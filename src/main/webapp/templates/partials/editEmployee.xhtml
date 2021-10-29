@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>IGNORED</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<ui:composition>
+		<div class="create-employee-container">
+			<h:form class="form-container">
+				<div>
+					<h2 class="create-employee-title-container">
+						Edit Employee</h2>
+				</div>
+
+				<div class="employee-input-container">
+					<h:outputText class="input-employee"
+						value="#{employeeController.editEmployee.employee.empNumber}"
+					/>
+					<h:inputText class="input-employee"
+						value="#{employeeController.editEmployee.employee.userName}"
+						a:placeholder="Username:" />
+					<h:inputText class="input-employee"
+						value="#{employeeController.editEmployee.credentials.password}"
+						a:placeholder="Password:" />
+					<h:inputText class="input-employee"
+						value="#{employeeController.editEmployee.employee.empName}"
+						a:placeholder="Name:" />
+				</div>
+
+				<div class="create-employee-btn-container">
+					<h:commandButton class="btn-secondary" action="#{employeeController.onEdit()}"
+						value="#{msgs.saveBtn}" />
+				</div>
+
+			</h:form>
+		</div>
+	</ui:composition>
+</h:body>
+</html>

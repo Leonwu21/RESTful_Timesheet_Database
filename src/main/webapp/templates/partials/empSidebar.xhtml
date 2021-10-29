@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>IGNORED</title>
+</h:head>
+<h:body>
+	<ui:composition>
+		<div class="employee-sidebar-container">
+			<div class="employee-info-container">
+				<div>
+					<h:graphicImage id="profileImg" value="/resources/img/profile.png" />
+				</div>
+				<div class="employee-credentials-container">
+					<div class="employee-fullname-container">
+						<p>#{msgs.empName}</p>
+						<h:outputText value="#{employeeManager.currentEmployee.empName}" />
+					</div>
+					<div class="employee-fullname-container">
+						<p>#{msgs.empNum}</p>
+						<h:outputText value="#{employeeManager.currentEmployee.empNumber}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="employee-link-containter">
+				<h:form>
+					<ul>
+						<li class="employee-my-timesheet"><h:graphicImage
+								id="myTimesheet" value="/resources/img/timesheet.png" /> <h:commandLink
+								action="#{timesheetController.prepareList()}" value="#{msgs.empTimesheet}"
+								style="text-decoration:none;color:#273469" /></li>
+						<li class="employee-create-timesheet"><h:graphicImage
+								id="createTimesheet" value="/resources/img/createTimesheet.png" />
+							<h:commandLink action="#{timesheetController.prepareCreate()}" value="#{msgs.newTimesheet}"
+								style="text-decoration:none;color:#273469" /></li>
+						<li class="employee-my-profile"><h:graphicImage
+								id="myProfile" value="/resources/img/myProfile.png" /> <h:commandLink
+								action="#{profileController.prepareProfile()}" value="#{msgs.empProfile}"
+								style="text-decoration:none;color:#273469" /></li>
+					</ul>
+				</h:form>
+			</div>
+
+
+		</div>
+
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>IGNORED</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templates/common.xhtml">
+		<ui:define name="windowTitle">
+            #{msgs.appTitle}
+         </ui:define>
+		<ui:define name="main">
+			<div class="main">
+				<h:messages styleClass="error-messages" layout="table" />
+				<h2>#{msgs['timesheet.editTitle']}</h2>
+				<h:form class="timesheet-form">
+					<div class="timesheet-weekend-container">
+						<div class="timesheet-weekend-input-container">
+							<p class="timesheet-weekend-label">#{msgs['timesheet.weekEnding']}</p>
+							<h:inputText id="weekend" value="#{timesheetController.editTimesheet.timesheet.endDate}"
+								styleClass="timesheet-weekend-input">
+								<f:convertDateTime type="localDate" />
+							</h:inputText>
+						</div>
+						<h:message for="weekend" styleClass="weekend-errors" />
+					</div>
+					<ui:include src="/templates/partials/timesheetsTbl.xhtml" />
+
+					<div class="buttons-container">
+						<h:commandButton action="#{timesheetController.onAddRow()}"
+							value="#{msgs['timesheet.addRow']}" styleClass="btn-primary" />
+						<h:commandButton action="#{timesheetController.onEdit()}"
+							value="#{msgs['timesheet.save']}"  styleClass="btn-primary"/>
+					</div>
+				</h:form>
+			</div>
+		</ui:define>
+		<ui:define name="sidebar">
+         		<ui:include src="#{employeeManager.isAdminLogin() ? '/templates/partials/adminSidebar.xhtml' : '/templates/partials/empSidebar.xhtml'}" />
+         </ui:define>
+	</ui:composition>
+</h:body>
+</html>

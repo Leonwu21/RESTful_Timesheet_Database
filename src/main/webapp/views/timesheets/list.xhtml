@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>IGNORED</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templates/common.xhtml">
+		<ui:define name="windowTitle">
+            #{msgs.appTitle}
+         </ui:define>
+		<ui:define name="main">
+			<div class="main">
+				<h:messages styleClass="error-messages" layout="table" />
+				<h2>#{msgs['allTimesheet']}</h2>
+				<div class="timesheets-container">
+
+					<ui:repeat value="#{timesheetController.timesheets}" var="timesheet">
+						<div class="timesheet-container">
+							<div class="timesheet-data">
+								<h2 class="timesheet-week-number">#{msgs['timesheet.week']}
+									#{timesheet.weekNumber}</h2>
+								<h2 class="timesheet-week-end">
+									<h:outputText value="#{timesheet.endDate}"
+										styleClass="timesheet-weekend-input">
+										<f:convertDateTime type="localDate" />
+									</h:outputText>
+								</h2>
+
+								<h2 class="timesheet-total-hours">#{msgs['timesheet.totalHours']}:
+									#{timesheet.totalHours}</h2>
+							</div>
+							<div class="timesheet-buttons-container">
+								<h:form styleClass="timesheet-buttons">
+									<h:commandButton styleClass="timesheet-view-button btn-primary"
+										action="#{timesheetController.prepareView(timesheet)}"
+										value="#{msgs['timesheet.view']}" />
+									<h:commandButton styleClass="timesheet-edit-button btn-primary"
+										action="#{timesheetController.prepareEdit(timesheet)}"
+										value="#{msgs['timesheet.edit']}" />
+								</h:form>
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+			</div>
+		</ui:define>
+		<ui:define name="sidebar">
+			<ui:include
+				src="#{employeeManager.isAdminLogin() ? '/templates/partials/adminSidebar.xhtml' : '/templates/partials/empSidebar.xhtml'}" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

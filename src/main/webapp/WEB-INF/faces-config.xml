@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config version="2.3" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
+   <application>
+      <locale-config>
+         <default-locale>en</default-locale>
+      </locale-config>
+      <resource-bundle>
+         <base-name>messages</base-name>
+         <var>msgs</var>
+      </resource-bundle>
+   </application>
+   
+   <navigation-rule>
+		<from-view-id>/views/*</from-view-id>
+		<navigation-case>
+			<from-outcome>/timesheet/list</from-outcome>
+			<to-view-id>/views/timesheets/list</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{timesheetController.prepareCreate()}</from-action>
+			<from-outcome>/timesheet/create</from-outcome>
+			<to-view-id>/views/timesheets/create</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>/timesheet/view</from-outcome>
+			<to-view-id>/views/timesheets/view</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>/timesheet/edit</from-outcome>
+			<to-view-id>/views/timesheets/edit</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/*</from-view-id>
+		<navigation-case>
+			<from-action>#{employeeController.prepareCreate()}</from-action>
+			<from-outcome>/employee/create</from-outcome>
+			<to-view-id>/views/employee/adminEmployeeCreate</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>/employee/list</from-outcome>
+			<to-view-id>/views/employee/adminEmployeeList</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>/employee/edit</from-outcome>
+			<to-view-id>/views/employee/adminEmployeeEdit</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>/employee/profile</from-outcome>
+			<to-view-id>/views/employee/empMyProfile</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/employee/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{loginController.login()}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/views/timesheets/list</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/views/*</from-view-id>
+		<navigation-case>
+			<from-action>#{employeeManager.logout()}</from-action>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/views/employee/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+<factory>
+        <exception-handler-factory>
+            ca.bcit.infosys.exception.CustomExceptionHandlerFactory
+        </exception-handler-factory>
+</factory>
+</faces-config>

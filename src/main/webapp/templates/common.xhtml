@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title><ui:insert name="windowTitle" /></title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<ui:insert name="navbar">
+		<ui:include src="/templates/partials/navbar.xhtml" />
+	</ui:insert>
+	<div class="main-container">
+		<ui:insert name="sidebar"></ui:insert>
+		<ui:insert name="main">
+		</ui:insert>
+	</div>
+</h:body>
+</html>

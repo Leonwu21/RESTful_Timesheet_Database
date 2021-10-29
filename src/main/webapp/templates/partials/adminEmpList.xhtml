@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>IGNORED</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<ui:composition>
+
+		<div class="employee-list-container">
+			<h2 id="employeeListHeading">#{msgs['employee.list']}</h2>
+			<h:form>
+				<h:dataTable id="employee-table"
+					value="#{employeeManager.employees}" var="employee" styleClass="employee-list-table" headerClass="timesheet-table-header"
+				rowClasses="timesheet-table-row">
+					<h:column>
+						<f:facet name="header">#{msgs['employee.empNum']}</f:facet>
+						<h:outputText value="#{employee.empNumber}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">#{msgs['employee.empName']}</f:facet>
+						<h:outputText value="#{employee.empName}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">#{msgs['employee.empUsername']}</f:facet>
+						<h:outputText value="#{employee.userName}" />
+					</h:column>
+
+					<h:column>
+						<h:commandButton
+							action="#{employeeController.prepareEdit(employee.userName)}"
+							value="#{msgs.editBtn}" styleClass="btn-secondary" />
+					</h:column>
+
+					<h:column>
+						<h:commandButton
+							action="#{employeeController.prepareDelete(employee.userName)}"
+							value="#{msgs.deleteBtn}" styleClass="btn-secondary" />
+					</h:column>
+
+				</h:dataTable>
+			</h:form>
+		</div>
+	</ui:composition>
+</h:body>
+</html>

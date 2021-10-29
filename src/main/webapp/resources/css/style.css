@@ -1,0 +1,410 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 10px;
+	font-family: Montserrat, sans-serif;
+	font-weight: regular;
+	min-height:100%;
+	display:flex;
+	flex-direction:column;
+	overflow:hidden;
+}
+
+.empSidebar{
+	height: 100%;
+	border-right: 1px solid;
+}
+
+.main-container {
+	width: 100vw;
+	height: 90vh;
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.navbar-container {
+	font-size: 7px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #AEF3E7;
+	color: 30343F;
+	height: 10vh;
+	padding: 0 10px;
+	
+}
+
+.logo-container {
+	display: flex;
+	align-items: center;
+}
+
+.btn-primary {
+	font-family: Montserrat, sans-serif;
+	border: none;
+	outline: none;
+	padding: 0.5rem 1rem;
+	background-color: #273469;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 10px;
+	font-size: 1.5em;
+}
+
+#img {
+	width: auto;
+	height: 40px;
+}
+
+#profileImg {
+	height: 40px;
+	width: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.employee-sidebar-container {
+	display: flex;
+	padding-top: 5%;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	width: 10%;
+	color: #273469;
+	
+}
+
+.employee-info-container {
+	display: flex;
+	align-items: center;
+}
+
+.employee-credentials-container {
+	margin-left: 0.5em;
+}
+
+.employee-my-timesheet {
+	display: flex;
+	align-items: center;
+}
+
+.employee-create-timesheet {
+	display: flex;
+	align-items: center;
+}
+
+.employee-my-profile {
+	display: flex;
+	align-items: center;
+}
+
+.employee-create-employee {
+	display: flex;
+	align-items: center;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul li {
+	margin: 25px 0;
+	color: #273469;
+}
+
+ul li img {
+	height: 20px;
+	width: auto;
+	margin-right: 10px;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: 90%;
+	height: 100%;
+}
+
+.create-employee-container {
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	min-height: 90vh;
+}
+
+.form-container {
+	min-height: 50vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.employee-input-container {
+	min-height: 32.5vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	
+}
+
+.input-employee {
+	background-color: #273469;
+	color: white;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	height: 22.5px;
+	padding-left: 0.5rem;
+}
+
+::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.create-employee-btn-container {
+	height: 15px;
+}
+
+.btn-secondary {
+	font-family: Montserrat, sans-serif;
+	font-size: 0.65rem;
+	border: none;
+	outline: none;
+	padding: 0.25rem 0.5rem;
+	background-color: #273469;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 10px;
+}
+
+/* Login */
+.login-page-heading {
+	position: relative;
+	bottom: 2vw;
+}
+
+.login-form-container {
+	height: 40vh;
+	width: 30vw;
+}
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	height: 60%;
+}
+
+.login-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.login-input-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 3vmin;
+	width: 12vmax;
+	font-size: 1.5em;
+}
+
+.login-input {
+	height: 2vmin;
+	border-radius: 10px;
+}
+
+.timesheet-form {
+	height: 90%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.timesheet-attr-container {
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	height: 3%;
+	margin-bottom: 1rem;
+}
+
+.timesheet-attr-input-container {
+	width: 10vw;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.timesheet-attr-input {
+	flex: 1;
+	background-color: #273469;
+	color: white;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	height: 22.5px;
+	padding-left: 0.5em;
+	margin-left: 0.5rem;
+	
+}
+
+.timesheet-table-container {
+	height: 40%;
+}
+
+.timesheet-table {
+	border-spacing: 0;
+}
+
+.employee-list-table {
+	border-spacing: 0;
+}
+
+.timesheet-table-header {
+	width: 4vw;
+	padding: 5px;
+	border: 1px solid black;
+}
+
+.timesheet-table-row td {
+	width: 3vw;
+	padding: 5px;
+	border: 1px solid black;
+}
+
+.timesheet-table-row td input {
+	max-width: 4vw;
+}
+
+/*List timesheets */
+.timesheets-container {
+	height: 90%;
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	padding: 1vmin;
+}
+
+.timesheet-container {
+	width: 20%;
+	height: 7vh;
+	display: flex;
+	border: 1px solid black;
+	border-radius: 10px;
+}
+
+.timesheet-data {
+	width: 70%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	border: solid black;
+	border-width: 0 1px 0 0;
+}
+
+.timesheet-buttons-container {
+	width: 30%;
+	height: 100%;
+}
+
+.timesheet-buttons {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.timesheet-buttons .btn-primary {
+	width: 70%;
+}
+
+/* Login */
+
+.username-input-container-login-input-container {
+	display: flex;
+	align-items: center;
+}
+
+.username-label {
+	margin-right: 1em;
+}
+
+.password-input-container-login-input-container {
+	display: flex;
+	align-items: center;
+}
+
+.password-label {
+	margin-right: 1em;
+}
+
+.username-input {
+	background-color: #273469;
+	color: white;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	height: 22.5px;
+	padding-left: 0.5em;
+}
+
+.password-input {
+	background-color: #273469;
+	color: white;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	height: 22.5px;
+	padding-left:0.5em;
+}
+
+#createNewTimesheet {
+	margin-left: 10rem;
+}
+
+.btn-create {
+	font-family: Montserrat, sans-serif;
+	border: none;
+	outline: none;
+	padding: 0.5rem 1rem;
+	background-color: #273469;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 10px;
+	font-size: 1.5em;
+	margin-left: 1rem;
+}
+
+.timesheet-form {
+	margin-top: 1rem;
+}
+
+.employee-list-container {
+	height:70vh;
+}
+
+#employeeListHeading {
+	margin-bottom: 2rem;
+}
+
+.error-messages {
+	color:red;
+	font-size: 1.5em;
+}

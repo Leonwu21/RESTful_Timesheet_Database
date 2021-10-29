@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>IGNORED</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templates/common.xhtml">
+		 <ui:define name="navbar">
+			<div class="navbar">
+				<ui:include src="/templates/partials/navbar.xhtml" />
+			</div>
+         </ui:define>
+         <ui:define name="sidebar">
+         	<div class="sidebar" style="float:left">
+         		<ui:include src="#{employeeManager.isAdminLogin() ? '/templates/partials/adminSidebar.xhtml' : '/templates/partials/empSidebar.xhtml'}" />
+         	</div>
+         </ui:define>
+	</ui:composition>
+</h:body>
+</html>
