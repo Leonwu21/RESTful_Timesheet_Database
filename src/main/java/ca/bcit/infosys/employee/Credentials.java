@@ -9,8 +9,8 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class Credentials implements Serializable {
-    //TODO: Why do we need this? Does it need to be this number?
-    private static final long serialVersionUID = 11L;
+
+	private static final long serialVersionUID = 12L;
     
     /** 
      * The login ID.

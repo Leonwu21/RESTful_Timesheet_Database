@@ -1,7 +1,5 @@
 package ca.bcit.infosys.employee;
 
-import ca.bcit.infosys.employee.Employee;
-
 /**
  * A class for an admin.
  *
@@ -9,8 +7,8 @@ import ca.bcit.infosys.employee.Employee;
  * @version 1.0
  */
 public class Admin extends Employee {
-    //TODO: Why do we need this? Does it need to be this number?
-    private static final long serialVersionUID = 3893651203522967194L;
+
+	private static final long serialVersionUID = 11L;
 
     /**
      * Constructor for an admin.

@@ -1,5 +1,6 @@
 package ca.bcit.infosys.database;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,10 @@ import ca.bcit.infosys.timesheet.Timesheet;
  */
 @Named("timesheetDatabase")
 @ApplicationScoped
-public class TimesheetDatabase {
+public class TimesheetDatabase implements Serializable {
+	
+    private static final long serialVersionUID = 8L;
+	
     /**
      * A cell of the timesheets table.
      */

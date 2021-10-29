@@ -27,8 +27,7 @@ import ca.bcit.infosys.employee.EmployeeList;
 @ConversationScoped
 public class EmployeeManager implements EmployeeList, Serializable {
     
-    //TODO: Why do we need this? Does it need to be this number?
-    private static final long serialVersionUID = -8890730783815459598L;
+    private static final long serialVersionUID = 15L;
 
     /**
      * Injected EmployeeDatabase.

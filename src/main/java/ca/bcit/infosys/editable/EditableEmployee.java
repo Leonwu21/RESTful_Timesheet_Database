@@ -1,5 +1,7 @@
 package ca.bcit.infosys.editable;
 
+import java.io.Serializable;
+
 import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
 
@@ -9,8 +11,9 @@ import ca.bcit.infosys.employee.Employee;
  * @author Benedict Halim and Leon Wu.
  * @version 1.0
  */
-public class EditableEmployee {
-    
+public class EditableEmployee implements Serializable {
+	
+    private static final long serialVersionUID = 9L;
     /**
      * True if an employee is editable. Otherwise, false.
      */

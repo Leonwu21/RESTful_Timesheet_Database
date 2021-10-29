@@ -23,8 +23,7 @@ import ca.bcit.infosys.employee.Employee;
 @ConversationScoped
 public class LoginController implements Serializable {
     
-    //TODO: Why do we need this? Does it need to be this number?
-    private static final long serialVersionUID = 6687823809360236313L;
+    private static final long serialVersionUID = 2L;
 
     /**
      * Injected EmployeeManager. Provides access to employees.

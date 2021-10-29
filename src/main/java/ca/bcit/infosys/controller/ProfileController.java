@@ -23,10 +23,11 @@ import ca.bcit.infosys.employee.Employee;
  */
 @Named("profileController")
 @ConversationScoped
-//TODO: Do we need to implement Serializable?
 public class ProfileController implements Serializable {
 
-    /**
+	private static final long serialVersionUID = 3L;
+
+	/**
      * Injected Conversation to control the context.
      */
     @Inject

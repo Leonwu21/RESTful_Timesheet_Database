@@ -21,8 +21,7 @@ import ca.bcit.infosys.employee.Credentials;
 @ConversationScoped
 public class CredentialsManager implements Serializable {
     
-    //TODO: Why do we need this? Does it need to be this number?
-    private static final long serialVersionUID = -6478292740340769939L;
+    private static final long serialVersionUID = 14L;
     
     /**
      * Injected CredentialsDatabase.

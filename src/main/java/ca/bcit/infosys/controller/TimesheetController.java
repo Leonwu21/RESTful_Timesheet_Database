@@ -25,8 +25,7 @@ import ca.bcit.infosys.editable.EditableTimesheet;
 @ConversationScoped
 public class TimesheetController implements Serializable {
     
-    //TODO: Why do we need this? Does it need to be this number?
-    private static final long serialVersionUID = -8334771555481885625L;
+    private static final long serialVersionUID = 4L;
 
     /**
      * Injected TimesheetManager. Provides access to timesheets.

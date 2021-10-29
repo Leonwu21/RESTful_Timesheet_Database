@@ -9,8 +9,8 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class Employee implements Serializable {
-    //TODO: What is this for? Do we need this specific number?
-    private static final long serialVersionUID = 11L;
+	
+    private static final long serialVersionUID = 13L;
     
     /** 
      * The employee's name. 

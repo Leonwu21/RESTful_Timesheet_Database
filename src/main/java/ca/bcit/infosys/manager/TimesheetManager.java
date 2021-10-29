@@ -22,8 +22,7 @@ import ca.bcit.infosys.timesheet.TimesheetCollection;
  */
 public class TimesheetManager implements TimesheetCollection {
     
-    //TODO: Why do we need this? Does it need to be this number?
-    private static final long serialVersionUID = -1786252399378663291L;
+    private static final long serialVersionUID = 16L;
     
     /**
      * Injected TimesheetDatabase.
