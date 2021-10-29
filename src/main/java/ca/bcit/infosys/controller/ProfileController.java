@@ -55,7 +55,6 @@ public class ProfileController implements Serializable {
     /**
      * The current user's credentials.
      */
-    //TODO: Need getter and setter.
     private Credentials credentials;
 
     /**
@@ -138,6 +137,24 @@ public class ProfileController implements Serializable {
      */
     public void setEditEmployee(EditableEmployee employee) {
         editEmployee = employee;
+    }
+    
+    /**
+     * Gets the user's credentials.
+     *
+     * @return The user's credentials (login ID and password).
+     */
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    /**
+     * Sets the user's credentials.
+     *
+     * @param creds The user's new credentials (new login ID and password).
+     */
+    public void setCredentials(Credentials creds) {
+        credentials = creds;
     }
 
     /**

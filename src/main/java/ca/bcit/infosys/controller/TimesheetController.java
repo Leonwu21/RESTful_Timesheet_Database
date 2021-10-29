@@ -56,7 +56,6 @@ public class TimesheetController implements Serializable {
     /**
      * A list of timesheets.
      */
-    //TODO: Needs a setter.
     private List<Timesheet> timesheetList;
 
     /**
@@ -79,7 +78,7 @@ public class TimesheetController implements Serializable {
      *
      * @return The list of timesheets.
      */
-    public List<Timesheet> getTimesheets() {
+    public List<Timesheet> getTimesheetList() {
         return timesheetList;
     }
 
@@ -146,7 +145,6 @@ public class TimesheetController implements Serializable {
      */
     //TODO: Refactor if-else statement.
     //TODO: Refactor method chaining.
-    //TODO: Why use timesheetManager.getTimesheets() instead of timesheetDatabase.getAllTimesheets()?
     public String prepareList() {
         if (conversation.isTransient()) {
             conversation.begin();
@@ -164,13 +162,12 @@ public class TimesheetController implements Serializable {
      *
      * @return Null.
      */
-    //TODO: Refactor == to !=
     //TODO: Refactor method chaining.
     public String onAddRow() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
-        if (!(editTimesheet.getTimesheet().getDetails().size() == 7)) {
+        if (editTimesheet.getTimesheet().getDetails().size() != 7) {
             editTimesheet.getTimesheet().addRow();
         }
         return null;

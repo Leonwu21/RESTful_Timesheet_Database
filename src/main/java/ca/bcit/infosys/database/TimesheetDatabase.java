@@ -58,7 +58,7 @@ public class TimesheetDatabase implements Serializable {
      * 
      * @return The list of timesheets.
      */
-    public List<Timesheet> getAllTimesheets() {
+    public List<Timesheet> getTimesheetList() {
         return timesheetList;
     }
 }

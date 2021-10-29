@@ -35,7 +35,7 @@ public class TimesheetManager implements TimesheetCollection {
      */
     @Override
     public List<Timesheet> getTimesheets() {
-        return timesheetDatabase.getAllTimesheets();
+        return timesheetDatabase.getTimesheetList();
     }
 
     /**
@@ -88,7 +88,7 @@ public class TimesheetManager implements TimesheetCollection {
     @Override
     public String addTimesheet() {
         Timesheet timesheet = new Timesheet();
-        timesheetDatabase.getAllTimesheets().add(timesheet);
+        timesheetDatabase.getTimesheetList().add(timesheet);
         return "/timesheet/create";
     }
     

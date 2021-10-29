@@ -48,7 +48,6 @@ public class EmployeeController implements Serializable {
     /**
      * Provides access to edit an employee.
      */
-    //TODO: Why is this not injected?
     private EditableEmployee editableEmployee;
 
     /**

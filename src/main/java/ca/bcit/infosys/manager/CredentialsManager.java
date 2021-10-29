@@ -35,7 +35,7 @@ public class CredentialsManager implements Serializable {
      * @return The credentials of the employee with the employee number given.
      */
     public Credentials getCredentialsByEmpNumber(int empNumber) {
-        List<Credentials> credentialsList = credentialsDatabase.getAllCredentials();
+        List<Credentials> credentialsList = credentialsDatabase.getCredentialsList();
         
         for(Credentials credentials : credentialsList) {
             if (credentials.getEmpNumber() == empNumber) {
@@ -50,7 +50,7 @@ public class CredentialsManager implements Serializable {
      * @param credentials The set of credentials to be added to the CredentialsDatabase.
      */
     public void add(Credentials credentials) {
-        credentialsDatabase.getAllCredentials().add(credentials);
+        credentialsDatabase.getCredentialsList().add(credentials);
     }
     
 }

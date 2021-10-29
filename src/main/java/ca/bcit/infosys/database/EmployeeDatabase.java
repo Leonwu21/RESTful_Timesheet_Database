@@ -25,16 +25,14 @@ public class EmployeeDatabase implements Serializable {
     /**
      * A list of all the employees.
      */
-    //TODO: Implement a setter.
     private final List<Employee> employeeList;
     
     /**
      * Constructor for EmployeeDatabase.
      */
-    //TODO: Edit default employee to something else.
     public EmployeeDatabase() {
         employeeList = new ArrayList<>();
-        employeeList.add(new Employee("Bruce Link", 1234, "bdlink"));
+        employeeList.add(new Employee("John Doe", 1111, "admin"));
     }
 
     /**
@@ -42,7 +40,7 @@ public class EmployeeDatabase implements Serializable {
      *
      * @return The list of employees.
      */
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getEmployeeList() {
         return employeeList;
     }
 

@@ -25,16 +25,14 @@ public class AdminDatabase implements Serializable {
     /**
      * A list of all the admins.
      */
-    //TODO: Implement a setter.
     private final List<Admin> adminList;
 
     /**
      * Constructor for AdminDatabase.
      */
-    //TODO: Edit default admin to something else.
     public AdminDatabase() {
         adminList = new ArrayList<>();
-        adminList.add(new Admin(new Employee("Bruce Link", 1234, "bdlink")));
+        adminList.add(new Admin(new Employee("John Doe", 1111, "admin")));
     }
 
     /**
@@ -42,7 +40,7 @@ public class AdminDatabase implements Serializable {
      * 
      * @return The list of admins.
      */
-    public List<Admin> getAllAdmins() {
+    public List<Admin> getAdminList() {
         return adminList;
     }
 }

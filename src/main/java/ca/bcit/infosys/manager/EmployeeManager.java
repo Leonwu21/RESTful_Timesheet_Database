@@ -58,7 +58,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Override
     public List<Employee> getEmployees() {
-        return employeeDatabase.getAllEmployees();
+        return employeeDatabase.getEmployeeList();
     }
 
     /**
@@ -67,7 +67,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Override
     public Employee getEmployeeByUserName(String userName) {
-        List<Employee> employeeList = employeeDatabase.getAllEmployees();
+        List<Employee> employeeList = employeeDatabase.getEmployeeList();
         
         for (Employee employee : employeeList) {
             if (employee.getUserName().equals(userName)) {
@@ -105,7 +105,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Override
     public Employee getAdministrator() {
-        return adminDatabase.getAllAdmins().get(0);
+        return adminDatabase.getAdminList().get(0);
     }
 
     /**
@@ -128,9 +128,10 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * @return True if the login ID and password is a valid combination. Otherwise, false.
      */
     //TODO: Refactor method chaining.
+    //TODO: Refactor to use credentialsManager (See TimesheetController.java prepareList() for an example)
     @Override
     public boolean verifyUser(Credentials credentials) {
-        for (Credentials c : credentialsDatabase.getAllCredentials()) {
+        for (Credentials c : credentialsDatabase.getCredentialsList()) {
             return (c.equals(credentials));
         };
         return false;
@@ -160,7 +161,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
         if (getAdministrator().getUserName().equals(employee.getUserName())) {
             return;
         }
-        employeeDatabase.getAllEmployees().remove(employee);
+        employeeDatabase.getEmployeeList().remove(employee);
     }
 
     /**
@@ -170,7 +171,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
     //TODO: Refactor method chaining.
     @Override
     public void addEmployee(Employee employee) {
-        for (final Employee emp : employeeDatabase.getAllEmployees()) {
+        for (final Employee emp : employeeDatabase.getEmployeeList()) {
             if (emp.getUserName().equals(employee.getUserName())) {
                 throw new IllegalArgumentException("A user with the same username already exists");
             }
@@ -179,6 +180,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
                 throw new IllegalArgumentException("A user with the same employee number already exists");
             }
         }
-        employeeDatabase.getAllEmployees().add(employee);
+        employeeDatabase.getEmployeeList().add(employee);
     }
 }

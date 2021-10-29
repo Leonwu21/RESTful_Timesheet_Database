@@ -24,17 +24,15 @@ public class CredentialsDatabase implements Serializable {
     /**
      * A list of all the credentials.
      */
-    //TODO: Implement a setter.
     private final List<Credentials> credentialList;
 
     /**
      * Constructor for CredentialsDatabase.
      */
-    //TODO: Edit default credentials to something else.
     public CredentialsDatabase() {
         credentialList = new ArrayList<Credentials>();
-        credentialList.add(new Credentials("bdlink", "password"));
-        credentialList.get(0).setEmpNumber(1234);
+        credentialList.add(new Credentials("admin", "password"));
+        credentialList.get(0).setEmpNumber(1111);
     }
 
     /**
@@ -42,7 +40,7 @@ public class CredentialsDatabase implements Serializable {
      * 
      * @return The list of credentials.
      */
-    public List<Credentials> getAllCredentials() {
+    public List<Credentials> getCredentialsList() {
         return credentialList;
     }
 
