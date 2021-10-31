@@ -41,7 +41,7 @@ public class TimesheetRow implements java.io.Serializable {
     public static final int LAST_DAY = FRI;
 
     /** Version number. */
-    private static final long serialVersionUID = 4L;
+    private static final long serialVersionUID = 18L;
 
     /** mask for packing, unpacking hours. */
     private static final long[] MASK = {0xFFL, 
