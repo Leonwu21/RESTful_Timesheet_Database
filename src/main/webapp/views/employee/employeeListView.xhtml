@@ -4,22 +4,22 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-	<title>IGNORED</title>
+	<title>#{msgs.title_header}</title>
 </h:head>
 <h:body>
-	<ui:composition template="/templates/common.xhtml">
-		 <ui:define name="navbar">
-			<div class="navbar">
-				<ui:include src="/templates/partials/navbar.xhtml" />
+	<ui:composition template="/templates/master.xhtml">
+		 <ui:define name="header">
+			<div class="header">
+				<ui:include src="/templates/partials/navbar_admin.xhtml" />
 			</div>
          </ui:define>
          <ui:define name="sidebar">
-         		<ui:include src="/templates/partials/adminSidebar.xhtml" />
+         		<ui:include src="/templates/partials/sidebar_admin.xhtml" />
          </ui:define>
          <ui:define name="main">
          	<div class="main">
-         		<h:messages styleClass="error-messages" layout="table" />
-         		<ui:include src="/templates/partials/adminEmpList.xhtml" />
+         		<h:messages styleClass="errorMessages" />
+         		<ui:include src="/templates/partials/employeeList.xhtml" />
          	</div>
          </ui:define>
 	</ui:composition>

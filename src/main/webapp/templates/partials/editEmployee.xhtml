@@ -5,19 +5,19 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
-	<title>IGNORED</title>
+	<title>#{msgs.title_header}</title>
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
 	<ui:composition>
-		<div class="create-employee-container">
-			<h:form class="form-container">
+		<div class="create-employee-div">
+			<h:form class="form-div">
 				<div>
-					<h2 class="create-employee-title-container">
+					<h2 class="create-employee-title-div">
 						Edit Employee</h2>
 				</div>
 
-				<div class="employee-input-container">
+				<div class="employee-input-div">
 					<h:outputText class="input-employee"
 						value="#{employeeController.editEmployee.employee.empNumber}"
 					/>
@@ -32,9 +32,9 @@
 						a:placeholder="Name:" />
 				</div>
 
-				<div class="create-employee-btn-container">
-					<h:commandButton class="btn-secondary" action="#{employeeController.onEdit()}"
-						value="#{msgs.saveBtn}" />
+				<div class="create-employee-btn-div">
+					<h:commandButton class="btn-small" action="#{employeeController.onEdit()}"
+						value="#{msgs.save}" />
 				</div>
 
 			</h:form>

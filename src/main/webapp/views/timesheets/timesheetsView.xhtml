@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>#{msgs.title_header}</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templates/master.xhtml">
+		<ui:define name="windowTitle">
+            #{msgs.title_header}
+        </ui:define>
+        <ui:define name="header">
+			<div class="header">
+				<ui:include src="#{employeeManager.isAdminLogin() ?
+         		 '/templates/partials/navbar_admin.xhtml' : '/templates/partials/navbar_user.xhtml'}"  />
+			</div>
+        </ui:define>
+		<ui:define name="main">
+			<div class="main">
+				<h:messages styleClass="errorMessages" />
+				<h2>#{msgs.view}</h2>
+				<h:form class="timesheet-form">
+					<div class="timesheet-inner-container">
+						<div class="timesheet-inner-input-container">
+							<h4 class="timesheet-inner-label">#{msgs.weekEnding}</h4>
+							<h:outputText id="weekend"
+								value="#{timesheetController.editTimesheet.timesheet.endDate}"
+								styleClass="timesheet-inner-input">
+								<f:convertDateTime type="localDate" />
+							</h:outputText>
+						</div>
+					</div>
+					<div class="timesheet-inner-container">
+						<div class="timesheet-inner-input-container">
+							<h4 class="timesheet-inner-label">#{msgs.weekNumber}</h4>
+							<h:outputText id="weekno"
+								value="#{timesheetController.editTimesheet.timesheet.weekNumber}"
+								styleClass="timesheet-inner-input"/>
+						</div>
+					</div>
+					<div class="timesheet-inner-container">
+						<div class="timesheet-inner-input-container">
+							<h4 class="timesheet-inner-label">#{msgs.empNo}</h4>
+							<h:outputText id="employeeno"
+								value="#{timesheetController.editTimesheet.timesheet.employee.empNumber}"
+								styleClass="timesheet-inner-input"/>
+						</div>
+					</div>
+					<div class="timesheet-inner-container">
+						<div class="timesheet-inner-input-container">
+							<h4 class="timesheet-inner-label">#{msgs.empName}</h4>
+							<h:outputText id="employeename"
+								value="#{timesheetController.editTimesheet.timesheet.employee.empName}"
+								styleClass="timesheet-inner-input"/>
+						</div>
+					</div>
+					<ui:include src="/templates/partials/timesheetsTable.xhtml" />
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

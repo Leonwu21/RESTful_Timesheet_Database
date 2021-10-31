@@ -5,36 +5,37 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<title>IGNORED</title>
+	<title>#{msgs.title_header}</title>
 </h:head>
 <h:body>
 	<ui:composition>
-		<div class="timesheet-table-container">
-			<h:dataTable id="timesheet-table" styleClass="timesheet-table"
+	<br/>
+		<div class="table-div">
+			<h:dataTable id="table" styleClass="table"
 				value="#{timesheetController.editTimesheet.timesheet.details}"
-				var="timesheetRow" headerClass="timesheet-table-header"
-				rowClasses="timesheet-table-row"
+				var="timesheetRow" headerClass="table-header"
+				rowClasses="table-row"
 				columnClasses="#{timesheetList.cellClasses}">
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.project']}</f:facet>
+					<f:facet name="header">#{msgs.project}</f:facet>
 					<h:outputText value="#{timesheetRow.projectId}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.projectId}"
 						rendered="#{timesheetController.editTimesheet.editable}" />
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.workPackage']}</f:facet>
+					<f:facet name="header">#{msgs.wp}</f:facet>
 					<h:outputText value="#{timesheetRow.workPackageId}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.workPackageId}"
 						rendered="#{timesheetController.editTimesheet.editable}" />
 				</h:column>
 				<h:column rendered="#{view.viewId eq '/views/timesheets/view.xhtml'}">
-					<f:facet name="header">#{msgs['timesheetRow.total']}</f:facet>
+					<f:facet name="header">#{msgs.total}</f:facet>
 					<h:outputText value="#{timesheetRow.sum}" />
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.saturday']}</f:facet>
+					<f:facet name="header">#{msgs.sat}</f:facet>
 					<h:outputText value="#{timesheetRow.packedHours}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.packedHours}"
@@ -43,7 +44,7 @@
 					</h:inputText>
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.sunday']}</f:facet>
+					<f:facet name="header">#{msgs.sun}</f:facet>
 					<h:outputText value="#{timesheetRow.packedHours}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.packedHours}"
@@ -52,7 +53,7 @@
 					</h:inputText>
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.monday']}</f:facet>
+					<f:facet name="header">#{msgs.mon}</f:facet>
 					<h:outputText value="#{timesheetRow.packedHours}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.packedHours}"
@@ -61,7 +62,7 @@
 					</h:inputText>
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.tuesday']}</f:facet>
+					<f:facet name="header">#{msgs.tue}</f:facet>
 					<h:outputText value="#{timesheetRow.packedHours}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.packedHours}"
@@ -70,7 +71,7 @@
 					</h:inputText>
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.wednesday']}</f:facet>
+					<f:facet name="header">#{msgs.wed}</f:facet>
 					<h:outputText value="#{timesheetRow.packedHours}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.packedHours}"
@@ -79,7 +80,7 @@
 					</h:inputText>
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.thursday']}</f:facet>
+					<f:facet name="header">#{msgs.thu}</f:facet>
 					<h:outputText value="#{timesheetRow.packedHours}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.packedHours}"
@@ -88,7 +89,7 @@
 					</h:inputText>
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.friday']}</f:facet>
+					<f:facet name="header">#{msgs.fri}</f:facet>
 					<h:outputText value="#{timesheetRow.packedHours}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.packedHours}"
@@ -97,7 +98,7 @@
 					</h:inputText>
 				</h:column>
 				<h:column>
-					<f:facet name="header">#{msgs['timesheetRow.comments']}</f:facet>
+					<f:facet name="header">#{msgs.notes}</f:facet>
 					<h:outputText value="#{timesheetRow.notes}"
 						rendered="#{not timesheetController.editTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.notes}"
@@ -105,6 +106,7 @@
 				</h:column>
 			</h:dataTable>
 		</div>
+		<br/>
 	</ui:composition>
 </h:body>
 </html>
