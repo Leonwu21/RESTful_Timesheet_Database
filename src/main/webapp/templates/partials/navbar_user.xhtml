@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>#{msgs.title_header}</title>
+</h:head>
+<h:body>
+	<ui:composition>
+		<div class="header-div">
+			<div class="title-div">
+				<h1>
+					<h:outputFormat value="#{msgs.title_header}" />
+				</h1>
+			</div>
+			<div class="nav-div">
+				<div class="employee-div">
+				<h:form>
+					<ul>
+						<li class="employee-timesheet">
+							<h:commandLink action="#{timesheetController.prepareList()}"
+							value="#{msgs.allTs}" style="color:#9C3B03" /></li>
+						<li class="employee-create-timesheet">
+							<h:commandLink action="#{timesheetController.prepareCreate()}"
+							value="#{msgs.newTs}" style="color:#9C3B03"/></li>
+						<li class="employee-change-password">
+							<h:commandLink action="#{profileController.prepareProfile()}"
+							value="#{msgs.changePw}" style="color:#9C3B03"/></li>
+					</ul>
+				</h:form>
+			</div>
+			</div>
+			<div class="logout-div">
+				<h:form>
+					<h:commandButton class="btn-big" action="#{employeeManager.logout()}"
+						value="#{msgs.logout}" />
+				</h:form>
+			</div>
+		</div>
+	</ui:composition>
+</h:body>
+</html>

@@ -6,11 +6,9 @@
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
-	<ui:insert name="navbar">
-		<ui:include src="/templates/partials/navbar.xhtml" />
+	<ui:insert name="header">
 	</ui:insert>
-	<div class="main-container">
-		<ui:insert name="sidebar"></ui:insert>
+	<div class="main-div">
 		<ui:insert name="main">
 		</ui:insert>
 	</div>

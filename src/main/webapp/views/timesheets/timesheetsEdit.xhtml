@@ -5,42 +5,45 @@
 	xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<title>IGNORED</title>
+	<title>#{msgs.title_header}</title>
 </h:head>
 <h:body>
-	<ui:composition template="/templates/common.xhtml">
+	<ui:composition template="/templates/master.xhtml">
 		<ui:define name="windowTitle">
-            #{msgs.appTitle}
+            #{msgs.title_header}
          </ui:define>
+        <ui:define name="header">
+			<div class="header">
+				<ui:include src="#{employeeManager.isAdminLogin() ?
+         		 '/templates/partials/navbar_admin.xhtml' : '/templates/partials/navbar_user.xhtml'}"  />
+			</div>
+        </ui:define>
 		<ui:define name="main">
 			<div class="main">
-				<h:messages styleClass="error-messages" layout="table" />
-				<h2>#{msgs['timesheet.editTitle']}</h2>
+				<h:messages styleClass="errorMessages"/>
+				<h2>#{msgs.editTs}</h2>
 				<h:form class="timesheet-form">
-					<div class="timesheet-weekend-container">
-						<div class="timesheet-weekend-input-container">
-							<p class="timesheet-weekend-label">#{msgs['timesheet.weekEnding']}</p>
+					<div class="timesheet-weekend-div">
+						<div class="timesheet-weekend-input-div">
+							<p class="timesheet-weekend-label">#{msgs.weekEnding}</p>
 							<h:inputText id="weekend" value="#{timesheetController.editTimesheet.timesheet.endDate}"
 								styleClass="timesheet-weekend-input">
 								<f:convertDateTime type="localDate" />
 							</h:inputText>
 						</div>
-						<h:message for="weekend" styleClass="weekend-errors" />
+						<h:message for="weekend" styleClass="errorMessages" />
 					</div>
-					<ui:include src="/templates/partials/timesheetsTbl.xhtml" />
+					<ui:include src="/templates/partials/timesheetsTable.xhtml" />
 
-					<div class="buttons-container">
+					<div class="buttons-div">
 						<h:commandButton action="#{timesheetController.onAddRow()}"
-							value="#{msgs['timesheet.addRow']}" styleClass="btn-primary" />
+							value="#{msgs.addRow}" styleClass="btn-big" />
 						<h:commandButton action="#{timesheetController.onEdit()}"
-							value="#{msgs['timesheet.save']}"  styleClass="btn-primary"/>
+							value="#{msgs.save}"  styleClass="btn-big"/>
 					</div>
 				</h:form>
 			</div>
 		</ui:define>
-		<ui:define name="sidebar">
-         		<ui:include src="#{employeeManager.isAdminLogin() ? '/templates/partials/adminSidebar.xhtml' : '/templates/partials/empSidebar.xhtml'}" />
-         </ui:define>
 	</ui:composition>
 </h:body>
 </html>

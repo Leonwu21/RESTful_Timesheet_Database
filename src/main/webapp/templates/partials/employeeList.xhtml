@@ -4,43 +4,43 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-	<title>IGNORED</title>
+	<title>#{msgs.title_header}</title>
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
 	<ui:composition>
-
-		<div class="employee-list-container">
-			<h2 id="employeeListHeading">#{msgs['employee.list']}</h2>
+		<div class="employee-list-div">
+			<h2 id="employee-list-h2">#{msgs.empList}</h2>
 			<h:form>
 				<h:dataTable id="employee-table"
-					value="#{employeeManager.employees}" var="employee" styleClass="employee-list-table" headerClass="timesheet-table-header"
-				rowClasses="timesheet-table-row">
+					value="#{employeeManager.employees}" var="employee"
+					styleClass="employee-list-table" headerClass="table-header"
+				rowClasses="table-row">
 					<h:column>
-						<f:facet name="header">#{msgs['employee.empNum']}</f:facet>
+						<f:facet name="header">#{msgs.empNo}</f:facet>
 						<h:outputText value="#{employee.empNumber}" />
 					</h:column>
 
 					<h:column>
-						<f:facet name="header">#{msgs['employee.empName']}</f:facet>
+						<f:facet name="header">#{msgs.empName}</f:facet>
 						<h:outputText value="#{employee.empName}" />
 					</h:column>
 
 					<h:column>
-						<f:facet name="header">#{msgs['employee.empUsername']}</f:facet>
+						<f:facet name="header">#{msgs.empUser}</f:facet>
 						<h:outputText value="#{employee.userName}" />
 					</h:column>
 
 					<h:column>
 						<h:commandButton
 							action="#{employeeController.prepareEdit(employee.userName)}"
-							value="#{msgs.editBtn}" styleClass="btn-secondary" />
+							value="#{msgs.edit}" styleClass="btn-small" />
 					</h:column>
 
 					<h:column>
 						<h:commandButton
 							action="#{employeeController.prepareDelete(employee.userName)}"
-							value="#{msgs.deleteBtn}" styleClass="btn-secondary" />
+							value="#{msgs.delete}" styleClass="btn-small" />
 					</h:column>
 
 				</h:dataTable>

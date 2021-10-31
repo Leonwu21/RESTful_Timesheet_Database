@@ -1,111 +1,107 @@
-* {
-	margin: 0;
-	padding: 0;
-}
-
 body {
-	font-size: 10px;
-	font-family: Montserrat, sans-serif;
-	font-weight: regular;
+	font-size: 12px;
+	font-family: Arial, sans-serif;
 	min-height:100%;
 	display:flex;
 	flex-direction:column;
 	overflow:hidden;
 }
 
-.empSidebar{
-	height: 100%;
-	border-right: 1px solid;
+#login_body {
+	transform: translateY(50%) !important;
+	background-color: #FCFCBC;
 }
 
-.main-container {
+li {
+	display: inline !important;
+	padding: 20px;
+}
+
+.main-div {
 	width: 100vw;
 	height: 90vh;
 	display:flex;
+	background-color: #FCFCBC;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 }
 
-.navbar-container {
-	font-size: 7px;
+.header-div {
+	font-size: 10px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #AEF3E7;
-	color: 30343F;
+	background-color: #FFB95F;
 	height: 10vh;
 	padding: 0 10px;
 	
 }
 
-.logo-container {
-	display: flex;
-	align-items: center;
+* {
+	margin: 0;
+	padding: 0;
 }
 
-.btn-primary {
-	font-family: Montserrat, sans-serif;
+.btn-big {
+	font-family: Arial, sans-serif;
 	border: none;
 	outline: none;
 	padding: 0.5rem 1rem;
-	background-color: #273469;
+	background-color: #9C3B03;
 	color: #fff;
 	cursor: pointer;
 	border-radius: 10px;
 	font-size: 1.5em;
 }
 
-#img {
-	width: auto;
-	height: 40px;
-}
-
-#profileImg {
-	height: 40px;
-	width: auto;
-	margin-top: auto;
-	margin-bottom: auto;
-}
-
-.employee-sidebar-container {
-	display: flex;
-	padding-top: 5%;
-	flex-direction: column;
-	align-items: center;
-	height: 100%;
-	width: 10%;
-	color: #273469;
-	
-}
-
-.employee-info-container {
+.employee-info-div {
+	font-size: 17px;
+	font-weight: bold;
 	display: flex;
 	align-items: center;
+	border: 5px ridge #9C3B03;
+	border-radius: 5px;
+	padding: 10px;
 }
 
-.employee-credentials-container {
+.employee-credentials-div {
 	margin-left: 0.5em;
 }
 
-.employee-my-timesheet {
+.employee-div {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.employee-timesheet {
 	display: flex;
 	align-items: center;
+	margin: 3em 0 3em 0;
 }
 
 .employee-create-timesheet {
 	display: flex;
 	align-items: center;
+	margin: 3em 0 3em 0;
 }
 
-.employee-my-profile {
+.employee-list {
 	display: flex;
 	align-items: center;
+	margin: 3em 0 3em 0;
+}
+
+.employee-change-password {
+	display: flex;
+	align-items: center;
+	margin: 3em 0 3em 0;
 }
 
 .employee-create-employee {
 	display: flex;
 	align-items: center;
+	margin: 3em 0 3em 0;
 }
 
 ul {
@@ -114,13 +110,7 @@ ul {
 
 ul li {
 	margin: 25px 0;
-	color: #273469;
-}
-
-ul li img {
-	height: 20px;
-	width: auto;
-	margin-right: 10px;
+	color: #9C3B03;
 }
 
 .main {
@@ -133,7 +123,7 @@ ul li img {
 	height: 100%;
 }
 
-.create-employee-container {
+.create-employee-div {
 	display: flex;
 	text-align: center;
 	justify-content: center;
@@ -142,14 +132,14 @@ ul li img {
 	min-height: 90vh;
 }
 
-.form-container {
+.form-div {
 	min-height: 50vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
 }
 
-.employee-input-container {
+.employee-input-div {
 	min-height: 32.5vh;
 	display: flex;
 	flex-direction: column;
@@ -158,7 +148,7 @@ ul li img {
 }
 
 .input-employee {
-	background-color: #273469;
+	background-color: #9C3B03;
 	color: white;
 	outline: none;
 	border: none;
@@ -172,29 +162,28 @@ ul li img {
   opacity: 1;
 }
 
-.create-employee-btn-container {
+.create-employee-btn-div {
 	height: 15px;
 }
 
-.btn-secondary {
-	font-family: Montserrat, sans-serif;
-	font-size: 0.65rem;
+.btn-small {
+	font-family: Arial, sans-serif;
+	font-size: 1em;
 	border: none;
 	outline: none;
 	padding: 0.25rem 0.5rem;
-	background-color: #273469;
+	background-color: #9C3B03;
 	color: #fff;
 	cursor: pointer;
 	border-radius: 10px;
 }
 
-/* Login */
 .login-page-heading {
 	position: relative;
 	bottom: 2vw;
 }
 
-.login-form-container {
+.login-form-div {
 	height: 40vh;
 	width: 30vw;
 }
@@ -207,12 +196,18 @@ ul li img {
 	height: 60%;
 }
 
-.login-container {
+.errorMessages {
+	color:red;
+	font-weight: bold;
+	font-size: 1.5em;
+	display: block;
+}
+.login-div {
 	display: flex;
 	flex-direction: column;
 }
 
-.login-input-container {
+.login-input-div {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -234,7 +229,7 @@ ul li img {
 	align-items: center;
 }
 
-.timesheet-attr-container {
+.timesheet-inner-div {
 	width: 80%;
 	display: flex;
 	flex-direction: column;
@@ -242,31 +237,34 @@ ul li img {
 	margin-bottom: 1rem;
 }
 
-.timesheet-attr-input-container {
-	width: 10vw;
+.timesheet-inner-input-div {
+	height: 3vw;
+	width: 15vw;
+	font-size: 15px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 3em;
 }
 
-.timesheet-attr-input {
+.timesheet-inner-input {
 	flex: 1;
-	background-color: #273469;
+	background-color: #9C3B03;
 	color: white;
 	outline: none;
 	border: none;
 	border-radius: 5px;
-	height: 22.5px;
+	height: 25px;
 	padding-left: 0.5em;
-	margin-left: 0.5rem;
+	margin-left: 0.5em;
 	
 }
 
-.timesheet-table-container {
-	height: 40%;
+.table-div {
+	height: 50%;
 }
 
-.timesheet-table {
+.table {
 	border-spacing: 0;
 }
 
@@ -274,24 +272,27 @@ ul li img {
 	border-spacing: 0;
 }
 
-.timesheet-table-header {
+.table-header {
 	width: 4vw;
 	padding: 5px;
 	border: 1px solid black;
 }
 
-.timesheet-table-row td {
+.table-row td {
 	width: 3vw;
 	padding: 5px;
 	border: 1px solid black;
 }
 
-.timesheet-table-row td input {
+.table-row td input {
 	max-width: 4vw;
 }
 
-/*List timesheets */
-.timesheets-container {
+.total-hours, .week-number, .timesheet-weekend-input {
+	font-size: 15px;
+}
+.timesheets-div {
+	font-size: 12px;
 	height: 90%;
 	width: 100%;
 	display: flex;
@@ -299,12 +300,12 @@ ul li img {
 	padding: 1vmin;
 }
 
-.timesheet-container {
-	width: 20%;
-	height: 7vh;
+.timesheet-div {
+	width: 25%;
+	height: 10vh;
 	display: flex;
-	border: 1px solid black;
-	border-radius: 10px;
+	border: 2px solid black;
+	border-radius: 5px;
 }
 
 .timesheet-data {
@@ -317,7 +318,7 @@ ul li img {
 	border-width: 0 1px 0 0;
 }
 
-.timesheet-buttons-container {
+.timesheet-buttons-div {
 	width: 30%;
 	height: 100%;
 }
@@ -331,42 +332,12 @@ ul li img {
 	align-items: center;
 }
 
-.timesheet-buttons .btn-primary {
+.timesheet-buttons .btn-big {
 	width: 70%;
 }
 
-/* Login */
-
-.username-input-container-login-input-container {
-	display: flex;
-	align-items: center;
-}
-
-.username-label {
-	margin-right: 1em;
-}
-
-.password-input-container-login-input-container {
-	display: flex;
-	align-items: center;
-}
-
-.password-label {
-	margin-right: 1em;
-}
-
-.username-input {
-	background-color: #273469;
-	color: white;
-	outline: none;
-	border: none;
-	border-radius: 5px;
-	height: 22.5px;
-	padding-left: 0.5em;
-}
-
 .password-input {
-	background-color: #273469;
+	background-color: #9C3B03;
 	color: white;
 	outline: none;
 	border: none;
@@ -380,11 +351,11 @@ ul li img {
 }
 
 .btn-create {
-	font-family: Montserrat, sans-serif;
+	font-family: Arial, sans-serif;
 	border: none;
 	outline: none;
 	padding: 0.5rem 1rem;
-	background-color: #273469;
+	background-color: #9C3B03;
 	color: #fff;
 	cursor: pointer;
 	border-radius: 10px;
@@ -396,15 +367,41 @@ ul li img {
 	margin-top: 1rem;
 }
 
-.employee-list-container {
+.employee-list-div {
 	height:70vh;
 }
 
-#employeeListHeading {
+#employee-list-h2 {
 	margin-bottom: 2rem;
 }
 
-.error-messages {
-	color:red;
-	font-size: 1.5em;
+.username-input {
+	background-color: #9C3B03;
+	color: white;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	height: 22.5px;
+	padding-left: 0.5em;
 }
+
+.username-input-div {
+	display: flex;
+	align-items: center;
+}
+
+.username-label {
+	font-size: 17px;
+	margin-right: 1em;
+}
+
+.password-input-div {
+	display: flex;
+	align-items: center;
+}
+
+.password-label {
+	font-size: 17px;
+	margin-right: 1em;
+}
+

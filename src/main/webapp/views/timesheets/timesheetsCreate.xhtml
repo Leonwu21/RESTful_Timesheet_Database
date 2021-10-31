@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>#{msgs.title_header}</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templates/master.xhtml">
+		<ui:define name="windowTitle">
+            #{msgs.title_header}
+         </ui:define>
+         <ui:define name="header">
+			<div class="header">
+				<ui:include src="#{employeeManager.isAdminLogin() ?
+         		 '/templates/partials/navbar_admin.xhtml' : '/templates/partials/navbar_user.xhtml'}"  />
+			</div>
+         </ui:define>
+		<ui:define name="main">
+			<div class="main">
+				<h:messages styleClass="errorMessages" />
+				<h2>#{msgs.createTs}</h2>
+				<h:form class="timesheet-form">
+					<div class="timesheet-inner-div">
+						<div class="timesheet-inner-input-div">
+							<p class="timesheet-inner-label">#{msgs.weekEnding}</p>
+							<h:inputText id="weekend" value="#{timesheetController.editTimesheet.timesheet.endDate}"
+								styleClass="timesheet-inner-input">
+								<f:convertDateTime type="localDate" />
+							</h:inputText>
+						</div>
+						<h:message for="weekend" styleClass="errorMessages" />
+					</div>
+					<ui:include src="/templates/partials/timesheetsTable.xhtml" />
+
+					<div class="buttons-div">
+						<h:commandButton action="#{timesheetController.onAddRow()}"
+							value="#{msgs.addRow}" styleClass="btn-big" />
+						<h:commandButton action="#{timesheetController.onCreate()}"
+							value="#{msgs.createTs}" styleClass="btn-create" />
+					</div>
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
