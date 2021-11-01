@@ -78,17 +78,6 @@ public class LoginController implements Serializable {
         }
     }
 
-    //TODO: EmployeeList has a logout method as well. Currently implemented through there. If OK, then delete this method.
-//    /**
-//     * Logs the user out.
-//     *
-//     * @return A notification, "logout", as a String.
-//     */
-//    public String logout() {
-//        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-//        return "logout";
-//    }
-
     /**
      * Gets the employee's login ID.
      *

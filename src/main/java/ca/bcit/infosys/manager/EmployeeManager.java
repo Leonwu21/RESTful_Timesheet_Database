@@ -141,10 +141,8 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * Logs the user out of the system.
      *
      * @param employee the user to logout.
-     * @return a String representing the login page.
+     * @return a String for navigation to the login page
      */
-    //TODO: Why do we need to feed in employee parameter?
-    //TODO: Refactor method chaining.
     @Override
     public String logout(Employee employee) {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
