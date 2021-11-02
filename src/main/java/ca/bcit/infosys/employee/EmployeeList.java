@@ -1,10 +1,7 @@
-package ca.bcit.infosys.manager;
+package ca.bcit.infosys.employee;
 
 import java.util.List;
 import java.util.Map;
-
-import ca.bcit.infosys.employee.Credentials;
-import ca.bcit.infosys.employee.Employee;
 
 /**
  * Interface to back-end to access Employees and verify login credentials.

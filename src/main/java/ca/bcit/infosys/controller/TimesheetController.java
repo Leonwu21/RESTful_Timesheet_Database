@@ -14,6 +14,7 @@ import javax.inject.Named;
 import ca.bcit.infosys.manager.EmployeeManager;
 import ca.bcit.infosys.manager.TimesheetManager;
 import ca.bcit.infosys.timesheet.Timesheet;
+import ca.bcit.infosys.editable.EditableTimesheet;
 import ca.bcit.infosys.employee.Employee;
 
 /**
@@ -133,17 +134,18 @@ public class TimesheetController implements Serializable {
      */
     public String prepareView(Timesheet timesheet) {
         conversation.end();
-        //NULL POINTER ON LINE 138, NOT GETTING EMPLOYEE NUMBER
-        Employee employee = timesheet.getEmployee();
-        int empNumber = employee.getEmpNumber();
-        int currEmpNumber = employeeManager.getCurrentEmployee().getEmpNumber();
-        if (empNumber != currEmpNumber) {
+        //NULL POINTER ON LINE 138, NOT GETTING EMPLOYEE NUMBER SINCE EMPLOYEE NULL
+//        Employee employee = timesheet.getEmployee();
+//        int empNumber = employee.getEmpNumber();
+//        Employee currEmployee = employeeManager.getCurrentEmployee();
+//        int currEmpNumber = currEmployee.getEmpNumber();
+//        if (111 != currEmpNumber) {
             if (employeeManager.isAdminLogin()) {
                 editableTimesheet = new EditableTimesheet(timesheet, true);
             } else {
                 return null;
             }
-        }
+//        }
         editableTimesheet = new EditableTimesheet(timesheet, false);
         return "/timesheet/view";
     }

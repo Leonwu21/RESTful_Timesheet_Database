@@ -10,6 +10,7 @@ import javax.inject.Named;
 import ca.bcit.infosys.database.TimesheetDatabase;
 import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.timesheet.Timesheet;
+import ca.bcit.infosys.timesheet.TimesheetCollection;
 
 @Named("timesheetManager")
 @ConversationScoped

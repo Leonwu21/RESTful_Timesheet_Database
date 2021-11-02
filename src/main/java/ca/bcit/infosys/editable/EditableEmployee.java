@@ -1,4 +1,4 @@
-    package ca.bcit.infosys.controller;
+    package ca.bcit.infosys.editable;
 
 import java.io.Serializable;
 

@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import ca.bcit.infosys.manager.CredentialsManager;
 import ca.bcit.infosys.manager.EmployeeManager;
+import ca.bcit.infosys.editable.EditableEmployee;
 import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
 

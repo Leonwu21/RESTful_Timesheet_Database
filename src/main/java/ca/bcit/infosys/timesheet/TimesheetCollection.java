@@ -1,10 +1,9 @@
-package ca.bcit.infosys.manager;
+package ca.bcit.infosys.timesheet;
 
 import java.io.Serializable;
 import java.util.List;
 
 import ca.bcit.infosys.employee.Employee;
-import ca.bcit.infosys.timesheet.Timesheet;
 
 /**
  * Interface to access all existing Timesheets.
