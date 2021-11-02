@@ -1,6 +1,7 @@
 package ca.bcit.infosys.controller;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -14,6 +15,7 @@ import ca.bcit.infosys.manager.EmployeeManager;
 import ca.bcit.infosys.manager.TimesheetManager;
 import ca.bcit.infosys.timesheet.Timesheet;
 import ca.bcit.infosys.editable.EditableTimesheet;
+import ca.bcit.infosys.employee.Employee;
 
 /**
  * A class to control the timesheets.
@@ -36,9 +38,8 @@ public class TimesheetController implements Serializable {
     /**
      * Injected EmployeeManager. Provides access to employees.
      */
-    //TODO: Refactor to employeeManager.
     @Inject
-    private EmployeeManager empManager;
+    private EmployeeManager employeeManager;
 
     /**
      * Injected Conversation to control the context.
@@ -49,9 +50,7 @@ public class TimesheetController implements Serializable {
     /**
      * Provides access to edit a timesheet.
      */
-    //TODO: Refactor to editableTimesheet.
-    //TODO: Needs a setter.
-    private EditableTimesheet editTimesheet;
+    private EditableTimesheet editableTimesheet;
 
     /**
      * A list of timesheets.
@@ -69,8 +68,17 @@ public class TimesheetController implements Serializable {
      *
      * @return The EditableTimesheet.
      */
-    public EditableTimesheet getEditTimesheet() {
-        return editTimesheet;
+    public EditableTimesheet getEditableTimesheet() {
+        return editableTimesheet;
+    }
+    
+    /**
+     * Sets the EditableTimesheet.
+     *
+     * @param editTimesheet The editable timesheet.
+     */
+    public void setEditableTimesheet(EditableTimesheet editTimesheet) {
+        editableTimesheet = editTimesheet;
     }
 
     /**
@@ -91,7 +99,7 @@ public class TimesheetController implements Serializable {
         if (conversation.isTransient()) {
             conversation.begin();
         }
-        editTimesheet = new EditableTimesheet(true);
+        editableTimesheet = new EditableTimesheet(true);
         return "/timesheet/create";
     }
 
@@ -101,19 +109,20 @@ public class TimesheetController implements Serializable {
      * @param timesheet The timesheet to be edited.
      * @return The path to edit a timesheet page.
      */
-    //TODO: Refactor if-else statement.
     public String prepareEdit(Timesheet timesheet) {
         if (conversation.isTransient()) {
             conversation.begin();
         }
-        if (timesheet.getEmployee().getEmpNumber() != empManager.getCurrentEmployee().getEmpNumber()) {
-            if (empManager.isAdminLogin()) {
-                editTimesheet = new EditableTimesheet(timesheet, true);
+        int empNumber = timesheet.getEmployee().getEmpNumber();
+        int currEmpNumber = employeeManager.getCurrentEmployee().getEmpNumber();
+        if (empNumber != currEmpNumber) {
+            if (employeeManager.isAdminLogin()) {
+                editableTimesheet = new EditableTimesheet(timesheet, true);
             } else {
                 return null;
             }
         }
-        editTimesheet = new EditableTimesheet(timesheet, true);
+        editableTimesheet = new EditableTimesheet(timesheet, true);
         return "/timesheet/edit";
     }
 
@@ -123,18 +132,18 @@ public class TimesheetController implements Serializable {
      * @param timesheet The timesheet to be viewed.
      * @return The path to view a timesheet page.
      */
-    //TODO: Refactor if-else statement.
-    //TODO: Refactor method chaining.
     public String prepareView(Timesheet timesheet) {
         conversation.end();
-        if (timesheet.getEmployee().getEmpNumber() != empManager.getCurrentEmployee().getEmpNumber()) {
-            if (empManager.isAdminLogin()) {
-                editTimesheet = new EditableTimesheet(timesheet, true);
+        int empNumber = timesheet.getEmployee().getEmpNumber();
+        int currEmpNumber = employeeManager.getCurrentEmployee().getEmpNumber();
+        if (empNumber != currEmpNumber) {
+            if (employeeManager.isAdminLogin()) {
+                editableTimesheet = new EditableTimesheet(timesheet, true);
             } else {
                 return null;
             }
         }
-        editTimesheet = new EditableTimesheet(timesheet, false);
+        editableTimesheet = new EditableTimesheet(timesheet, false);
         return "/timesheet/view";
     }
 
@@ -143,16 +152,15 @@ public class TimesheetController implements Serializable {
      *
      * @return The path to the list of timesheets page.
      */
-    //TODO: Refactor if-else statement.
-    //TODO: Refactor method chaining.
     public String prepareList() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
-        if (empManager.isAdminLogin()) {
+        if (employeeManager.isAdminLogin()) {
             timesheetList = timesheetManager.getTimesheets();
         } else {
-            timesheetList = timesheetManager.getTimesheets(empManager.getCurrentEmployee());
+            Employee currentEmployee = employeeManager.getCurrentEmployee();
+            timesheetList = timesheetManager.getTimesheets(currentEmployee);
         }
         return "/timesheet/list";
     }
@@ -162,13 +170,13 @@ public class TimesheetController implements Serializable {
      *
      * @return Null.
      */
-    //TODO: Refactor method chaining.
     public String onAddRow() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
-        if (editTimesheet.getTimesheet().getDetails().size() != 7) {
-            editTimesheet.getTimesheet().addRow();
+        int sizeOfTimesheet = editableTimesheet.getTimesheet().getDetails().size();
+        if (sizeOfTimesheet != 7) {
+            editableTimesheet.getTimesheet().addRow();
         }
         return null;
     }
@@ -178,21 +186,23 @@ public class TimesheetController implements Serializable {
      *
      * @return The list of timesheets.
      */
-    //TODO: Refactor method chaining.
     public String onCreate() {
-        editTimesheet.getTimesheet().setEmployee(empManager.getCurrentEmployee());
+        Employee currentEmployee = employeeManager.getCurrentEmployee();
+        editableTimesheet.getTimesheet().setEmployee(currentEmployee);
 
-        for (final Timesheet timesheet : timesheetManager.getTimesheets(empManager.getCurrentEmployee())) {
-            if (timesheet.getEndDate().equals(editTimesheet.getTimesheet().getEndDate())) {
+        for (final Timesheet timesheet : timesheetManager.getTimesheets(currentEmployee)) {
+            LocalDate timesheetEndDate = timesheet.getEndDate();
+            LocalDate editableTimesheetEndDate = editableTimesheet.getTimesheet().getEndDate();
+            if (timesheetEndDate.equals(editableTimesheetEndDate)) {
                 final FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage(null,
-                        new FacesMessage("A timesheet with same end week already exists. Please try again"));
+                        new FacesMessage("Error: A timesheet with same end date already exists."));
                 return null;
             }
         }
 
         timesheetManager.addTimesheet();
-        editTimesheet = null;
+        editableTimesheet = null;
         conversation.end();
         return prepareList();
     }
@@ -202,9 +212,8 @@ public class TimesheetController implements Serializable {
      *
      * @return The list of timesheets.
      */
-    //TODO: Understand what this is doing.
     public String onEdit() {
-        editTimesheet = null;
+        editableTimesheet = null;
         conversation.end();
         return prepareList();
     }

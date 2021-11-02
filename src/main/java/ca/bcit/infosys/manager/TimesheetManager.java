@@ -43,16 +43,19 @@ public class TimesheetManager implements TimesheetCollection {
      * @param employee The employee of interest.
      * @return The list of timesheets for the employee of interest.
      */
-    //TODO: Refactor method chaining.
     @Override
     public List<Timesheet> getTimesheets(Employee employee) {
-        List<Timesheet> employeeTimesheetsList = new ArrayList<>();
+        List<Timesheet> timesheetList = new ArrayList<>();
         for (Timesheet timesheet: this.getTimesheets()) {
-            if (timesheet.getEmployee().getEmpNumber() == employee.getEmpNumber()) {
-                employeeTimesheetsList.add(timesheet);
+            
+            int timesheetEmployeeNumber = timesheet.getEmployee().getEmpNumber();
+            int employeeNumber = employee.getEmpNumber();
+            
+            if (timesheetEmployeeNumber == employeeNumber) {
+                timesheetList.add(timesheet);
             }
         }
-        return employeeTimesheetsList;
+        return timesheetList;
     }
 
     /**
@@ -60,24 +63,23 @@ public class TimesheetManager implements TimesheetCollection {
      * @param employee The employee of interest.
      * @return The current timesheet for the employee of interest.
      */
-    //TODO: Refactor method chaining.
     @Override
     public Timesheet getCurrentTimesheet(Employee employee) {
         List<Timesheet> employeeTimesheetsList = this.getTimesheets(employee);
         
-        long maxWeekEnd = 0;
-        int currTimesheetIndex = 0;
+        long maxEndDate = 0;
+        int currentTimesheetIndex = 0;
         
         for(int i = 0; i < employeeTimesheetsList.size() - 1; i++) {
             Timesheet timesheet = employeeTimesheetsList.get(i);
             
-            long weekEnd = timesheet.getEndDate().toEpochDay();
-            if (weekEnd > maxWeekEnd) {
-                weekEnd = maxWeekEnd;
-                currTimesheetIndex = i;
+            long endDate = timesheet.getEndDate().toEpochDay();
+            if (endDate > maxEndDate) {
+                endDate = maxEndDate;
+                currentTimesheetIndex = i;
             }
         }
-        return employeeTimesheetsList.get(currTimesheetIndex);
+        return employeeTimesheetsList.get(currentTimesheetIndex);
     }
     
     /**
@@ -99,11 +101,10 @@ public class TimesheetManager implements TimesheetCollection {
      * @param weekEnding The end of the week.
      * @return If found, the timesheet for an employee of interest for a specific week. Otherwise, null.
      */
-    //TODO: Refactor method chaining.
-    //TODO: weekEnding is already a String - why do we need a toString?
     public Timesheet findTimesheet(Employee employee, String weekEnding) {
-        for (Timesheet timesheet: this.getTimesheets(employee)) {
-            if (timesheet.getWeekEnding().equals(weekEnding.toString())) {
+        for (Timesheet timesheet : this.getTimesheets(employee)) {
+            String timesheetWeekEnd = timesheet.getWeekEnding();
+            if (timesheetWeekEnd.equals(weekEnding)) {
                 return timesheet;
             }
         }

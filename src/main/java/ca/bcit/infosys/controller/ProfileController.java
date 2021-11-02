@@ -36,9 +36,8 @@ public class ProfileController implements Serializable {
     /**
      * Injected EmployeeManager. Provides access to employees.
      */
-    //TODO: Refactor to employeeManager.
     @Inject
-    private EmployeeManager empManager;
+    private EmployeeManager employeeManager;
 
     /**
      * Injected CredentialsManager. Provides access to credentials.
@@ -49,8 +48,7 @@ public class ProfileController implements Serializable {
     /**
      * Provides access to edit an employee.
      */
-    //TODO: Refactor to editableEmployee.
-    private EditableEmployee editEmployee;
+    private EditableEmployee editableEmployee;
 
     /**
      * The current user's credentials.
@@ -70,7 +68,6 @@ public class ProfileController implements Serializable {
     /**
      * The current user's new password confirmation.
      */
-    //TODO: Refactor to a better name.
     private String confirmNewPassword;
 
     /**
@@ -82,12 +79,13 @@ public class ProfileController implements Serializable {
         if (conversation.isTransient()) {
             conversation.begin();
         }
-        final Employee employee = empManager.getCurrentEmployee();
+        final Employee employee = employeeManager.getCurrentEmployee();
         if (employee == null) {
             return null;
         }
-        credentials = credentialsManager.getCredentialsByEmpNumber(employee.getEmpNumber());
-        editEmployee = new EditableEmployee(employee, true);
+        int employeeNumber = employee.getEmpNumber();
+        credentials = credentialsManager.getCredentialsByEmpNumber(employeeNumber);
+        editableEmployee = new EditableEmployee(employee, true);
         return "/employee/profile";
     }
 
@@ -96,26 +94,25 @@ public class ProfileController implements Serializable {
      *
      * @return The path to the list of timesheet page.
      */
-    //TODO: Replace Strings.
     public String onSaveProfile() {
         final FacesContext context = FacesContext.getCurrentInstance();
 
         if (oldPassword == null || newPassword == null || confirmNewPassword == null) {
-            context.addMessage(null, new FacesMessage("Please fill in the required fields"));
+            context.addMessage(null, new FacesMessage("Error: Please fill in all required fields."));
             return null;
         }
 
         if (!credentials.getPassword().equals(oldPassword)) {
-            context.addMessage(null, new FacesMessage("Old password is incorrect"));
+            context.addMessage(null, new FacesMessage("Error: Incorrect old password entered."));
             return null;
         }
 
         if (!newPassword.equals(confirmNewPassword)) {
-            context.addMessage(null, new FacesMessage("New password and confirm new password do not match"));
+            context.addMessage(null, new FacesMessage("Error: New password fields entered are not matching."));
             return null;
         }
 
-        credentials.setUserName(editEmployee.getEmployee().getUserName());
+        credentials.setUserName(editableEmployee.getEmployee().getUserName());
         credentials.setPassword(newPassword);
         conversation.end();
         return "/timesheet/list";
@@ -127,7 +124,7 @@ public class ProfileController implements Serializable {
      * @return The employee.
      */
     public EditableEmployee getEditEmployee() {
-        return editEmployee;
+        return editableEmployee;
     }
 
     /**
@@ -136,7 +133,7 @@ public class ProfileController implements Serializable {
      * @param employee The employee.
      */
     public void setEditEmployee(EditableEmployee employee) {
-        editEmployee = employee;
+        editableEmployee = employee;
     }
     
     /**

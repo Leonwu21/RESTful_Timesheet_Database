@@ -27,7 +27,7 @@
 						<div class="timesheet-inner-input-container">
 							<h4 class="timesheet-inner-label">#{msgs.weekEnding}</h4>
 							<h:outputText id="weekend"
-								value="#{timesheetController.editTimesheet.timesheet.endDate}"
+								value="#{timesheetController.editableTimesheet.timesheet.endDate}"
 								styleClass="timesheet-inner-input">
 								<f:convertDateTime type="localDate" />
 							</h:outputText>
@@ -37,7 +37,7 @@
 						<div class="timesheet-inner-input-container">
 							<h4 class="timesheet-inner-label">#{msgs.weekNumber}</h4>
 							<h:outputText id="weekno"
-								value="#{timesheetController.editTimesheet.timesheet.weekNumber}"
+								value="#{timesheetController.editableTimesheet.timesheet.weekNumber}"
 								styleClass="timesheet-inner-input"/>
 						</div>
 					</div>
@@ -45,7 +45,7 @@
 						<div class="timesheet-inner-input-container">
 							<h4 class="timesheet-inner-label">#{msgs.empNo}</h4>
 							<h:outputText id="employeeno"
-								value="#{timesheetController.editTimesheet.timesheet.employee.empNumber}"
+								value="#{timesheetController.editableTimesheet.timesheet.employee.empNumber}"
 								styleClass="timesheet-inner-input"/>
 						</div>
 					</div>
@@ -53,7 +53,7 @@
 						<div class="timesheet-inner-input-container">
 							<h4 class="timesheet-inner-label">#{msgs.empName}</h4>
 							<h:outputText id="employeename"
-								value="#{timesheetController.editTimesheet.timesheet.employee.empName}"
+								value="#{timesheetController.editableTimesheet.timesheet.employee.empName}"
 								styleClass="timesheet-inner-input"/>
 						</div>
 					</div>

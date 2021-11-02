@@ -51,7 +51,6 @@ public class LoginController implements Serializable {
      *
      * @return A notification, as a String, to let the user know whether login was successful or not.
      */
-    //TODO: Refactor if-else statement.
     public String login() {
         if (conversation.isTransient()) {
             conversation.begin();
@@ -77,17 +76,6 @@ public class LoginController implements Serializable {
             return "success";
         }
     }
-
-    //TODO: EmployeeList has a logout method as well. Currently implemented through there. If OK, then delete this method.
-//    /**
-//     * Logs the user out.
-//     *
-//     * @return A notification, "logout", as a String.
-//     */
-//    public String logout() {
-//        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-//        return "logout";
-//    }
 
     /**
      * Gets the employee's login ID.

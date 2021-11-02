@@ -81,7 +81,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * Gets map of valid passwords for userNames.
      * @return The map containing the valid (userName, password) combinations.
      */
-    //TODO: This does nothing. May need to implement it?
+    //TODO: This currently does nothing.
     @Override
     public Map<String, String> getLoginCombos() {
         return null;
@@ -92,11 +92,10 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * @return The current employee.
      */
     @Override
-    //TODO: Refactor method chaining.
     public Employee getCurrentEmployee() {
         final FacesContext context = FacesContext.getCurrentInstance();
-        final String username = (String) context.getExternalContext().getSessionMap().get("emp_no");
-        return getEmployeeByUserName(username);
+        final String id = (String) context.getExternalContext().getSessionMap().get("emp_no");
+        return getEmployeeByUserName(id);
     }
 
     /**
@@ -127,11 +126,10 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * @param credential (userName, Password) pair
      * @return True if the login ID and password is a valid combination. Otherwise, false.
      */
-    //TODO: Refactor method chaining.
-    //TODO: Refactor to use credentialsManager (See TimesheetController.java prepareList() for an example)
     @Override
     public boolean verifyUser(Credentials credentials) {
-        for (Credentials c : credentialsDatabase.getCredentialsList()) {
+        List<Credentials> credentialsList = credentialsDatabase.getCredentialsList();
+        for (Credentials c : credentialsList) {
             return (c.equals(credentials));
         };
         return false;
@@ -143,8 +141,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * @param employee the user to logout.
      * @return a String representing the login page.
      */
-    //TODO: Why do we need to feed in employee parameter?
-    //TODO: Refactor method chaining.
     @Override
     public String logout(Employee employee) {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -155,31 +151,38 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * Deletes the employee of interest.
      * @param employee The employee to be deleted.
      */
-    //TODO: Refactor method chaining.
     @Override
     public void deleteEmployee(Employee employee) {
-        if (getAdministrator().getUserName().equals(employee.getUserName())) {
+        String administratorId = getAdministrator().getUserName();
+        String employeeId = employee.getUserName();
+        if (administratorId.equals(employeeId)) {
             return;
         }
-        employeeDatabase.getEmployeeList().remove(employee);
+        List<Employee> employeeList = employeeDatabase.getEmployeeList();
+        employeeList.remove(employee);
     }
 
     /**
      * Adds the employee of interest.
      * @param employee The employee to be added.
      */
-    //TODO: Refactor method chaining.
     @Override
     public void addEmployee(Employee employee) {
-        for (final Employee emp : employeeDatabase.getEmployeeList()) {
-            if (emp.getUserName().equals(employee.getUserName())) {
-                throw new IllegalArgumentException("A user with the same username already exists");
+        List<Employee> employeeList = employeeDatabase.getEmployeeList();
+        for (final Employee emp : employeeList) {
+            
+            String empId = emp.getUserName();
+            String employeeId = employee.getUserName();
+            if (empId.equals(employeeId)) {
+                throw new IllegalArgumentException("Error: An existing user has that username already.");
             }
-
-            if (emp.getEmpNumber() == employee.getEmpNumber()) {
-                throw new IllegalArgumentException("A user with the same employee number already exists");
+            
+            int empNumber = emp.getEmpNumber();
+            int employeeNumber = employee.getEmpNumber();
+            if (empNumber == employeeNumber) {
+                throw new IllegalArgumentException("Error: An existing user has that employee number already.");
             }
         }
-        employeeDatabase.getEmployeeList().add(employee);
+        employeeList.add(employee);
     }
 }
