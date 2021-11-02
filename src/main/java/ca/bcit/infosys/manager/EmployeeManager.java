@@ -40,12 +40,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Inject
     private AdminDatabase adminDatabase;
-
-    /**
-     * Injected CredentialsManager.
-     */
-    @Inject
-    private CredentialsManager credentialsManager;
     
     /**
      * Injected CredentialsDatabase.
