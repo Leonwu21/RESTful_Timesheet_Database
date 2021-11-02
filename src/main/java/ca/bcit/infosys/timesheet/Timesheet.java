@@ -1,5 +1,7 @@
 package ca.bcit.infosys.timesheet;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjuster;
@@ -8,13 +10,15 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import ca.bcit.infosys.employee.Employee;
 
 /**
  * A class representing a single Timesheet.
  *
  * @author Bruce Link
- * @version 2.0
+ * @version 1.1
  */
 public class Timesheet implements java.io.Serializable {
 
@@ -22,40 +26,37 @@ public class Timesheet implements java.io.Serializable {
     public static final int DAYS_IN_WEEK = 7;
     
     /** Number of hours in a day as double. */
-    public static final double HOURS_IN_DAY = 24.0;
+    public static final double HOURS_IN_A_DAY = 24.0;
     
-    /** Number of decihours in a day. */
-    public static final int DECIHOURS_IN_DAY = 240;
+    /** Number of hours in a day. */
+    public static final BigDecimal HOURS_IN_DAY =
+           new BigDecimal(HOURS_IN_A_DAY).setScale(1, RoundingMode.HALF_UP);
     
-    /** Number of work hours in a week as double. */
-    public static final double FULL_WORK_WEEK_HOURS = 40.0;
+    /** Number of work hours in week as double. */
+    public static final double WORK_HOURS = 40.0;
 
-    /** Number of work decihours in a week. */
-    public static final int FULL_WORK_WEEK_DECIHOURS = 400;
-
-    /** Week fields of week ending on Friday. */
-    public static final WeekFields FRIDAY_END 
-            = WeekFields.of(DayOfWeek.SATURDAY, 1);
+    /** Full work week in units of hours. */
+    public static final BigDecimal FULL_WORK_WEEK =
+            new BigDecimal(WORK_HOURS).setScale(1, RoundingMode.HALF_UP);
+    
+    /** Week fields of week ending on Friday */
+    public static final WeekFields FRIDAY_END = WeekFields.of(DayOfWeek.SATURDAY, 1);
 
     /** Serial version number. */
-    private static final long serialVersionUID = 17L;
+    private static final long serialVersionUID = 2L;
 
     /** The user associated with this timesheet. */
     private Employee employee;
     
+    @NotNull
     /** The date of Friday for the week of the timesheet. */
-    private LocalDate endDate;
-    
-    /** The List of all details (i.e. rows) that the form contains. */
+    private LocalDate endWeek;
+    /** The ArrayList of all details (i.e. rows) that the form contains. */
     private List<TimesheetRow> details;
-    
-    /** The total number of overtime hours on the timesheet. Decihours. 
-     *  Must be >= 0 */
-    private int overtime;
-    
-    /** The total number of flextime hours on the timesheet. Decihours.
-     *  Must be >= 0  */
-    private int flextime;
+    /** The total number of overtime hours on the timesheet. */
+    private BigDecimal overtime;
+    /** The total number of flextime hours on the timesheet. */
+    private BigDecimal flextime;
 
 
     /**
@@ -65,38 +66,23 @@ public class Timesheet implements java.io.Serializable {
      */
     public Timesheet() {
         details = new ArrayList<TimesheetRow>();
-        endDate = LocalDate.now().
-                with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+        endWeek = LocalDate.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
     }
 
     /**
-     * Creates new timesheet with no rows.  Date is adjusted to Friday.
-     * @param employee owner of timesheet
-     * @param endDate date in timesheet week
-     */
-    public Timesheet(Employee employee, LocalDate endDate) {
-        details = new ArrayList<TimesheetRow>();
-        this.employee = employee;
-        this.endDate = endDate.
-                with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
-    }
-    
-    /**
-     * Creates a Timesheet object with all fields set.
-     * Date is adjusted to Friday.
+     * Creates a Timesheet object with all fields set. 
      * 
      * @param user The owner of the timesheet
-     * @param endDate The date of the end of the week for this
-     *                 timesheet (Friday)
-     * @param details The detailed hours charged for the week for this 
+     * @param end The date of the end of the week for the timesheet (Friday)
+     * @param charges The detailed hours charged for the week for this 
      *        timesheet
      */
-    public Timesheet(final Employee user, final LocalDate endDate,
-            final List<TimesheetRow> details) {
+    public Timesheet(final Employee user, final LocalDate end,
+            final List<TimesheetRow> charges) {
         employee = user;
-        this.endDate = endDate.
-                with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
-        this.details = details;
+        checkFriday(end);
+        endWeek = end;
+        details = charges;
     }
 
     /**
@@ -120,16 +106,29 @@ public class Timesheet implements java.io.Serializable {
      * Getter for timesheet's end of week date.
      * @return the endWeek
      */
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getEndWeek() {
+        return endWeek;
     }
-    
+
     /**
-     * Sets the timesheet end of week. Adjusted to be next or same Friday.
-     * @param end the endWeek to set. 
+     * Verify date is a Friday.
+     * @param end a date which should be on a Friday
+     * @throws IllegalArgumentException if date is not on Friday.
      */
-    public void setEndDate(final LocalDate end) {
-        endDate = end.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+    private void checkFriday(final LocalDate end) {
+        if (end.getDayOfWeek() != DayOfWeek.FRIDAY) {
+            throw new IllegalArgumentException("EndWeek must be a Friday");
+        }
+
+    }
+    /**
+     * Sets the timesheet end of week. Must be a Friday.
+     * @param end the endWeek to set. 
+     * @throws IllegalArgumentException if date is not on Friday.
+     */
+    public void setEndWeek(final LocalDate end) {
+        checkFriday(end);
+        endWeek = end;
     }
 
     /**
@@ -137,7 +136,7 @@ public class Timesheet implements java.io.Serializable {
      * @return the calculated week number
      */
     public int getWeekNumber() {
-        return endDate.get(FRIDAY_END.weekOfWeekBasedYear());
+        return endWeek.get(FRIDAY_END.weekOfWeekBasedYear());
     }
 
     /**
@@ -147,13 +146,13 @@ public class Timesheet implements java.io.Serializable {
      * @param weekYear the year of the timesheet
      */
     public void setWeekNumber(final int weekNo, final int weekYear) {
-        final LocalDate weekByNumber = 
-                LocalDate.of(weekYear, 1, 1).
-                  with(FRIDAY_END.weekOfWeekBasedYear(), weekNo);
+        LocalDate weekByNumber = 
+                LocalDate.of(weekYear,  7, 1)
+                  .with(FRIDAY_END.weekOfWeekBasedYear(), weekNo);
 
         final TemporalAdjuster adjuster = 
                 TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY);
-        endDate = weekByNumber.with(adjuster);
+        endWeek = weekByNumber.with(adjuster);
     }
 
     /**
@@ -161,7 +160,7 @@ public class Timesheet implements java.io.Serializable {
      * @return the endWeek as string yyyy-mm-dd
      */
     public String getWeekEnding() {
-        return endDate.toString();
+        return endWeek.toString();
     }
 
     /**
@@ -177,75 +176,26 @@ public class Timesheet implements java.io.Serializable {
      *
      * @param newDetails new weekly charges to set
      */
-    public void setDetails(final List<TimesheetRow> newDetails) {
+    public void setDetails(final ArrayList<TimesheetRow> newDetails) {
         details = newDetails;
-    }
-
-    /**
-     * Getter for overtime field, indicates number of decihours to
-     * be paid for overtime for this week.
-     * @return the overtime
-     */
-    public int getOvertimeDecihours() {
-        return overtime;
-    }
-
-    /**
-     * Setter for overtime field, indicates number of decihours to
-     * be paid for overtime for this week.
-     * @param ot the overtime to set
-     * @throws IllegalArgumentException if ot < 0
-     */
-    public void setOvertime(final int ot) {
-        if (ot < 0) {
-            throw new IllegalArgumentException("must be >= 0");
-        }
-        overtime = ot;
-    }
-
-    /**
-     * Setter for overtime field, indicates number of hours to
-     * be paid for overtime for this week.
-     * Rounded to one fractional digit.
-     * @param ot the overtime to set
-     * @throws IllegalArgumentException if ot < 0
-     */
-    public void setOvertime(final float ot) {
-        if (ot < 0f) {
-            throw new IllegalArgumentException("must be >= 0");
-        }
-        overtime = Math.round(ot * TimesheetRow.BASE10);
     }
 
     /**
      * Getter for overtime field, indicates number of hours to
      * be paid for overtime for this week.
-     * @return the overtime as float
+     * @return the overtime
      */
-    public float getOvertimeHours() {
-        return overtime / TimesheetRow.BASE10;
+    public BigDecimal getOvertime() {
+        return overtime;
     }
 
     /**
-     * Getter for flextime field, indicates number of decihours to
-     * save for flextime this week.
-     * @return the flextime
+     * Setter for overtime field, indicates number of hours to
+     * be paid for overtime for this week.
+     * @param ot the overtime to set
      */
-    public int getFlextimeDecihours() {
-        return flextime;
-    }
-
-    /**
-     * Setter for flextime field, indicates number of decihours to
-     * save for flextime this week.
-     * @param flex the flextime to set
-     * @throws IllegalArgumentException if flex < 0
-     */
-    public void setFlextime(final int flex) {
-        if (flex < 0) {
-            throw new IllegalArgumentException("must be >= 0");
-        }
-        flextime = flex;
+    public void setOvertime(final BigDecimal ot) {
+        overtime = ot.setScale(1, RoundingMode.HALF_UP);
     }
 
     /**
@@ -253,22 +203,17 @@ public class Timesheet implements java.io.Serializable {
      * save for flextime this week.
      * @return the flextime
      */
-    public float getFlextimeHours() {
-        return flextime / TimesheetRow.BASE10;
+    public BigDecimal getFlextime() {
+        return flextime;
     }
 
     /**
      * Setter for flextime field, indicates number of hours to
      * save for flextime this week.
-     * rounded to one fractional digit.
-     * @param flex the float flextime value to set
-     * @throws IllegalArgumentException if flex < 0
+     * @param flex the flextime to set
      */
-    public void setFlextime(final float flex) {
-        if (flex < 0f) {
-            throw new IllegalArgumentException("must be >= 0");
-        }
-        flextime =  Math.round(flex * TimesheetRow.BASE10);
+    public void setFlextime(final BigDecimal flex) {
+        flextime = flex.setScale(1, RoundingMode.HALF_UP);
     }
 
     /**
@@ -276,69 +221,49 @@ public class Timesheet implements java.io.Serializable {
      *
      * @return total hours for timesheet.
      */
-    public float getTotalHours() {
-        return getTotalDecihours() / TimesheetRow.BASE10;
-    }
-
-    /**
-     * Calculates the total decihours.
-     *
-     * @return total decihours for timesheet.
-     */
-    public int getTotalDecihours() {
-        int sum = 0;
+    public BigDecimal getTotalHours() {
+        BigDecimal sum = BigDecimal.ZERO;
         for (TimesheetRow row : details) {
-            sum = sum + row.getDeciSum();
+            sum = sum.add(row.getSum());
         }
         return sum;
     }
 
     /**
-     * Calculates the daily total hours.
+     * Calculates the daily hours.
      *
      * @return array of total hours for each day of week for timesheet.
      */
-    public float[] getDailyHours() {
-        int[] deciSums = new int[DAYS_IN_WEEK];
-        float[] sums = new float[DAYS_IN_WEEK];
+    public BigDecimal[] getDailyHours() {
+        BigDecimal[] sums = new BigDecimal[DAYS_IN_WEEK];
         for (TimesheetRow day : details) {
-            int[] hours = day.getDecihours();
+            BigDecimal[] hours = day.getHoursForWeek();
             for (int i = 0; i < DAYS_IN_WEEK; i++) {
-                deciSums[i] += hours[i];
+                if (hours[i] != null) {
+                    if (sums[i] == null) {
+                        sums[i] = hours[i];
+                    } else {
+                        sums[i] = sums[i].add(hours[i]);
+                    }
+                }
             }
-        }
-        for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            sums[i] = deciSums[i] / TimesheetRow.BASE10;
         }
         return sums;
     }
 
     /**
-     * Calculates the daily total decihours.
-     *
-     * @return array of total hours for each day of week for timesheet.
-     */
-    public int[] getDailyDecihours() {
-        int[] deciSums = new int[DAYS_IN_WEEK];
-        for (TimesheetRow day : details) {
-            int[] hours = day.getDecihours();
-            for (int i = 0; i < DAYS_IN_WEEK; i++) {
-                deciSums[i] += hours[i];
-            }
-        }
-        return deciSums;
-    }
-
-    /**
      * Checks to see if timesheet total nets 40 hours.
      * @return true if FULL_WORK_WEEK == hours -flextime - overtime
-     *     and at most one of flex time and overtime is non zero
      */
     public boolean isValid() {
-        long total = getTotalDecihours();
-
-        return (overtime == 0 || flextime == 0)
-             && (total - overtime - flextime == FULL_WORK_WEEK_DECIHOURS);
+        BigDecimal net = getTotalHours();
+        if (overtime != null) {
+            net = net.subtract(overtime);
+        }
+        if (flextime != null) {
+            net = net.subtract(flextime);
+        }
+        return net.equals(FULL_WORK_WEEK);
     }
 
     /**
@@ -352,20 +277,10 @@ public class Timesheet implements java.io.Serializable {
     }
 
     /**
-     * Add an empty row to to the end of the timesheet details.
+     * Add an empty row to to the timesheet.
      */
     public void addRow() {
         details.add(new TimesheetRow());
-    }
-    
-    @Override
-    public String toString() {
-        String result = employee.toString() + '\t' + endDate + '\t' 
-                + overtime + '\t' + flextime;
-        for (TimesheetRow tsr : details) {
-            result += '\n' + tsr.toString();
-        }
-        return result;
     }
 
 }

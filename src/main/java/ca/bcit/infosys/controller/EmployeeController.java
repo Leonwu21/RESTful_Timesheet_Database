@@ -135,9 +135,9 @@ public class EmployeeController implements Serializable {
             return null;
         }
 
+        Credentials credentials = editableEmployee.getCredentials();
         int employeeNumber = editableEmployee.getEmployee().getEmpNumber();
         String employeeId = editableEmployee.getEmployee().getUserName();
-        Credentials credentials = editableEmployee.getCredentials();
         
         credentials.setEmpNumber(employeeNumber);
         credentials.setUserName(employeeId);
@@ -154,8 +154,12 @@ public class EmployeeController implements Serializable {
      * @return The path to the list of employees page.
      */
     public String onEdit() {
-        editableEmployee.getCredentials().setEmpNumber(editableEmployee.getEmployee().getEmpNumber());
-        editableEmployee.getCredentials().setUserName(editableEmployee.getEmployee().getUserName());
+        Credentials credentials = editableEmployee.getCredentials();
+        int employeeNumber = editableEmployee.getEmployee().getEmpNumber();
+        String employeeId = editableEmployee.getEmployee().getUserName();
+        
+        credentials.setEmpNumber(employeeNumber);
+        credentials.setUserName(employeeId);
         editableEmployee = null;
         conversation.end();
         return "/employee/list";

@@ -1,219 +1,187 @@
 package ca.bcit.infosys.timesheet;
 
-import java.util.Arrays;
+import java.math.BigDecimal;
 
 /**
  * A class representing a single row of a Timesheet.
  *
  * @author Bruce Link
- * @version 2.0
+ * @version 1.1
  */
+
 public class TimesheetRow implements java.io.Serializable {
 
     /** Timesheet row index for Saturday. */
     public static final int SAT = 0;
-    
     /** Timesheet row index for Sunday. */
     public static final int SUN = 1;
-    
     /** Timesheet row index for Monday. */
     public static final int MON = 2;
-    
     /** Timesheet row index for Tuesday. */
     public static final int TUE = 3;
-    
     /** Timesheet row index for Wednesday. */
     public static final int WED = 4;
-    
     /** Timesheet row index for Thursday. */
     public static final int THU = 5;
-    
     /** Timesheet row index for Friday. */
     public static final int FRI = 6;
 
-    /** decimal base in float. */
-    public static final float BASE10 = 10.0F;
-    
-    /** Day number for Friday. */
-    public static final int FIRST_DAY = SAT;
-
-    /** Day number for Friday. */
-    public static final int LAST_DAY = FRI;
-
     /** Version number. */
-    private static final long serialVersionUID = 18L;
+    private static final long serialVersionUID = 2L;
 
-    /** mask for packing, unpacking hours. */
-    private static final long[] MASK = {0xFFL, 
-                                        0xFF00L, 
-                                        0xFF0000L, 
-                                        0xFF000000L,
-                                        0xFF00000000L, 
-                                        0xFF0000000000L, 
-                                        0xFF000000000000L};
-    
-    /** mask for packing, unpacking hours. */
-    private static final long[] UMASK = {0xFFFFFFFFFFFFFF00L, 
-                                         0xFFFFFFFFFFFF00FFL, 
-                                         0xFFFFFFFFFF00FFFFL, 
-                                         0xFFFFFFFF00FFFFFFL,
-                                         0xFFFFFF00FFFFFFFFL, 
-                                         0xFFFF00FFFFFFFFFFL, 
-                                         0xFF00FFFFFFFFFFFFL};
-    
-    /** 2**8. */
-    private static final long BYTE_BASE = 256;
-    
-    /** max number of deci-hours per day. */
-    private static final int DECI_MAX = 240;
-    
-    /** number of bits in a byte. */
-    private static final int BITS_PER_BYTE = 8;
+    /** The projectID. */
+    private int projectID;
+    /** The WorkPackage. Must be a unique for a given projectID. */
+    private String workPackage;
 
-    /** The projectId. */
-    private int projectId;
-    
-    /** The WorkPackageId. Must be a unique for a given projectId. */
-    private String workPackageId;
-
-    /** hours for the week, packed into a long.
-     * Each of the low-order 7 bytes is the decihours for one day.
-     * Order is 00-FR-TH-WE-TU-MO-SU-SA
-     * Counting days d = 0 .. 6 (starting at Saturday) the position of 
-     * a day's byte is shifted d * 8 bits to the left.
+    /**
+     * An array holding all the hours charged for each day of the week. Day 0 is
+     * Saturday, ... day 6 is Friday
      */
-    private long packedHours;
-
-    /** Any notes added to the timesheet row. */
+    private BigDecimal[] hoursForWeek = new BigDecimal[Timesheet.DAYS_IN_WEEK];
+    /** Any notes added to the end of a row. */
     private String notes;
 
-    /** create empty timesheetRow to be modified later.*/
+    /**
+     * Creates a TimesheetDetails object and sets the editable state to true.
+     */
     public TimesheetRow() {
     }
 
     /**
-     * Initialize timesheet row with instance data, no hours charged.
-     * @param projectId project number
-     * @param workPackageId work package id
+     * Creates a TimesheetDetails object with all fields set. Used to create
+     * sample data.
+     * @param id project id
+     * @param wp work package number (alphanumeric)
+     * @param hours number of hours charged for each day of week.
+     *      null represents ZERO
+     * @param comments any notes with respect to this work package charges
      */
-    public TimesheetRow(int projectId, String workPackageId) {
-        this.projectId = projectId;
-        this.workPackageId = workPackageId;
+    public TimesheetRow(final int id, final String wp,
+            final BigDecimal[] hours, final String comments) {
+        setProjectID(id);
+        setWorkPackage(wp);
+        setHoursForWeek(hours);
+        setNotes(comments);
     }
-    
+
     /**
-     * Initialize timesheet row with instance data, hours charged (in order of
-     * Saturday, .. Friday.
-     * @param projectId project number
-     * @param workPackageId work package id
-     * @param notes is a field for comments for this row
-     * @param hours the charges for each day of the week.  There must be 7, or 
-     *        else an array with 7 hours passed.
+     * projectID getter.
+     * @return the projectID
      */
-    public TimesheetRow(int projectId, String workPackageId, String notes, 
-            float...hours) {
+    public int getProjectID() {
+        return projectID;
+    }
+
+    /**
+     * projectID setter.
+     * @param id the projectID to set
+     */
+    public void setProjectID(final int id) {
+        this.projectID = id;
+    }
+
+    /**
+     * workPackage getter.
+     * @return the workPackage
+     */
+    public String getWorkPackage() {
+        return workPackage;
+    }
+
+    /**
+     * workPackage setter.
+     * @param wp the workPackage to set
+     */
+    public void setWorkPackage(final String wp) {
+        this.workPackage = wp;
+    }
+
+    /**
+     * hoursForWeek getter.
+     * @return the hours charged for each day
+     */
+    public BigDecimal[] getHoursForWeek() {
+        return hoursForWeek;
+    }
+
+    /**
+     * hoursForWeek setter.
+     * @param hours the hours charged for each day
+     */
+    public void setHoursForWeek(final BigDecimal[] hours) {
+        checkHoursForWeek(hours);
+        this.hoursForWeek = hours;
+    }
+
+    /**
+     * gets hour for a give day of the week.
+     * @param day The day of week to return charges for
+     * @return charges in hours of specific day in week
+     */
+    public BigDecimal getHour(final int day) {
+        return hoursForWeek[day];
+    }
+
+    /**
+     * sets hour for a given day of the week.
+    * @param day The day of week to set the hour
+    * @param hour The number of hours worked for that day
+    */
+   public void setHour(final int day, final BigDecimal hour) {
+       checkHour(hour);
+       hoursForWeek[day] = hour;
+   }
+   /**
+    * sets hour for a given day.
+   * @param day The day of week to set the hour
+   * @param hour The number of hours worked for that day
+   */
+  public void setHour(final int day, final double hour) {
+      BigDecimal bdHour = null;
+      if (hour != 0.0) {
+          bdHour = new BigDecimal(hour).setScale(1, BigDecimal.ROUND_HALF_UP);
+      }
+      checkHour(bdHour);
+      hoursForWeek[day] = bdHour;
+  }
+
+    /**
+     * Checks if hour value is out of the valid
+     * bounds of 0.0 to 24.0, or has more than one decimal digit.
+     *
+     *@param hour the value to check
+     */
+    private void checkHour(final BigDecimal hour) {
+        if (hour != null) {
+            if (hour.compareTo(Timesheet.HOURS_IN_DAY) > 0.0
+                    || hour.compareTo(BigDecimal.ZERO) < 0.0) {
+                throw new IllegalArgumentException(
+                       "out of range: should be between 0 and 24");
+            }
+            if (hour.scale() > 1) {
+                throw new IllegalArgumentException(
+                        "too many decimal digits: should be at most 1");
+            }
+        }
+    }
+
+    /**
+     * Checks if any hour value in any day of the week is out of the valid
+     * bounds of 0.0 to 24.0, or has more than one decimal digit.
+     *
+     * @param hours array of hours charged for each day in a week
+     */
+    private void checkHoursForWeek(final BigDecimal[] hours) {
         if (hours.length != Timesheet.DAYS_IN_WEEK) {
-            throw new IllegalArgumentException("Wrong number of hours");
+            throw new IllegalArgumentException(
+                    "wrong week length: should be 7");
         }
-        setHours(hours);
-        this.projectId = projectId;
-        this.workPackageId = workPackageId;
-        this.notes = notes;
-    }
-    
-    /**
-     * convert hour to decihour.  hour rounded to one fractional decimal place.
-     * @param hour as float
-     * @return equivalent number of decihours as int
-     */
-    public static int toDecihour(float hour) {
-        return Math.round(hour * BASE10);
-    }
-    
-    /**
-     * convert decihour to hour.  
-     * @param decihour as int
-     * @return equivalent number of hours as float
-     */
-    public static float toHour(int decihour) {
-        return decihour / BASE10;
-    }
-    
-
-    /**
-     * projectId getter.
-     * @return the projectId
-     */
-    public int getProjectId() {
-        return projectId;
-    }
-
-    /**
-     * projectId setter.
-     * @param id the projectId to set, must be >= 0
-     */
-    public void setProjectId(final int id) {
-        if (id < 0) {
-            throw new IllegalArgumentException("ProjectId must be >= 0");
+        for (BigDecimal next : hours) {
+            checkHour(next);
         }
-        this.projectId = id;
     }
 
-    /**
-     * workPackageId getter.
-     * @return the workPackageId
-     */
-    public String getWorkPackageId() {
-        return workPackageId;
-    }
-
-    /**
-     * workPackageId setter.
-     * @param wp the workPackageId to set
-     */
-    public void setWorkPackageId(final String wp) {
-        this.workPackageId = wp;
-    }
-
-    /**
-     * packedHours getter.
-     * @return the hours charged for each day, packed into a long.
-     */
-    public long getPackedHours() {
-        return packedHours;
-    }
-
-    /**
-     * packedHours setter.
-     * @param packedHours the hours charged for each day, packed into a long
-     */
-    public void setPackedHours(final long packedHours) {
-        checkHoursForWeek(packedHours);
-        this.packedHours = packedHours;
-    }
-
-    /**
-     * Extract the hours for a given day.
-     * @param d the day number (0 = Saturday .. 6 = Friday)
-     * @return hours for that day
-     */
-    public float getHour(int d) {
-        return toHour(getDecihour(d));
-    }
-    
-    /**
-     * Set the hours for a given day. Rounded to one decimal.
-     * @param d the day number (0 = Saturday .. 6 = Friday)
-     * @param charge hours charged for that day
-     * @throws IllegalArgumentException if charge < 0 or > 24
-     */
-    public void setHour(int d, float charge) {
-        if (charge < 0.0 || charge > Timesheet.HOURS_IN_DAY) {
-            throw new IllegalArgumentException("Charge is out of range");
-        }
-        setDecihour(d, toDecihour(charge));
-    }
-    
     /**
      * getter for notes section.
      * @return the notes
@@ -224,159 +192,24 @@ public class TimesheetRow implements java.io.Serializable {
 
     /**
      * setter for notes section.
-     * @param notes the notes to set
+     * @param comments the notes to set
      */
-    public void setNotes(final String notes) {
-        this.notes = notes;
+    public void setNotes(final String comments) {
+        this.notes = comments;
     }
 
     /**
      * adds total hours for this timesheet row.
      * @return the weekly hours
      */
-    public Float getSum() {
-        return toHour(getDeciSum());
-    }
-    
-    /**
-     * Adds total hours for this timesheet row.
-     * @return total hours in units of decihours
-     */
-    public int getDeciSum() {
-        int[] charges = getDecihours();
-        int sum = 0;
-        for (int charge: charges) {
-            sum += charge;
+    public BigDecimal getSum() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (BigDecimal next : hoursForWeek) {
+            if (next != null) {
+                sum = sum.add(next);
+            }
         }
         return sum;
     }
-    
-    /**
-     * Extract the integer hours * 10 for a given day.
-     * @param d the day number (0 = Saturday .. 6 = Friday)
-     * @return hours for that day
-     */
-    public int getDecihour(int d) {
-        if (d < FIRST_DAY || d > LAST_DAY) {
-            throw new IllegalArgumentException("day number out of range");
-        }
-        return (int) ((packedHours & MASK[d]) >> d * BITS_PER_BYTE);
-    }
-    
-    /**
-     * Set the integer hours * 10 for a given day.
-     * @param d the day number (0 = Saturday .. 6 = Friday)
-     * @param charge hours charged for that day
-     * @throws IllegalArgumentException if invalid day or charge
-     */
-    public void setDecihour(int d, int charge) {
-        if (d < FIRST_DAY || d > LAST_DAY) {
-            throw new IllegalArgumentException("day number out of range, " 
-                        + "must be in 0 .. 6");
-        }
-        if (charge < 0 || charge > DECI_MAX) {
-            throw new IllegalArgumentException("charge out of range, " 
-                        + "must be 0 .. 240");
-        }
-        packedHours = packedHours & UMASK[d]
-                | (long) charge << (d * BITS_PER_BYTE);
-    }
-    
-    /**
-     * Get hours array of charges, index is day number.
-     * @return hours as array of charges
-     */
-    public float[] getHours() {
-        float[] result = new float[LAST_DAY + 1];
-        long check = packedHours;
-        for (int i = FIRST_DAY; i <= LAST_DAY; i++) {
-            result[i] = check % BYTE_BASE / BASE10;
-            check /= BYTE_BASE;
-        }
-        return result;
-    }
-    
-    /**
-     *  Convert hours array to packed hours and store in hours field.
-     *  Index of array is day of week number, starting with Saturday
-     * @param charges array of hours to pack (single fractional digit)
-     * @throws IllegalArgumentException if charges < 0 or > 24
-     */
-    public void setHours(float[] charges) {
-        for (float charge : charges) {
-            if (charge < 0.0 || charge > Timesheet.HOURS_IN_DAY) {
-                throw new IllegalArgumentException("charge is out of " 
-                            + "maximum hours in day range");           
-            }
-        }
-        long result = 0;
-        for (int i = LAST_DAY; i >= FIRST_DAY; i--) {
-            result = result * BYTE_BASE + toDecihour(charges[i]);
-        }
-        packedHours = result;
-    }
-    
-    /**
-     * Get hours array of charges, index is day number.
-     * @return hours as array of charges
-     */
-    public int[] getDecihours() {
-        int[] result = new int[LAST_DAY + 1];
-        long check = packedHours;
-        for (int i = FIRST_DAY; i <= LAST_DAY; i++) {
-            result[i] = (int) (check % BYTE_BASE);
-            check /= BYTE_BASE;
-        }
-        return result;
-    }
-    
-    /**
-     *  Convert hours array to packed hours and store in hours field.
-     *  Index of array is day of week number, starting with Saturday
-     * @param charges array of hours to pack (single fractional digit)
-     * @throws IllegalArgumentException if charges < 0 or > 24
-     */
-    public void setDecihours(int[] charges) {
-        for (float charge : charges) {
-            if (charge < 0 || charge > Timesheet.DECIHOURS_IN_DAY) {
-                throw new IllegalArgumentException("charge is out of " 
-                            + "maximum hours in day range");           
-            }
-        }
-        long result = 0;
-        for (int i = LAST_DAY; i >= FIRST_DAY; i--) {
-            result = result * BYTE_BASE + charges[i];
-        }
-        packedHours = result;
-    }
-    
-    /* throw IllegalArgumentException if an hour is out of range */
-    private void checkHoursForWeek(final long packedDecihours) {
-        if (packedDecihours < 0) {
-            throw new IllegalArgumentException(
-                    "improperly formed packedHours < 0");
-        }    
-        long check = packedDecihours;
-        for (int i = FIRST_DAY; i <= LAST_DAY; i++) {
-            if (check % BYTE_BASE > Timesheet.DECIHOURS_IN_DAY) {
-                throw new IllegalArgumentException(
-                        "improperly formed packedHours");
-            }
-            check /= BYTE_BASE;
-        }
-        //top byte must be zero
-        if (check > 0) {
-            throw new IllegalArgumentException(
-                    "improperly formed packedHours");
-        }
-
-    }
-    
-    @Override
-    public String toString() {
-        return projectId + " " + workPackageId + " "
-                + Arrays.toString(getHours());
-    }
-    
 
 }
