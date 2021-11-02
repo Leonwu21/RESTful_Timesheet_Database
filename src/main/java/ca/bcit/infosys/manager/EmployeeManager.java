@@ -75,7 +75,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * Gets map of valid passwords for userNames.
      * @return The map containing the valid (userName, password) combinations.
      */
-    //TODO: This currently does nothing.
     @Override
     public Map<String, String> getLoginCombos() {
         return null;

@@ -99,23 +99,7 @@ public class Credentials implements Serializable {
     public String toString() {
         return userName + '\t' + password;
     }
-    
-    //TODO: Not sure if needed.
-    /**
-     * Creates a hash code for Credentials.
-     * @return The hash code as an int.
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + employeeNumber;
-        result = prime * result + ((password == null) ? 0 : password.hashCode());
-        result = prime * result + ((userName == null) ? 0 : userName.hashCode());
-        return result;
-    }
 
-    //TODO: Not sure if needed.
     /**
      * Checks if two Credential objects are the same.
      * @return True if two Credential objects are the same, false otherwise.

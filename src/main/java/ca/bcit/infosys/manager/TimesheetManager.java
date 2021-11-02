@@ -86,7 +86,6 @@ public class TimesheetManager implements TimesheetCollection {
      * Creates a Timesheet object and adds it to the database.
      * @return The path to a new timesheet page.
      */
-    //TODO: Not sure if this path signifies "navigation to the newTimesheet page."
     @Override
     public String addTimesheet() {
         Timesheet timesheet = new Timesheet();
