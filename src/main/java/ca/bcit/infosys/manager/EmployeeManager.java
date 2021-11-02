@@ -133,7 +133,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * Logs the user out of the system.
      *
      * @param employee the user to logout.
-     * @return a String representing the login page.
+     * @return a String for navigation to the login page
      */
     @Override
     public String logout(Employee employee) {

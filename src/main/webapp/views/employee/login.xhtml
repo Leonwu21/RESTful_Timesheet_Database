@@ -14,18 +14,14 @@
 		<br/><br/>
 		<div class="login-form-div">
 			<h:form styleClass="login-form">
-				<div>
-					<div class="username-input-div">
-						<p class="username-label">#{msgs.user}</p>
-						<h:inputText id="username" value="#{loginController.username}" styleClass="username-input login-input" />
-					</div>
+				<div class="username-input-div">
+					<p class="username-label">#{msgs.user}</p>
+					<h:inputText id="username" value="#{loginController.username}" styleClass="username-input login-input" />
 					<h:message for="username" styleClass="errorMessages"/>
 				</div>
-				<div>
-					<div class="password-input-div">
-						<p class="password-label">#{msgs.pass}</p>
-						<h:inputSecret id="password" value="#{loginController.password}" styleClass="password-input login-input" />
-					</div>
+				<div class="password-input-div">
+					<p class="password-label">#{msgs.pass}</p>
+					<h:inputSecret id="password" value="#{loginController.password}" styleClass="password-input login-input" />
 					<h:message for="password" styleClass="errorMessages"/>
 				</div>
 				<br/>

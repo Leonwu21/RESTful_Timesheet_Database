@@ -69,15 +69,9 @@
 	<navigation-rule>
 		<from-view-id>/views/*</from-view-id>
 		<navigation-case>
-			<from-action>#{employeeManager.logout()}</from-action>
+			<from-action>#{employeeManager.logout(employee)}</from-action>
 			<from-outcome>logout</from-outcome>
 			<to-view-id>/views/employee/login.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-
-<factory>
-        <exception-handler-factory>
-            ca.bcit.infosys.exception.CustomExceptionHandlerFactory
-        </exception-handler-factory>
-</factory>
 </faces-config>
