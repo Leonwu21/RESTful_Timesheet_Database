@@ -1,4 +1,4 @@
-package ca.bcit.infosys.editable;
+    package ca.bcit.infosys.editable;
 
 import java.io.Serializable;
 
