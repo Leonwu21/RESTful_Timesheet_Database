@@ -1,16 +1,12 @@
 package ca.bcit.infosys.employee;
 
-import java.io.Serializable;
-
 /**
  * A class for an Employee.
  *
  * @author Benedict Halim and Leon Wu
  * @version 1.0
  */
-public class Employee implements Serializable {
-	
-    private static final long serialVersionUID = 13L;
+public class Employee {
     
     /** 
      * The employee's name. 

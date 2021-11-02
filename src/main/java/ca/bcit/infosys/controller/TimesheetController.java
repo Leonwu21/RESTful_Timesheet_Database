@@ -14,7 +14,6 @@ import javax.inject.Named;
 import ca.bcit.infosys.manager.EmployeeManager;
 import ca.bcit.infosys.manager.TimesheetManager;
 import ca.bcit.infosys.timesheet.Timesheet;
-import ca.bcit.infosys.editable.EditableTimesheet;
 import ca.bcit.infosys.employee.Employee;
 
 /**
@@ -134,7 +133,9 @@ public class TimesheetController implements Serializable {
      */
     public String prepareView(Timesheet timesheet) {
         conversation.end();
-        int empNumber = timesheet.getEmployee().getEmpNumber();
+        //NULL POINTER ON LINE 138, NOT GETTING EMPLOYEE NUMBER
+        Employee employee = timesheet.getEmployee();
+        int empNumber = employee.getEmpNumber();
         int currEmpNumber = employeeManager.getCurrentEmployee().getEmpNumber();
         if (empNumber != currEmpNumber) {
             if (employeeManager.isAdminLogin()) {
