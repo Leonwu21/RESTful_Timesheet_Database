@@ -38,7 +38,7 @@ public class Timesheet implements java.io.Serializable {
             = WeekFields.of(DayOfWeek.SATURDAY, 1);
 
     /** Serial version number. */
-    private static final long serialVersionUID = 4L;
+    private static final long serialVersionUID = 17L;
 
     /** The user associated with this timesheet. */
     private Employee employee;
