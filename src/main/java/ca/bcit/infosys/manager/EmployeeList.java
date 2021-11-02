@@ -1,8 +1,10 @@
-package ca.bcit.infosys.employee;
+package ca.bcit.infosys.manager;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+
+import ca.bcit.infosys.employee.Credentials;
+import ca.bcit.infosys.employee.Employee;
 
 /**
  * Interface to back-end to access Employees and verify login credentials.
@@ -11,7 +13,7 @@ import java.util.Map;
  * @version 1.0
  *
  */
-public interface EmployeeList extends Serializable {
+public interface EmployeeList {
 	
     /**
      * Gets the list of employees.

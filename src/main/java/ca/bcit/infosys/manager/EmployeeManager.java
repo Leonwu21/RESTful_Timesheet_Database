@@ -14,7 +14,6 @@ import ca.bcit.infosys.database.CredentialsDatabase;
 import ca.bcit.infosys.database.EmployeeDatabase;
 import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
-import ca.bcit.infosys.employee.EmployeeList;
 
 /**
  * Class to manage employees.
@@ -46,6 +45,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Inject
     private CredentialsDatabase credentialsDatabase;
+    
     /**
      * Gets the list of employees.
      * @return The list of Employees as an ArrayList.

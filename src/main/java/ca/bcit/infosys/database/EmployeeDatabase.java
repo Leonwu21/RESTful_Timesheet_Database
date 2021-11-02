@@ -1,6 +1,5 @@
 package ca.bcit.infosys.database;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +17,8 @@ import ca.bcit.infosys.employee.Employee;
  */
 @Named("employeeDatabase")
 @ApplicationScoped
-public class EmployeeDatabase implements Serializable {
+public class EmployeeDatabase {
 	
-    private static final long serialVersionUID = 7L;
-
     /**
      * A list of all the employees.
      */
