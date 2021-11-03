@@ -81,7 +81,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
         return null;
     }
 
-    //TODO: Refactor emp_no to employeeNumber?
     /**
      * Gets the current employee. 
      * @return The current employee.
@@ -89,7 +88,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
     @Override
     public Employee getCurrentEmployee() {
         final FacesContext context = FacesContext.getCurrentInstance();
-        final String id = (String) context.getExternalContext().getSessionMap().get("emp_no");
+        final String id = (String) context.getExternalContext().getSessionMap().get("employeeNumber");
         return getEmployeeByUserName(id);
     }
 

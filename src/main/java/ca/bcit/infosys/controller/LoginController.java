@@ -70,8 +70,7 @@ public class LoginController implements Serializable {
                 context.addMessage(null, new FacesMessage("Error: Invalid Login ID & password combination."));
                 return null;
             }
-            //TODO: Refactor emp_no to employeeNumber?
-            context.getExternalContext().getSessionMap().put("emp_no", employee.getUserName());
+            context.getExternalContext().getSessionMap().put("employeeNumber", employee.getUserName());
             conversation.end();
             return "success";
         }
