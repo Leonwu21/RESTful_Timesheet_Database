@@ -58,7 +58,7 @@ public class EmployeeController implements Serializable {
         if (!employeeManager.isAdminLogin()) {
             return null;
         }
-        return "/employee/list";
+        return "employeeListPage";
     }
 
     /**
@@ -73,7 +73,7 @@ public class EmployeeController implements Serializable {
             return null;
         }
         editableEmployee = new EditableEmployee(true);
-        return "/employee/create";
+        return "employeeCreatePage";
     }
     
     /**
@@ -92,7 +92,7 @@ public class EmployeeController implements Serializable {
             return null;
         }
         editableEmployee = new EditableEmployee(employee, true);
-        return "/employee/edit";
+        return "employeeEditPage";
     }
 
     /**
@@ -111,7 +111,7 @@ public class EmployeeController implements Serializable {
             return null;
         }
         editableEmployee = new EditableEmployee(employee, false);
-        return "/employee/view";
+        return "employeeViewPage";
     }
 
     /**
@@ -152,7 +152,7 @@ public class EmployeeController implements Serializable {
         credentialsManager.addCredentials(credentials);
         editableEmployee = null;
         conversation.end();
-        return "/employee/list";
+        return "employeeListPage";
     }
 
     /**
@@ -169,7 +169,7 @@ public class EmployeeController implements Serializable {
         
         editableEmployee = null;
         conversation.end();
-        return "/employee/list";
+        return "employeeListPage";
     }
 
     /**

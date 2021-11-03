@@ -72,7 +72,7 @@ public class LoginController implements Serializable {
             }
             context.getExternalContext().getSessionMap().put("employeeNumber", employee.getUserName());
             conversation.end();
-            return "success";
+            return "login";
         }
     }
 

@@ -84,7 +84,7 @@ public class ProfileController implements Serializable {
         int employeeNumber = employee.getEmployeeNumber();
         credentials = credentialsManager.getCredentialsByEmpNumber(employeeNumber);
         editableEmployee = new EditableEmployee(employee, true);
-        return "/employee/profile";
+        return "employeeProfilePage";
     }
 
     /**
@@ -115,7 +115,7 @@ public class ProfileController implements Serializable {
         credentials.setUserName(userName);
         credentials.setPassword(newPassword);
         conversation.end();
-        return "/timesheet/list";
+        return "timesheetListPage";
     }
 
     /**

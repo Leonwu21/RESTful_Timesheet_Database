@@ -73,7 +73,7 @@ public class TimesheetController implements Serializable {
             conversation.begin();
         }
         editableTimesheet = new EditableTimesheet(true);
-        return "/timesheet/create";
+        return "timesheetCreatePage";
     }
 
     /**
@@ -97,7 +97,7 @@ public class TimesheetController implements Serializable {
             }
         }
         editableTimesheet = new EditableTimesheet(timesheet, true);
-        return "/timesheet/edit";
+        return "timesheetEditPage";
     }
 
     /**
@@ -121,7 +121,7 @@ public class TimesheetController implements Serializable {
             }
         }
         editableTimesheet = new EditableTimesheet(timesheet, false);
-        return "/timesheet/view";
+        return "timesheetViewPage";
     }
 
     /**
@@ -138,7 +138,7 @@ public class TimesheetController implements Serializable {
             Employee currentEmployee = employeeManager.getCurrentEmployee();
             timesheetList = timesheetManager.getTimesheetList(currentEmployee);
         }
-        return "/timesheet/list";
+        return "timesheetListPage";
     }
 
     /**
