@@ -25,7 +25,7 @@ public interface TimesheetCollection extends Serializable {
      * @param employee The employee of interest.
      * @return The list of timesheets for the employee of interest.
      */
-    List<Timesheet> getTimesheets(Employee employee);
+    List<Timesheet> getTimesheetList(Employee employee);
 
     /**
      * Gets the current timesheet for an employee of interest.

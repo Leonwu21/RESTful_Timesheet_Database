@@ -81,7 +81,7 @@ public class ProfileController implements Serializable {
         if (employee == null) {
             return null;
         }
-        int employeeNumber = employee.getEmpNumber();
+        int employeeNumber = employee.getEmployeeNumber();
         credentials = credentialsManager.getCredentialsByEmpNumber(employeeNumber);
         editableEmployee = new EditableEmployee(employee, true);
         return "/employee/profile";

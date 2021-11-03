@@ -38,7 +38,7 @@ public class CredentialsManager implements Serializable {
         List<Credentials> credentialsList = credentialsDatabase.getCredentialsList();
         
         for(Credentials credentials : credentialsList) {
-            if (credentials.getEmpNumber() == empNumber) {
+            if (credentials.getEmployeeNumber() == empNumber) {
                 return credentials;
             }
         }

@@ -45,7 +45,7 @@
 						<div class="timesheet-inner-input-container">
 							<h4 class="timesheet-inner-label">#{msgs.empNo}</h4>
 							<h:outputText id="employeeno"
-								value="#{employeeManager.currentEmployee.empNumber}"
+								value="#{employeeManager.currentEmployee.employeeNumber}"
 								styleClass="timesheet-inner-input"/>
 						</div>
 					</div>
@@ -53,7 +53,7 @@
 						<div class="timesheet-inner-input-container">
 							<h4 class="timesheet-inner-label">#{msgs.empName}</h4>
 							<h:outputText id="employeename"
-								value="#{timesheetController.editableTimesheet.timesheet.employee.empName}"
+								value="#{timesheetController.editableTimesheet.timesheet.employee.employeeName}"
 								styleClass="timesheet-inner-input"/>
 						</div>
 					</div>

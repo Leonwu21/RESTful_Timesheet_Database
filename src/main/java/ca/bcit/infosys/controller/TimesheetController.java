@@ -86,8 +86,8 @@ public class TimesheetController implements Serializable {
             conversation.begin();
         }
         
-        int empNumber = timesheet.getEmployee().getEmpNumber();
-        int currEmpNumber = employeeManager.getCurrentEmployee().getEmpNumber();
+        int empNumber = timesheet.getEmployee().getEmployeeNumber();
+        int currEmpNumber = employeeManager.getCurrentEmployee().getEmployeeNumber();
         
         if (empNumber != currEmpNumber) {
             if (employeeManager.isAdminLogin()) {
@@ -109,9 +109,9 @@ public class TimesheetController implements Serializable {
         conversation.end();
         
         Employee employee = timesheet.getEmployee();
-        int empNumber = employee.getEmpNumber();
+        int empNumber = employee.getEmployeeNumber();
         Employee currEmployee = employeeManager.getCurrentEmployee();
-        int currEmpNumber = currEmployee.getEmpNumber();
+        int currEmpNumber = currEmployee.getEmployeeNumber();
         
         if (empNumber != currEmpNumber) {
             if (employeeManager.isAdminLogin()) {
@@ -136,7 +136,7 @@ public class TimesheetController implements Serializable {
             timesheetList = timesheetManager.getTimesheets();
         } else {
             Employee currentEmployee = employeeManager.getCurrentEmployee();
-            timesheetList = timesheetManager.getTimesheets(currentEmployee);
+            timesheetList = timesheetManager.getTimesheetList(currentEmployee);
         }
         return "/timesheet/list";
     }
@@ -161,7 +161,7 @@ public class TimesheetController implements Serializable {
     public String onTimesheetCreate() {
         Employee currentEmployee = employeeManager.getCurrentEmployee();
         Timesheet editTimesheet = editableTimesheet.getTimesheet();
-        List<Timesheet> currEmpTimesheetList = timesheetManager.getTimesheets(currentEmployee);
+        List<Timesheet> currEmpTimesheetList = timesheetManager.getTimesheetList(currentEmployee);
         
         editTimesheet.setEmployee(currentEmployee);
 

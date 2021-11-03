@@ -40,6 +40,43 @@ public class Credentials {
     }
     
     /**
+     * Returns the login ID and password as a String.
+     * @return The login ID and password as a String.
+     */
+    @Override
+    public String toString() {
+        return userName + '\t' + password;
+    }
+    
+    /**
+     * Checks if two Credential objects are the same.
+     * @return True if two Credential objects are the same. Otherwise, false.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Credentials other = (Credentials) obj;
+        if (employeeNumber != other.employeeNumber)
+            return false;
+        if (userName == null) {
+            if (other.userName != null)
+                return false;
+        } else if (!userName.equals(other.userName))
+            return false;
+        if (password == null) {
+            if (other.password != null)
+                return false;
+        } else if (!password.equals(other.password))
+            return false;
+        return true;
+    }
+    
+    /**
      * Gets the login ID.
      * @return The login ID as a String.
      */
@@ -75,7 +112,7 @@ public class Credentials {
      * Gets the employee's number.
      * @return The employee's number.
      */
-    public int getEmpNumber() {
+    public int getEmployeeNumber() {
         return employeeNumber;
     }
     
@@ -83,45 +120,7 @@ public class Credentials {
      * Sets the employee's number.
      * @param empNumber The employee's number.
      */
-    public void setEmpNumber(int empNumber) {
+    public void setEmployeeNumber(int empNumber) {
         employeeNumber = empNumber;
     }
-    
-    /**
-     * Returns the login ID and password as a String.
-     * @return The login ID and password as a String.
-     */
-    @Override
-    public String toString() {
-        return userName + '\t' + password;
-    }
-
-    /**
-     * Checks if two Credential objects are the same.
-     * @return True if two Credential objects are the same. Otherwise, false.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Credentials other = (Credentials) obj;
-        if (employeeNumber != other.employeeNumber)
-            return false;
-        if (password == null) {
-            if (other.password != null)
-                return false;
-        } else if (!password.equals(other.password))
-            return false;
-        if (userName == null) {
-            if (other.userName != null)
-                return false;
-        } else if (!userName.equals(other.userName))
-            return false;
-        return true;
-    }
-
 }

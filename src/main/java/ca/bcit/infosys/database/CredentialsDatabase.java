@@ -30,7 +30,7 @@ public class CredentialsDatabase {
         credentialList = new ArrayList<Credentials>();
         Credentials credentials = new Credentials("admin", "password");
         credentialList.add(credentials);
-        credentialList.get(0).setEmpNumber(1111);
+        credentialList.get(0).setEmployeeNumber(1111);
     }
 
     /**

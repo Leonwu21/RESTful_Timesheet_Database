@@ -43,13 +43,13 @@ public class TimesheetManager implements TimesheetCollection {
      * @return The list of timesheets for the employee of interest.
      */
     @Override
-    public List<Timesheet> getTimesheets(Employee employee) {
+    public List<Timesheet> getTimesheetList(Employee employee) {
         List<Timesheet> timesheetList = timesheetDatabase.getTimesheetList();
         List<Timesheet> newTimesheetList = new ArrayList<>();
         
         for (Timesheet timesheet : timesheetList) {
-            int timesheetEmployeeNumber = timesheet.getEmployee().getEmpNumber();
-            int employeeNumber = employee.getEmpNumber();
+            int timesheetEmployeeNumber = timesheet.getEmployee().getEmployeeNumber();
+            int employeeNumber = employee.getEmployeeNumber();
             
             if (timesheetEmployeeNumber == employeeNumber) {
                 newTimesheetList.add(timesheet);
@@ -65,7 +65,7 @@ public class TimesheetManager implements TimesheetCollection {
      */
     @Override
     public Timesheet getCurrentTimesheet(Employee employee) {
-        List<Timesheet> employeeTimesheetsList = this.getTimesheets(employee);
+        List<Timesheet> employeeTimesheetsList = this.getTimesheetList(employee);
         
         long maxEndDate = 0;
         int currentTimesheetIndex = 0;
@@ -100,7 +100,7 @@ public class TimesheetManager implements TimesheetCollection {
      * @return If found, the timesheet for an employee of interest for a specific week. Otherwise, null.
      */
     public Timesheet findTimesheet(Employee employee, String endOfWeek) {
-        List<Timesheet> timesheetList = this.getTimesheets(employee);
+        List<Timesheet> timesheetList = this.getTimesheetList(employee);
         for (Timesheet timesheet : timesheetList) {
             String timesheetEndOfWeek = timesheet.getWeekEnding();
             if (timesheetEndOfWeek.equals(endOfWeek)) {

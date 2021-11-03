@@ -143,10 +143,10 @@ public class EmployeeController implements Serializable {
         }
 
         Credentials credentials = editableEmployee.getCredentials();
-        int employeeNumber = editableEmployee.getEmployee().getEmpNumber();
+        int employeeNumber = editableEmployee.getEmployee().getEmployeeNumber();
         String employeeId = editableEmployee.getEmployee().getUserName();
         
-        credentials.setEmpNumber(employeeNumber);
+        credentials.setEmployeeNumber(employeeNumber);
         credentials.setUserName(employeeId);
 
         credentialsManager.addCredentials(credentials);
@@ -161,10 +161,10 @@ public class EmployeeController implements Serializable {
      */
     public String onEmployeeEdit() {
         Credentials credentials = editableEmployee.getCredentials();
-        int employeeNumber = editableEmployee.getEmployee().getEmpNumber();
+        int employeeNumber = editableEmployee.getEmployee().getEmployeeNumber();
         String employeeId = editableEmployee.getEmployee().getUserName();
         
-        credentials.setEmpNumber(employeeNumber);
+        credentials.setEmployeeNumber(employeeNumber);
         credentials.setUserName(employeeId);
         
         editableEmployee = null;

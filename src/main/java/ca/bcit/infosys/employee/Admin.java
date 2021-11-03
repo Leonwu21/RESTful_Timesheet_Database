@@ -13,6 +13,6 @@ public class Admin extends Employee {
      * @param emp The employee that is an admin.
      */
     public Admin(Employee emp) {
-        super(emp.getEmpName(), emp.getEmpNumber(), emp.getUserName());
+        super(emp.getEmployeeName(), emp.getEmployeeNumber(), emp.getUserName());
     }
 }

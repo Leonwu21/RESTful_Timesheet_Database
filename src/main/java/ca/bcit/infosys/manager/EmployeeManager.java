@@ -52,7 +52,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * @return The list of Employees as an ArrayList.
      */
     @Override
-    public List<Employee> getEmployees() {
+    public List<Employee> getEmployeeList() {
         return employeeDatabase.getEmployeeList();
     }
 
@@ -101,19 +101,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
     public Employee getAdministrator() {
         return adminDatabase.getAdminList().get(0);
     }
-
-    /**
-     * Checks if the admin is logged in.
-     * @return True if the admin is logged in. Otherwise, false.
-     */
-    public Boolean isAdminLogin() {
-        final Employee currentEmployee = getCurrentEmployee();
-        final Employee admin = getAdministrator();
-        if (admin == null || currentEmployee == null) {
-            return false;
-        }
-        return currentEmployee.getEmpNumber() == admin.getEmpNumber();
-    }
     
     /**
      * Verifies that the login ID and password is a valid combination.
@@ -157,8 +144,8 @@ public class EmployeeManager implements EmployeeList, Serializable {
                 throw new IllegalArgumentException("Error: An existing user has that username already.");
             }
             
-            int empNumber = emp.getEmpNumber();
-            int employeeNumber = employee.getEmpNumber();
+            int empNumber = emp.getEmployeeNumber();
+            int employeeNumber = employee.getEmployeeNumber();
             if (empNumber == employeeNumber) {
                 throw new IllegalArgumentException("Error: An existing user has that employee number already.");
             }
@@ -179,5 +166,18 @@ public class EmployeeManager implements EmployeeList, Serializable {
         }
         List<Employee> employeeList = employeeDatabase.getEmployeeList();
         employeeList.remove(employee);
+    }
+    
+    /**
+     * Checks if the admin is logged in.
+     * @return True if the admin is logged in. Otherwise, false.
+     */
+    public Boolean isAdminLogin() {
+        final Employee currentEmployee = getCurrentEmployee();
+        final Employee admin = getAdministrator();
+        if (admin == null || currentEmployee == null) {
+            return false;
+        }
+        return currentEmployee.getEmployeeNumber() == admin.getEmployeeNumber();
     }
 }

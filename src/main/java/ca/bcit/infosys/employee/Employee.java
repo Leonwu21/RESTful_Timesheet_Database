@@ -11,12 +11,12 @@ public class Employee {
     /** 
      * The employee's name. 
      */
-    private String empName;
+    private String employeeName;
     
     /** 
      * The employee's employee number.
      */
-    private int empNumber;
+    private int employeeNumber;
     
     /** 
      * The employee's login ID.
@@ -40,41 +40,50 @@ public class Employee {
      * @param id the loginID of the user.
      */
     public Employee(final String name, final int number, final String id) {
-        empName = name;
-        empNumber = number;
+        employeeName = name;
+        employeeNumber = number;
         userName = id;
+    }
+    
+    /**
+     * Returns the employee's name, employee number, and login ID as a String.
+     * @return The employee's name, employee number, and login ID as a String.
+     */
+    @Override
+    public String toString() {
+        return employeeName + '\t' + employeeNumber + '\t' + userName;
     }
 
     /**
      * Gets the employee's name.
      * @return The employee's name as a String.
      */
-    public String getEmpName() {
-        return empName;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
     /**
      * Sets the employee's name.
-     * @param empName The employee's name.
+     * @param employeeName The employee's name.
      */
-    public void setEmpName(final String name) {
-        empName = name;
+    public void setEmployeeName(final String name) {
+        employeeName = name;
     }
 
     /**
      * Gets the employee's employee number.
      * @return The employee's employee number as an int.
      */
-    public int getEmpNumber() {
-        return empNumber;
+    public int getEmployeeNumber() {
+        return employeeNumber;
     }
 
     /**
      * Sets the employee's employee number.
      * @param number The employee's employee number.
      */
-    public void setEmpNumber(final int number) {
-        empNumber = number;
+    public void setEmployeeNumber(final int number) {
+        employeeNumber = number;
     }
 
     /**
@@ -92,15 +101,4 @@ public class Employee {
     public void setUserName(final String id) {
         userName = id;
     }
-    
-    /**
-     * Returns the employee's name, employee number, and login ID as a String.
-     * @return The employee's name, employee number, and login ID as a String.
-     */
-    @Override
-    public String toString() {
-        return empName + '\t' + empNumber + '\t' + userName;
-    }
-
-
 }

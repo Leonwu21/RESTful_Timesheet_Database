@@ -16,7 +16,7 @@ public interface EmployeeList {
      * Gets the list of employees.
      * @return The list of Employees as an ArrayList.
      */
-    List<Employee> getEmployees();
+    List<Employee> getEmployeeList();
 
     /**
      * Gets the employee with the specified login ID.

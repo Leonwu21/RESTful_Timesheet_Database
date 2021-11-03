@@ -13,17 +13,17 @@
 			<h2 id="employee-list-h2">#{msgs.empList}</h2>
 			<h:form>
 				<h:dataTable id="employee-table"
-					value="#{employeeManager.employees}" var="employee"
+					value="#{employeeManager.employeeList}" var="employee"
 					styleClass="employee-list-table" headerClass="table-header"
 				rowClasses="table-row">
 					<h:column>
 						<f:facet name="header">#{msgs.empNo}</f:facet>
-						<h:outputText value="#{employee.empNumber}" />
+						<h:outputText value="#{employee.employeeNumber}" />
 					</h:column>
 
 					<h:column>
 						<f:facet name="header">#{msgs.empName}</f:facet>
-						<h:outputText value="#{employee.empName}" />
+						<h:outputText value="#{employee.employeeName}" />
 					</h:column>
 
 					<h:column>
