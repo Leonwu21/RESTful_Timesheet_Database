@@ -17,16 +17,16 @@
 				rowClasses="table-row">
 				<h:column>
 					<f:facet name="header">#{msgs.project}</f:facet>
-					<h:outputText value="#{timesheetRow.projectID}"
+					<h:outputText value="#{timesheetRow.projectId}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.projectID}"
+					<h:inputText value="#{timesheetRow.projectId}"
 						rendered="#{timesheetController.editableTimesheet.editable}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.wp}</f:facet>
-					<h:outputText value="#{timesheetRow.workPackage}"
+					<h:outputText value="#{timesheetRow.workPackageId}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.workPackage}"
+					<h:inputText value="#{timesheetRow.workPackageId}"
 						rendered="#{timesheetController.editableTimesheet.editable}" />
 				</h:column>
 				<h:column rendered="#{view.viewId eq '/views/timesheets/view.xhtml'}">
@@ -35,63 +35,63 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.sat}</f:facet>
-					<h:outputText value="#{timesheetRow.hoursForWeek[0]}"
+					<h:outputText value="#{timesheetRow.totalWeekHours[0]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.hoursForWeek[0]}"
+					<h:inputText value="#{timesheetRow.totalWeekHours[0]}"
 						rendered="#{timesheetController.editableTimesheet.editable}">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.sun}</f:facet>
-					<h:outputText value="#{timesheetRow.hoursForWeek[1]}"
+					<h:outputText value="#{timesheetRow.totalWeekHours[1]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.hoursForWeek[1]}"
+					<h:inputText value="#{timesheetRow.totalWeekHours[1]}"
 						rendered="#{timesheetController.editableTimesheet.editable}">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.mon}</f:facet>
-					<h:outputText value="#{timesheetRow.hoursForWeek[2]}"
+					<h:outputText value="#{timesheetRow.totalWeekHours[2]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.hoursForWeek[2]}"
+					<h:inputText value="#{timesheetRow.totalWeekHours[2]}"
 						rendered="#{timesheetController.editableTimesheet.editable}">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.tue}</f:facet>
-					<h:outputText value="#{timesheetRow.hoursForWeek[3]}"
+					<h:outputText value="#{timesheetRow.totalWeekHours[3]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.hoursForWeek[3]}"
+					<h:inputText value="#{timesheetRow.totalWeekHours[3]}"
 						rendered="#{timesheetController.editableTimesheet.editable}">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.wed}</f:facet>
-					<h:outputText value="#{timesheetRow.hoursForWeek[4]}"
+					<h:outputText value="#{timesheetRow.totalWeekHours[4]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.hoursForWeek[4]}"
+					<h:inputText value="#{timesheetRow.totalWeekHours[4]}"
 						rendered="#{timesheetController.editableTimesheet.editable}">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.thu}</f:facet>
-					<h:outputText value="#{timesheetRow.hoursForWeek[5]}"
+					<h:outputText value="#{timesheetRow.totalWeekHours[5]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.hoursForWeek[5]}"
+					<h:inputText value="#{timesheetRow.totalWeekHours[5]}"
 						rendered="#{timesheetController.editableTimesheet.editable}">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.fri}</f:facet>
-					<h:outputText value="#{timesheetRow.hoursForWeek[6]}"
+					<h:outputText value="#{timesheetRow.totalWeekHours[6]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
-					<h:inputText value="#{timesheetRow.hoursForWeek[6]}"
+					<h:inputText value="#{timesheetRow.totalWeekHours[6]}"
 						rendered="#{timesheetController.editableTimesheet.editable}">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>

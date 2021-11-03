@@ -166,8 +166,8 @@ public class TimesheetController implements Serializable {
         editTimesheet.setEmployee(currentEmployee);
 
         for (final Timesheet timesheet : currEmpTimesheetList) {
-            LocalDate timesheetEndDate = timesheet.getEndWeek();
-            LocalDate editableTimesheetEndDate = editTimesheet.getEndWeek();
+            LocalDate timesheetEndDate = timesheet.getEndDate();
+            LocalDate editableTimesheetEndDate = editTimesheet.getEndDate();
             if (timesheetEndDate.equals(editableTimesheetEndDate)) {
                 final FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage(null,

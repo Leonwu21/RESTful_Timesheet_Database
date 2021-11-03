@@ -73,7 +73,7 @@ public class TimesheetManager implements TimesheetCollection {
         for(int i = 0; i < employeeTimesheetsList.size() - 1; ++i) {
             Timesheet timesheet = employeeTimesheetsList.get(i);
             
-            long endDate = timesheet.getEndWeek().toEpochDay();
+            long endDate = timesheet.getEndDate().toEpochDay();
             if (endDate > maxEndDate) {
                 endDate = maxEndDate;
                 currentTimesheetIndex = i;
