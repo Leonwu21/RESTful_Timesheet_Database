@@ -48,7 +48,6 @@ public class LoginController implements Serializable {
 
     /**
      * Logs a user in. Lets user know whether login was successful or not.
-     *
      * @return A notification, as a String, to let the user know whether login was successful or not.
      */
     public String login() {
@@ -80,7 +79,6 @@ public class LoginController implements Serializable {
 
     /**
      * Gets the employee's login ID.
-     *
      * @return The employee's login ID as a String.
      */
     public String getUsername() {
@@ -89,7 +87,6 @@ public class LoginController implements Serializable {
 
     /**
      * Sets the employee's login ID.
-     *
      * @param id The employee's login ID.
      */
     public void setUsername(String id) {
@@ -98,7 +95,6 @@ public class LoginController implements Serializable {
 
     /**
      * Gets the employee's password.
-     *
      * @return The employee's password as a String.
      */
     public String getPassword() {
@@ -107,7 +103,6 @@ public class LoginController implements Serializable {
 
     /**
      * Sets the employee's password.
-     *
      * @param pw The employee's password.
      */
     public void setPassword(String pw) {

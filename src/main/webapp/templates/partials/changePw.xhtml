@@ -17,7 +17,7 @@
 				</div>
 
 				<div class="employee-input-div">
-					<h:inputText class="input-employee" value="#{profileController.editEmployee.employee.userName}"
+					<h:inputText class="input-employee" value="#{profileController.editableEmployee.employee.userName}"
 						a:placeholder="Username:" />
 
 					<h:inputSecret class="input-employee" value="#{profileController.oldPassword}"
@@ -29,7 +29,7 @@
 				</div>
 
 				<div class="create-employee-btn-div">
-					<h:commandButton class="btn-small" action="#{profileController.onSaveProfile()}"
+					<h:commandButton class="btn-small" action="#{profileController.saveProfile()}"
 						value="#{msgs.save}" />
 				</div>
 

@@ -19,21 +19,21 @@
 
 				<div class="employee-input-div">
 					<h:outputText class="input-employee"
-						value="#{employeeController.editEmployee.employee.empNumber}"
+						value="#{employeeController.editableEmployee.employee.empNumber}"
 					/>
 					<h:inputText class="input-employee"
-						value="#{employeeController.editEmployee.employee.userName}"
+						value="#{employeeController.editableEmployee.employee.userName}"
 						a:placeholder="Username:" />
 					<h:inputText class="input-employee"
-						value="#{employeeController.editEmployee.credentials.password}"
+						value="#{employeeController.editableEmployee.credentials.password}"
 						a:placeholder="Password:" />
 					<h:inputText class="input-employee"
-						value="#{employeeController.editEmployee.employee.empName}"
+						value="#{employeeController.editableEmployee.employee.empName}"
 						a:placeholder="Name:" />
 				</div>
 
 				<div class="create-employee-btn-div">
-					<h:commandButton class="btn-small" action="#{employeeController.onEdit()}"
+					<h:commandButton class="btn-small" action="#{employeeController.onEmployeeEdit()}"
 						value="#{msgs.save}" />
 				</div>
 

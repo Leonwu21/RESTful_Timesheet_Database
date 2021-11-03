@@ -42,10 +42,10 @@
 							<div class="timesheet-buttons-div">
 								<h:form styleClass="timesheet-buttons">
 									<h:commandButton styleClass="btn-small"
-										action="#{timesheetController.prepareView(timesheet)}"
+										action="#{timesheetController.goToTimesheetViewPage(timesheet)}"
 										value="#{msgs.view}" />
 									<h:commandButton styleClass="btn-small"
-										action="#{timesheetController.prepareEdit(timesheet)}"
+										action="#{timesheetController.goToTimesheetEditPage(timesheet)}"
 										value="#{msgs.edit}" />
 								</h:form>
 							</div>

@@ -71,10 +71,9 @@ public class ProfileController implements Serializable {
 
     /**
      * Prepares the user profile page.
-     *
      * @return The path to the user profile page.
      */
-    public String prepareProfile() {
+    public String goToEmployeeProfilePage() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
@@ -90,10 +89,9 @@ public class ProfileController implements Serializable {
 
     /**
      * Saves the current user's profile and performs validation checking.
-     *
      * @return The path to the list of timesheet page.
      */
-    public String onSaveProfile() {
+    public String saveProfile() {
         final FacesContext context = FacesContext.getCurrentInstance();
 
         if (oldPassword == null || newPassword == null || confirmNewPassword == null) {
@@ -122,25 +120,22 @@ public class ProfileController implements Serializable {
 
     /**
      * Gets the employee.
-     *
      * @return The employee.
      */
-    public EditableEmployee getEditEmployee() {
+    public EditableEmployee getEditableEmployee() {
         return editableEmployee;
     }
 
     /**
      * Sets the employee.
-     * 
      * @param employee The employee.
      */
-    public void setEditEmployee(EditableEmployee employee) {
+    public void setEditableEmployee(EditableEmployee employee) {
         editableEmployee = employee;
     }
     
     /**
      * Gets the user's credentials.
-     *
      * @return The user's credentials (login ID and password).
      */
     public Credentials getCredentials() {
@@ -149,7 +144,6 @@ public class ProfileController implements Serializable {
 
     /**
      * Sets the user's credentials.
-     *
      * @param creds The user's new credentials (new login ID and password).
      */
     public void setCredentials(Credentials creds) {
@@ -158,7 +152,6 @@ public class ProfileController implements Serializable {
 
     /**
      * Gets the user's old password.
-     *
      * @return The user's old password as a String.
      */
     public String getOldPassword() {
@@ -167,7 +160,6 @@ public class ProfileController implements Serializable {
 
     /**
      * Sets the user's old password.
-     *
      * @param oldPw The user's old password.
      */
     public void setOldPassword(String oldPw) {
@@ -176,7 +168,6 @@ public class ProfileController implements Serializable {
 
     /**
      * Gets the user's new password.
-     *
      * @return The user's new password as a String.
      */
     public String getNewPassword() {
@@ -185,7 +176,6 @@ public class ProfileController implements Serializable {
 
     /**
      * Sets the user's new password.
-     * 
      * @param newPw The user's new password.
      */
     public void setNewPassword(String newPw) {
@@ -194,7 +184,6 @@ public class ProfileController implements Serializable {
     
     /**
      * Gets the user's confirmed new password.
-     *
      * @return The user's confirmed new password as a String.
      */
     public String getConfirmNewPassword() {
@@ -203,7 +192,6 @@ public class ProfileController implements Serializable {
 
     /**
      * Sets the user's confirmed new password.
-     * 
      * @param confirmNewPw The user's confirmed new password.
      */
     public void setConfirmNewPassword(String confirmNewPw) {

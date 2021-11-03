@@ -48,7 +48,7 @@ public class TimesheetController implements Serializable {
     private Conversation conversation;
 
     /**
-     * Provides access to edit a timesheet.
+     * The editable timesheet.
      */
     private EditableTimesheet editableTimesheet;
 
@@ -64,38 +64,11 @@ public class TimesheetController implements Serializable {
     }
 
     /**
-     * Gets the EditableTimesheet.
-     *
-     * @return The EditableTimesheet.
+     * Creates a new editable timesheet and directs user to the timesheet create page.
+     * @return The path to the timesheet create page.
+     * 
      */
-    public EditableTimesheet getEditableTimesheet() {
-        return editableTimesheet;
-    }
-    
-    /**
-     * Sets the EditableTimesheet.
-     *
-     * @param editTimesheet The editable timesheet.
-     */
-    public void setEditableTimesheet(EditableTimesheet editTimesheet) {
-        editableTimesheet = editTimesheet;
-    }
-
-    /**
-     * Gets the list of timesheets.
-     *
-     * @return The list of timesheets.
-     */
-    public List<Timesheet> getTimesheetList() {
-        return timesheetList;
-    }
-
-    /**
-     * Prepares to create a new editable timesheet and starts the conversation.
-     *
-     * @return The path to create a timesheet page.
-     */
-    public String prepareCreate() {
+    public String goToTimesheetCreatePage() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
@@ -104,12 +77,11 @@ public class TimesheetController implements Serializable {
     }
 
     /**
-     * Prepares to edit a new editable timesheet and starts the conversation.
-     *
+     * Directs user to the timesheet edit page.
      * @param timesheet The timesheet to be edited.
-     * @return The path to edit a timesheet page.
+     * @return The path to the timesheet edit page.
      */
-    public String prepareEdit(Timesheet timesheet) {
+    public String goToTimesheetEditPage(Timesheet timesheet) {
         if (conversation.isTransient()) {
             conversation.begin();
         }
@@ -129,12 +101,11 @@ public class TimesheetController implements Serializable {
     }
 
     /**
-     * Prepares to view the timesheet of an employee and starts the conversation.
-     *
-     * @param timesheet The timesheet to be viewed.
-     * @return The path to view a timesheet page.
+     * Directs user to timesheet view page.
+     * @param timesheet The timesheet to be edited.
+     * @return The path to the timesheet edit page.
      */
-    public String prepareView(Timesheet timesheet) {
+    public String goToTimesheetViewPage(Timesheet timesheet) {
         conversation.end();
         
         Employee employee = timesheet.getEmployee();
@@ -154,11 +125,10 @@ public class TimesheetController implements Serializable {
     }
 
     /**
-     * Prepares a list of timesheets.
-     *
-     * @return The path to the list of timesheets page.
+     * Directs user to timesheet list page.
+     * @return The path to the timesheet list page.
      */
-    public String prepareList() {
+    public String goToTimesheetListPage() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
@@ -173,10 +143,8 @@ public class TimesheetController implements Serializable {
 
     /**
      * Adds a new row to the timesheet.
-     *
-     * @return Null.
      */
-    public String onAddRow() {
+    public void onAddRow() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
@@ -184,15 +152,13 @@ public class TimesheetController implements Serializable {
         if (sizeOfTimesheet != 7) {
             editableTimesheet.getTimesheet().addRow();
         }
-        return null;
     }
 
     /**
      * Creates a timesheet.
-     *
-     * @return The list of timesheets.
+     * @return The path to the timesheet list page.
      */
-    public String onCreate() {
+    public String onTimesheetCreate() {
         Employee currentEmployee = employeeManager.getCurrentEmployee();
         Timesheet editTimesheet = editableTimesheet.getTimesheet();
         List<Timesheet> currEmpTimesheetList = timesheetManager.getTimesheets(currentEmployee);
@@ -213,18 +179,48 @@ public class TimesheetController implements Serializable {
         timesheetManager.addTimesheet(editTimesheet);
         editableTimesheet = null;
         conversation.end();
-        return prepareList();
+        return goToTimesheetListPage();
     }
 
     /**
-     * Edits the timesheets.
-     *
-     * @return The list of timesheets.
+     * Edits the timesheet.
+     * @return The path to the timesheet list page.
      */
-    public String onEdit() {
+    public String onTimesheetEdit() {
         editableTimesheet = null;
         conversation.end();
-        return prepareList();
+        return goToTimesheetListPage();
+    }
+    
+    /**
+     * Gets the EditableTimesheet.
+     * @return The EditableTimesheet.
+     */
+    public EditableTimesheet getEditableTimesheet() {
+        return editableTimesheet;
+    }
+    
+    /**
+     * Sets the EditableTimesheet.
+     * @param editTimesheet The editable timesheet.
+     */
+    public void setEditableTimesheet(EditableTimesheet editTimesheet) {
+        editableTimesheet = editTimesheet;
     }
 
+    /**
+     * Gets the list of timesheets.
+     * @return The list of timesheets.
+     */
+    public List<Timesheet> getTimesheetList() {
+        return timesheetList;
+    }
+    
+    /**
+     * Sets the list of timesheets.
+     * @param tsList The list of timesheets.
+     */
+    public void setTimesheetList(List<Timesheet> tsList) {
+        timesheetList = tsList;
+    }
 }

@@ -51,25 +51,21 @@ public class EmployeeController implements Serializable {
     private EditableEmployee editableEmployee;
 
     /**
-     * If an admin user is logged in, direct the user to the list of employees page. Otherwise, do nothing.
-     *
-     * @return The path to the list of employees page.
+     * Directs the user to the employee list page.
+     * @return The path to the employee list page.
      */
-    public String prepareList() {
+    public String goToEmployeeListPage() {
         if (!employeeManager.isAdminLogin()) {
             return null;
         }
         return "/employee/list";
     }
 
-    //TODO: Can only an admin do this? Do we need to implement a check?
-    //employeeManager.isAdminLogin()
     /**
-     * Directs the user to the create employees list page.
-     *
-     * @return The path to create the list of employees page.
+     * Directs the user to the employee create page.
+     * @return The path to the employee create page.
      */
-    public String prepareCreate() {
+    public String goToEmployeeCreatePage() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
@@ -80,33 +76,30 @@ public class EmployeeController implements Serializable {
         return "/employee/create";
     }
     
-    //TODO: Can only an admin do this? Do we need to implement a check?
-    //employeeManager.isAdminLogin()
     /**
-     * Direct the user to the edit employees page.
-     *
-     * @return The path to the edit employees page.
+     * Direct the user to the employee edit page.
+     * @return The path to the employee edit page.
      */
-    public String prepareEdit(String username) {
+    public String goToEmployeeEditPage(String username) {
         if (conversation.isTransient()) {
             conversation.begin();
         }
         final Employee employee = employeeManager.getEmployeeByUserName(username);
         if (employee == null) {
+            return null;
+        }
+        if (!employeeManager.isAdminLogin()) {
             return null;
         }
         editableEmployee = new EditableEmployee(employee, true);
         return "/employee/edit";
     }
 
-    //TODO: Can only an admin do this? Do we need to implement a check?
-    //employeeManager.isAdminLogin()
     /**
-     * Direct the user to the view employees page.
-     *
-     * @return The path to the view employees page.
+     * Direct the user to the employee view page.
+     * @return The path to the employee view page.
      */
-    public String prepareView(String username) {
+    public String goToEmployeeViewPage(String username) {
         if (conversation.isTransient()) {
             conversation.begin();
         }
@@ -114,12 +107,13 @@ public class EmployeeController implements Serializable {
         if (employee == null) {
             return null;
         }
+        if (!employeeManager.isAdminLogin()) {
+            return null;
+        }
         editableEmployee = new EditableEmployee(employee, false);
         return "/employee/view";
     }
 
-    //TODO: Can only an admin do this? Do we need to implement a check?
-    //employeeManager.isAdminLogin()
     /**
      * Deletes an employee.
      * @param username The employee's login ID.
@@ -129,15 +123,17 @@ public class EmployeeController implements Serializable {
         if (employee == null) {
             return;
         }
+        if (!employeeManager.isAdminLogin()) {
+            return;
+        }
         employeeManager.deleteEmployee(employee);
     }
 
     /**
      * If the employee is unique, store in the list of employees. Otherwise, do nothing.
-     *
      * @return The path to the list of employees page.
      */
-    public String onCreate() {
+    public String onEmployeeCreate() {
         try {
             employeeManager.addEmployee(editableEmployee.getEmployee());
         } catch (final IllegalArgumentException ex) {
@@ -161,16 +157,16 @@ public class EmployeeController implements Serializable {
 
     /**
      * Edits an employee.
-     *
      * @return The path to the list of employees page.
      */
-    public String onEdit() {
+    public String onEmployeeEdit() {
         Credentials credentials = editableEmployee.getCredentials();
         int employeeNumber = editableEmployee.getEmployee().getEmpNumber();
         String employeeId = editableEmployee.getEmployee().getUserName();
         
         credentials.setEmpNumber(employeeNumber);
         credentials.setUserName(employeeId);
+        
         editableEmployee = null;
         conversation.end();
         return "/employee/list";
@@ -178,19 +174,17 @@ public class EmployeeController implements Serializable {
 
     /**
      * Gets the editable employee.
-     *
      * @return The editable employee.
      */
-    public EditableEmployee getEditEmployee() {
+    public EditableEmployee getEditableEmployee() {
         return editableEmployee;
     }
 
     /**
      * Sets the editable employee.
-     *
      * @param editEmployee The editable employee.
      */
-    public void setEditEmployee(EditableEmployee editEmployee) {
+    public void setEditableEmployee(EditableEmployee editEmployee) {
         editableEmployee = editEmployee;
     }
 

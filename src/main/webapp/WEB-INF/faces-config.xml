@@ -22,7 +22,7 @@
 			<to-view-id>/views/timesheets/timesheetsList</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-action>#{timesheetController.prepareCreate()}</from-action>
+			<from-action>#{timesheetController.goToTimesheetCreatePage()}</from-action>
 			<from-outcome>/timesheet/create</from-outcome>
 			<to-view-id>/views/timesheets/timesheetsCreate</to-view-id>
 		</navigation-case>
@@ -39,7 +39,7 @@
 	<navigation-rule>
 		<from-view-id>/views/*</from-view-id>
 		<navigation-case>
-			<from-action>#{employeeController.prepareCreate()}</from-action>
+			<from-action>#{employeeController.goToEmployeeCreatePage()}</from-action>
 			<from-outcome>/employee/create</from-outcome>
 			<to-view-id>/views/employee/employeeCreate</to-view-id>
 		</navigation-case>

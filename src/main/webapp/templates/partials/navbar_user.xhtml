@@ -19,13 +19,13 @@
 				<h:form>
 					<ul>
 						<li class="employee-timesheet">
-							<h:commandLink action="#{timesheetController.prepareList()}"
+							<h:commandLink action="#{timesheetController.goToTimesheetListPage()}"
 							value="#{msgs.allTs}" style="color:#9C3B03" /></li>
 						<li class="employee-create-timesheet">
-							<h:commandLink action="#{timesheetController.prepareCreate()}"
+							<h:commandLink action="#{timesheetController.goToTimesheetCreatePage()}"
 							value="#{msgs.newTs}" style="color:#9C3B03"/></li>
 						<li class="employee-change-password">
-							<h:commandLink action="#{profileController.prepareProfile()}"
+							<h:commandLink action="#{profileController.goToEmployeeProfilePage()}"
 							value="#{msgs.changePw}" style="color:#9C3B03"/></li>
 					</ul>
 				</h:form>
