@@ -1,6 +1,5 @@
 package ca.bcit.infosys.database;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +17,7 @@ import ca.bcit.infosys.employee.Employee;
  */
 @Named("adminDatabase")
 @ApplicationScoped
-public class AdminDatabase implements Serializable {
-
-    private static final long serialVersionUID = 5L;
+public class AdminDatabase {
     
     /**
      * A list of all the admins.

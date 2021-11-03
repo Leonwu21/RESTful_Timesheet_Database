@@ -13,9 +13,10 @@ import ca.bcit.infosys.employee.Employee;
  *
  */
 public interface TimesheetCollection extends Serializable {
+    
     /**
-     * Gets the list of timesheets.
-     * @return The list of timesheets.
+     * Gets all of the timesheets.
+     * @return The list of all the timesheets.
      */
     List<Timesheet> getTimesheets();
 
@@ -34,8 +35,9 @@ public interface TimesheetCollection extends Serializable {
     Timesheet getCurrentTimesheet(Employee employee);
 
     /**
-     * Creates a Timesheet object and adds it to the database.
-     * @return The path to a new timesheet page.
+     * Adds timesheet to the database.
+     * 
+     * @param timesheet The timesheet to be added.
      */
-    String addTimesheet();
+    void addTimesheet(Timesheet timesheet);
 }

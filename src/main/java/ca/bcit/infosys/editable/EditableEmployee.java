@@ -14,6 +14,7 @@ import ca.bcit.infosys.employee.Employee;
 public class EditableEmployee implements Serializable {
 	
     private static final long serialVersionUID = 9L;
+    
     /**
      * True if an employee is editable. Otherwise, false.
      */

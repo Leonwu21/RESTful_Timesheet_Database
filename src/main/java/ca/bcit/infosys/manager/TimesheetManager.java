@@ -30,14 +30,13 @@ public class TimesheetManager implements TimesheetCollection {
     @Inject private TimesheetDatabase timesheetDatabase;
 
     /**
-     * Gets the list of timesheets.
-     * @return The list of timesheets.
+     * Getting the Timesheets.
      */
     @Override
     public List<Timesheet> getTimesheets() {
         return timesheetDatabase.getTimesheetList();
     }
-
+    
     /**
      * Gets a list of timesheets for an employee of interest.
      * @param employee The employee of interest.
@@ -45,17 +44,18 @@ public class TimesheetManager implements TimesheetCollection {
      */
     @Override
     public List<Timesheet> getTimesheets(Employee employee) {
-        List<Timesheet> timesheetList = new ArrayList<>();
-        for (Timesheet timesheet: this.getTimesheets()) {
-            
+        List<Timesheet> timesheetList = timesheetDatabase.getTimesheetList();
+        List<Timesheet> newTimesheetList = new ArrayList<>();
+        
+        for (Timesheet timesheet : timesheetList) {
             int timesheetEmployeeNumber = timesheet.getEmployee().getEmpNumber();
             int employeeNumber = employee.getEmpNumber();
             
             if (timesheetEmployeeNumber == employeeNumber) {
-                timesheetList.add(timesheet);
+                newTimesheetList.add(timesheet);
             }
         }
-        return timesheetList;
+        return newTimesheetList;
     }
 
     /**
@@ -70,7 +70,7 @@ public class TimesheetManager implements TimesheetCollection {
         long maxEndDate = 0;
         int currentTimesheetIndex = 0;
         
-        for(int i = 0; i < employeeTimesheetsList.size() - 1; i++) {
+        for(int i = 0; i < employeeTimesheetsList.size() - 1; ++i) {
             Timesheet timesheet = employeeTimesheetsList.get(i);
             
             long endDate = timesheet.getEndWeek().toEpochDay();
@@ -87,23 +87,23 @@ public class TimesheetManager implements TimesheetCollection {
      * @return The path to a new timesheet page.
      */
     @Override
-    public String addTimesheet() {
-        Timesheet timesheet = new Timesheet();
-        timesheetDatabase.getTimesheetList().add(timesheet);
-        return "/timesheet/create";
+    public void addTimesheet(Timesheet timesheet) {
+        List<Timesheet> timesheetList = timesheetDatabase.getTimesheetList();
+        timesheetList.add(timesheet);
     }
     
     /**
      * Finds the timesheet for an employee of interest for a specific week.
      * 
      * @param employee The employee of interest.
-     * @param weekEnding The end of the week.
+     * @param endOfWeek The end of the week.
      * @return If found, the timesheet for an employee of interest for a specific week. Otherwise, null.
      */
-    public Timesheet findTimesheet(Employee employee, String weekEnding) {
-        for (Timesheet timesheet : this.getTimesheets(employee)) {
-            String timesheetWeekEnd = timesheet.getWeekEnding();
-            if (timesheetWeekEnd.equals(weekEnding)) {
+    public Timesheet findTimesheet(Employee employee, String endOfWeek) {
+        List<Timesheet> timesheetList = this.getTimesheets(employee);
+        for (Timesheet timesheet : timesheetList) {
+            String timesheetEndOfWeek = timesheet.getWeekEnding();
+            if (timesheetEndOfWeek.equals(endOfWeek)) {
                 return timesheet;
             }
         }

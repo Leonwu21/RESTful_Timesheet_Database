@@ -62,8 +62,10 @@ public class EmployeeController implements Serializable {
         return "/employee/list";
     }
 
+    //TODO: Can only an admin do this? Do we need to implement a check?
+    //employeeManager.isAdminLogin()
     /**
-     * If an admin user is logged in, create the list of employees page. Otherwise, do nothing.
+     * Directs the user to the create employees list page.
      *
      * @return The path to create the list of employees page.
      */
@@ -77,9 +79,11 @@ public class EmployeeController implements Serializable {
         editableEmployee = new EditableEmployee(true);
         return "/employee/create";
     }
-
+    
+    //TODO: Can only an admin do this? Do we need to implement a check?
+    //employeeManager.isAdminLogin()
     /**
-     * If an admin user is logged in, direct the user to the edit employees page. Otherwise, do nothing.
+     * Direct the user to the edit employees page.
      *
      * @return The path to the edit employees page.
      */
@@ -95,8 +99,10 @@ public class EmployeeController implements Serializable {
         return "/employee/edit";
     }
 
+    //TODO: Can only an admin do this? Do we need to implement a check?
+    //employeeManager.isAdminLogin()
     /**
-     * If an admin user is logged in, direct the user to the view employees page. Otherwise, do nothing.
+     * Direct the user to the view employees page.
      *
      * @return The path to the view employees page.
      */
@@ -112,13 +118,18 @@ public class EmployeeController implements Serializable {
         return "/employee/view";
     }
 
-    public String prepareDelete(String username) {
+    //TODO: Can only an admin do this? Do we need to implement a check?
+    //employeeManager.isAdminLogin()
+    /**
+     * Deletes an employee.
+     * @param username The employee's login ID.
+     */
+    public void deleteEmployee(String username) {
         final Employee employee = employeeManager.getEmployeeByUserName(username);
         if (employee == null) {
-            return null;
+            return;
         }
         employeeManager.deleteEmployee(employee);
-        return null;
     }
 
     /**
@@ -142,7 +153,7 @@ public class EmployeeController implements Serializable {
         credentials.setEmpNumber(employeeNumber);
         credentials.setUserName(employeeId);
 
-        credentialsManager.add(credentials);
+        credentialsManager.addCredentials(credentials);
         editableEmployee = null;
         conversation.end();
         return "/employee/list";

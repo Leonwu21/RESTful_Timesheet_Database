@@ -1,7 +1,5 @@
 package ca.bcit.infosys.editable;
 
-import java.io.Serializable;
-
 import ca.bcit.infosys.timesheet.Timesheet;
 
 /**
@@ -10,9 +8,8 @@ import ca.bcit.infosys.timesheet.Timesheet;
  * @author Benedict Halim and Leon Wu
  * @version 1.0
  */
-public class EditableTimesheet implements Serializable {
-	
-    private static final long serialVersionUID = 10L;
+public class EditableTimesheet {
+    
     /**
      * True if the timesheet is editable. Otherwise, false.
      */

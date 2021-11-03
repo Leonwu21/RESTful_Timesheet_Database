@@ -1,16 +1,12 @@
 package ca.bcit.infosys.employee;
 
-import java.io.Serializable;
-
 /**
  * A class for a set of Credentials.
  * 
  * @author Benedict Halim and Leon Wu
  * @version 1.0
  */
-public class Credentials implements Serializable {
-
-	private static final long serialVersionUID = 12L;
+public class Credentials {
     
     /** 
      * The login ID.
@@ -23,7 +19,7 @@ public class Credentials implements Serializable {
     private String password;
     
     /**
-     * The employee's number.
+     * The employee number.
      */
     private int employeeNumber;
     
@@ -102,7 +98,7 @@ public class Credentials implements Serializable {
 
     /**
      * Checks if two Credential objects are the same.
-     * @return True if two Credential objects are the same, false otherwise.
+     * @return True if two Credential objects are the same. Otherwise, false.
      */
     @Override
     public boolean equals(Object obj) {

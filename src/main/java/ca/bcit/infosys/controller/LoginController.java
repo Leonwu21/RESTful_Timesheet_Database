@@ -60,7 +60,7 @@ public class LoginController implements Serializable {
         final FacesContext context = FacesContext.getCurrentInstance();
 
         if (employee == null) {
-            context.addMessage(null, new FacesMessage("Unknown login, please try again"));
+            context.addMessage(null, new FacesMessage("Error: Login ID not found."));
             userName = null;
             password = null;
             return null;
@@ -68,9 +68,10 @@ public class LoginController implements Serializable {
             final Credentials credentials = new Credentials(userName, password);
             credentials.setEmpNumber(employee.getEmpNumber());
             if (!employeeManager.verifyUser(credentials)) {
-                context.addMessage(null, new FacesMessage("Could not authenticate user, please try again"));
+                context.addMessage(null, new FacesMessage("Error: Invalid Login ID & password combination."));
                 return null;
             }
+            //TODO: Refactor emp_no to employeeNumber?
             context.getExternalContext().getSessionMap().put("emp_no", employee.getUserName());
             conversation.end();
             return "success";

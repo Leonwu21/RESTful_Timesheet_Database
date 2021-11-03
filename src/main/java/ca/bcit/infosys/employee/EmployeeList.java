@@ -59,14 +59,14 @@ public interface EmployeeList {
     String logout(Employee employee);
 
     /**
-     * Deletes the employee of interest.
-     * @param employee The employee to be deleted.
-     */
-    void deleteEmployee(Employee employee);
-
-    /**
      * Adds the employee of interest.
      * @param employee The employee to be added.
      */
     void addEmployee(Employee employee);
+    
+    /**
+     * Deletes the employee of interest.
+     * @param employee The employee to be deleted.
+     */
+    void deleteEmployee(Employee employee);
 }

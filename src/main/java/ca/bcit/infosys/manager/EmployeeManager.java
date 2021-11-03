@@ -47,8 +47,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
     @Inject
     private CredentialsDatabase credentialsDatabase;
     
-    private Employee currentEmployee;
-    
     /**
      * Gets the list of employees.
      * @return The list of Employees as an ArrayList.
@@ -83,6 +81,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
         return null;
     }
 
+    //TODO: Refactor emp_no to employeeNumber?
     /**
      * Gets the current employee. 
      * @return The current employee.
@@ -108,12 +107,12 @@ public class EmployeeManager implements EmployeeList, Serializable {
      * @return True if the admin is logged in. Otherwise, false.
      */
     public Boolean isAdminLogin() {
-        final Employee currEmployee = getCurrentEmployee();
+        final Employee currentEmployee = getCurrentEmployee();
         final Employee admin = getAdministrator();
-        if (admin == null || currEmployee == null) {
+        if (admin == null || currentEmployee == null) {
             return false;
         }
-        return currEmployee.getEmpNumber() == admin.getEmpNumber();
+        return currentEmployee.getEmpNumber() == admin.getEmpNumber();
     }
     
     /**
@@ -142,22 +141,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "logout";
     }
-
-    /**
-     * Deletes the employee of interest.
-     * @param employee The employee to be deleted.
-     */
-    @Override
-    public void deleteEmployee(Employee employee) {
-        String administratorId = getAdministrator().getUserName();
-        String employeeId = employee.getUserName();
-        if (administratorId.equals(employeeId)) {
-            return;
-        }
-        List<Employee> employeeList = employeeDatabase.getEmployeeList();
-        employeeList.remove(employee);
-    }
-
+    
     /**
      * Adds the employee of interest.
      * @param employee The employee to be added.
@@ -180,5 +164,20 @@ public class EmployeeManager implements EmployeeList, Serializable {
             }
         }
         employeeList.add(employee);
+    }
+
+    /**
+     * Deletes the employee of interest.
+     * @param employee The employee to be deleted.
+     */
+    @Override
+    public void deleteEmployee(Employee employee) {
+        String administratorId = getAdministrator().getUserName();
+        String employeeId = employee.getUserName();
+        if (administratorId.equals(employeeId)) {
+            return;
+        }
+        List<Employee> employeeList = employeeDatabase.getEmployeeList();
+        employeeList.remove(employee);
     }
 }

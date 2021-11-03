@@ -18,16 +18,6 @@ import ca.bcit.infosys.timesheet.Timesheet;
 @Named("timesheetDatabase")
 @ApplicationScoped
 public class TimesheetDatabase {
-	
-    /**
-     * A cell of the timesheets table.
-     */
-    private static final String CELL = "timesheet-table-cell,";
-    
-    /**
-     * A collection of 10 cells.
-     */
-    private static final String CELLS = CELL.repeat(10) + CELL;
     
     /**
      * A list of all the timesheets.
@@ -42,20 +32,20 @@ public class TimesheetDatabase {
     }
     
     /**
-     * Gets the cells in a timesheet.
-     * 
-     * @return The collection of 10 cells.
-     */
-    public String getCellClasses() {
-        return CELLS;
-    }
-    
-    /**
      * Gets the list of timesheets.
      * 
      * @return The list of timesheets.
      */
     public List<Timesheet> getTimesheetList() {
         return timesheetList;
+    }
+    
+    /**
+     * Sets the list of timesheets.
+     * 
+     * @param tsList The list of timesheets.
+     */
+    public void setTimesheetList(List<Timesheet> tsList) {
+        timesheetList = tsList;
     }
 }

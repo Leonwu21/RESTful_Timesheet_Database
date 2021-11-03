@@ -113,8 +113,10 @@ public class TimesheetController implements Serializable {
         if (conversation.isTransient()) {
             conversation.begin();
         }
+        
         int empNumber = timesheet.getEmployee().getEmpNumber();
         int currEmpNumber = employeeManager.getCurrentEmployee().getEmpNumber();
+        
         if (empNumber != currEmpNumber) {
             if (employeeManager.isAdminLogin()) {
                 editableTimesheet = new EditableTimesheet(timesheet, true);
@@ -134,18 +136,19 @@ public class TimesheetController implements Serializable {
      */
     public String prepareView(Timesheet timesheet) {
         conversation.end();
-        //NULL POINTER ON LINE 138, NOT GETTING EMPLOYEE NUMBER SINCE EMPLOYEE NULL
-//        Employee employee = timesheet.getEmployee();
-//        int empNumber = employee.getEmpNumber();
-//        Employee currEmployee = employeeManager.getCurrentEmployee();
-//        int currEmpNumber = currEmployee.getEmpNumber();
-//        if (111 != currEmpNumber) {
+        
+        Employee employee = timesheet.getEmployee();
+        int empNumber = employee.getEmpNumber();
+        Employee currEmployee = employeeManager.getCurrentEmployee();
+        int currEmpNumber = currEmployee.getEmpNumber();
+        
+        if (empNumber != currEmpNumber) {
             if (employeeManager.isAdminLogin()) {
                 editableTimesheet = new EditableTimesheet(timesheet, true);
             } else {
                 return null;
             }
-//        }
+        }
         editableTimesheet = new EditableTimesheet(timesheet, false);
         return "/timesheet/view";
     }
@@ -191,11 +194,14 @@ public class TimesheetController implements Serializable {
      */
     public String onCreate() {
         Employee currentEmployee = employeeManager.getCurrentEmployee();
-        editableTimesheet.getTimesheet().setEmployee(currentEmployee);
+        Timesheet editTimesheet = editableTimesheet.getTimesheet();
+        List<Timesheet> currEmpTimesheetList = timesheetManager.getTimesheets(currentEmployee);
+        
+        editTimesheet.setEmployee(currentEmployee);
 
-        for (final Timesheet timesheet : timesheetManager.getTimesheets(currentEmployee)) {
+        for (final Timesheet timesheet : currEmpTimesheetList) {
             LocalDate timesheetEndDate = timesheet.getEndWeek();
-            LocalDate editableTimesheetEndDate = editableTimesheet.getTimesheet().getEndWeek();
+            LocalDate editableTimesheetEndDate = editTimesheet.getEndWeek();
             if (timesheetEndDate.equals(editableTimesheetEndDate)) {
                 final FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage(null,
@@ -204,7 +210,7 @@ public class TimesheetController implements Serializable {
             }
         }
 
-        timesheetManager.addTimesheet();
+        timesheetManager.addTimesheet(editTimesheet);
         editableTimesheet = null;
         conversation.end();
         return prepareList();

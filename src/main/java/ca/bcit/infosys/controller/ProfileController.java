@@ -26,13 +26,6 @@ import ca.bcit.infosys.employee.Employee;
 public class ProfileController implements Serializable {
 
 	private static final long serialVersionUID = 3L;
-
-	/**
-     * Injected Conversation to control the context.
-     */
-    @Inject
-    private Conversation conversation;
-
     /**
      * Injected EmployeeManager. Provides access to employees.
      */
@@ -44,6 +37,12 @@ public class ProfileController implements Serializable {
      */
     @Inject
     private CredentialsManager credentialsManager;
+    
+    /**
+     * Injected Conversation to control the context.
+     */
+    @Inject
+    private Conversation conversation;
 
     /**
      * Provides access to edit an employee.
@@ -98,7 +97,7 @@ public class ProfileController implements Serializable {
         final FacesContext context = FacesContext.getCurrentInstance();
 
         if (oldPassword == null || newPassword == null || confirmNewPassword == null) {
-            context.addMessage(null, new FacesMessage("Error: Please fill in all required fields."));
+            context.addMessage(null, new FacesMessage("Error: Missing required fields."));
             return null;
         }
 
@@ -112,7 +111,10 @@ public class ProfileController implements Serializable {
             return null;
         }
 
-        credentials.setUserName(editableEmployee.getEmployee().getUserName());
+        Employee editEmployee = editableEmployee.getEmployee();
+        String userName = editEmployee.getUserName();
+        
+        credentials.setUserName(userName);
         credentials.setPassword(newPassword);
         conversation.end();
         return "/timesheet/list";

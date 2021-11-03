@@ -1,6 +1,5 @@
 package ca.bcit.infosys.database;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +16,7 @@ import ca.bcit.infosys.employee.Credentials;
  */
 @Named("credentialsDatabase")
 @ApplicationScoped
-public class CredentialsDatabase implements Serializable {
-	
-    private static final long serialVersionUID = 6L;
+public class CredentialsDatabase {
     
     /**
      * A list of all the credentials.

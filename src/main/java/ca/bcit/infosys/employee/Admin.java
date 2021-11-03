@@ -8,8 +8,6 @@ package ca.bcit.infosys.employee;
  */
 public class Admin extends Employee {
 
-	private static final long serialVersionUID = 11L;
-
     /**
      * Constructor for an admin.
      * @param emp The employee that is an admin.

@@ -30,9 +30,9 @@ public class CredentialsManager implements Serializable {
     private CredentialsDatabase credentialsDatabase;
     
     /**
-     * Gets the credentials of an employee that has the employee number given.
-     * @param empNumber The employee's employee number.
-     * @return The credentials of the employee with the employee number given.
+     * Gets the credentials of an employee with a specified employee number.
+     * @param empNumber The employee number.
+     * @return The credentials of the employee with the specified employee number.
      */
     public Credentials getCredentialsByEmpNumber(int empNumber) {
         List<Credentials> credentialsList = credentialsDatabase.getCredentialsList();
@@ -49,8 +49,8 @@ public class CredentialsManager implements Serializable {
      * Adds a set of credentials to the CredentialsDatabase.
      * @param credentials The set of credentials to be added to the CredentialsDatabase.
      */
-    public void add(Credentials credentials) {
-        credentialsDatabase.getCredentialsList().add(credentials);
+    public void addCredentials(Credentials credentials) {
+        List<Credentials> credentialsList = credentialsDatabase.getCredentialsList();
+        credentialsList.add(credentials);
     }
-    
 }
