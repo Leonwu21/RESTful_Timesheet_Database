@@ -23,8 +23,8 @@
 				<h:messages styleClass="errorMessages" />
 				<h2>#{msgs.view}</h2>
 				<h:form class="timesheet-form">
-					<div class="timesheet-inner-container">
-						<div class="timesheet-inner-input-container">
+					<div class="timesheet-inner-div">
+						<div class="timesheet-inner-input-div">
 							<h4 class="timesheet-inner-label">#{msgs.weekEnding}</h4>
 							<h:outputText id="weekend"
 								value="#{timesheetController.editableTimesheet.timesheet.endDate}"
@@ -33,24 +33,24 @@
 							</h:outputText>
 						</div>
 					</div>
-					<div class="timesheet-inner-container">
-						<div class="timesheet-inner-input-container">
+					<div class="timesheet-inner-div">
+						<div class="timesheet-inner-input-div">
 							<h4 class="timesheet-inner-label">#{msgs.weekNumber}</h4>
 							<h:outputText id="weekno"
 								value="#{timesheetController.editableTimesheet.timesheet.weekNumber}"
 								styleClass="timesheet-inner-input"/>
 						</div>
 					</div>
-					<div class="timesheet-inner-container">
-						<div class="timesheet-inner-input-container">
+					<div class="timesheet-inner-div">
+						<div class="timesheet-inner-input-div">
 							<h4 class="timesheet-inner-label">#{msgs.empNo}</h4>
 							<h:outputText id="employeeno"
 								value="#{employeeManager.currentEmployee.employeeNumber}"
 								styleClass="timesheet-inner-input"/>
 						</div>
 					</div>
-					<div class="timesheet-inner-container">
-						<div class="timesheet-inner-input-container">
+					<div class="timesheet-inner-div">
+						<div class="timesheet-inner-input-div">
 							<h4 class="timesheet-inner-label">#{msgs.empName}</h4>
 							<h:outputText id="employeename"
 								value="#{timesheetController.editableTimesheet.timesheet.employee.employeeName}"

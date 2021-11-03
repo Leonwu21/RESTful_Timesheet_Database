@@ -23,11 +23,11 @@
 				<h:messages styleClass="errorMessages"/>
 				<h2>#{msgs.editTs}</h2>
 				<h:form class="timesheet-form">
-					<div class="timesheet-weekend-div">
-						<div class="timesheet-weekend-input-div">
-							<p class="timesheet-weekend-label">#{msgs.weekEnding}</p>
+					<div class="timesheet-inner-div">
+						<div class="timesheet-inner-input-div">
+							<p class="timesheet-inner-label">#{msgs.weekEnding}</p>
 							<h:inputText id="weekend" value="#{timesheetController.editableTimesheet.timesheet.endDate}"
-								styleClass="timesheet-weekend-input">
+								styleClass="timesheet-inner-input">
 								<f:convertDateTime type="localDate" />
 							</h:inputText>
 						</div>
