@@ -29,7 +29,8 @@ public class EmployeeDatabase {
      */
     public EmployeeDatabase() {
         employeeList = new ArrayList<>();
-        employeeList.add(new Employee("John Doe", 1111, "admin"));
+        Employee employee = new Employee("John Doe", 1111, "admin");
+        employeeList.add(employee);
     }
 
     /**

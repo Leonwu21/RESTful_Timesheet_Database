@@ -29,7 +29,9 @@ public class AdminDatabase {
      */
     public AdminDatabase() {
         adminList = new ArrayList<>();
-        adminList.add(new Admin(new Employee("John Doe", 1111, "admin")));
+        Employee employee = new Employee("John Doe", 1111, "admin");
+        Admin admin = new Admin(employee);
+        adminList.add(admin);
     }
 
     /**

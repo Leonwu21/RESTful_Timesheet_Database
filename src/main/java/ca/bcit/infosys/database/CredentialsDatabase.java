@@ -28,7 +28,8 @@ public class CredentialsDatabase {
      */
     public CredentialsDatabase() {
         credentialList = new ArrayList<Credentials>();
-        credentialList.add(new Credentials("admin", "password"));
+        Credentials credentials = new Credentials("admin", "password");
+        credentialList.add(credentials);
         credentialList.get(0).setEmpNumber(1111);
     }
 

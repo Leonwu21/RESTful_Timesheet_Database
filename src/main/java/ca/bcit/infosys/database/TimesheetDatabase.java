@@ -22,7 +22,7 @@ public class TimesheetDatabase {
     /**
      * A list of all the timesheets.
      */
-    private List<Timesheet> timesheetList;
+    private final List<Timesheet> timesheetList;
     
     /**
      * Constructor for TimesheetDatabase.
@@ -38,14 +38,5 @@ public class TimesheetDatabase {
      */
     public List<Timesheet> getTimesheetList() {
         return timesheetList;
-    }
-    
-    /**
-     * Sets the list of timesheets.
-     * 
-     * @param tsList The list of timesheets.
-     */
-    public void setTimesheetList(List<Timesheet> tsList) {
-        timesheetList = tsList;
     }
 }
