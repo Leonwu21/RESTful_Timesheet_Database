@@ -80,7 +80,7 @@ public class LoginController implements Serializable {
      * Gets the employee's login ID.
      * @return The employee's login ID as a String.
      */
-    public String getUsername() {
+    public String getUserName() {
         return userName;
     }
 
@@ -88,7 +88,7 @@ public class LoginController implements Serializable {
      * Sets the employee's login ID.
      * @param id The employee's login ID.
      */
-    public void setUsername(String id) {
+    public void setUserName(String id) {
         userName = id;
     }
 
