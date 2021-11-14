@@ -64,8 +64,8 @@ public class LoginController implements Serializable {
             password = null;
             return null;
         } else {
-            final Credentials credentials = new Credentials(userName, password);
-            credentials.setEmployeeNumber(employee.getEmployeeNumber());
+            final Credentials credentials = new Credentials(
+                    employee.getEmployeeNumber(), userName, password);
             if (!employeeManager.verifyUser(credentials)) {
                 context.addMessage(null, new FacesMessage("Error: Invalid Login ID & password combination."));
                 return null;

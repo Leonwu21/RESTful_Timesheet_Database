@@ -8,6 +8,11 @@ package ca.bcit.infosys.employee;
  */
 public class Credentials {
     
+    /**
+     * The employee number.
+     */
+    private int employeeNumber;
+    
     /** 
      * The login ID.
      */
@@ -18,10 +23,6 @@ public class Credentials {
      */
     private String password;
     
-    /**
-     * The employee number.
-     */
-    private int employeeNumber;
     
     /**
      * Default constructor for Credentials.
@@ -34,7 +35,8 @@ public class Credentials {
      * @param id The login ID.
      * @param pw The password.
      */
-    public Credentials(String id, String pw) {
+    public Credentials(int num, String id, String pw) {
+        employeeNumber = num;
         userName = id;
         password = pw;
     }

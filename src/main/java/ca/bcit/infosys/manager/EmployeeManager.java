@@ -1,20 +1,24 @@
 package ca.bcit.infosys.manager;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ca.bcit.infosys.database.AdminDatabase;
-import ca.bcit.infosys.database.CredentialsDatabase;
-import ca.bcit.infosys.database.EmployeeDatabase;
 import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.employee.EmployeeList;
+import javax.sql.DataSource;
 
 /**
  * Class to manage employees.
@@ -30,22 +34,17 @@ public class EmployeeManager implements EmployeeList, Serializable {
     private static final long serialVersionUID = 15L;
 
     /**
-     * Injected EmployeeDatabase.
+     * Datasource for the project
      */
-    @Inject
-    private EmployeeDatabase employeeDatabase;
+    @Resource(mappedName = "java:jboss/datasources/timesheet_system")
+    private DataSource dataSource;
+    
     
     /**
-     * Injected AdminDatabase.
+     * Provides access to the credentials table in the datasource
      */
     @Inject
-    private AdminDatabase adminDatabase;
-    
-    /**
-     * Injected CredentialsDatabase.
-     */
-    @Inject
-    private CredentialsDatabase credentialsDatabase;
+    private CredentialsManager credentialsManager;
     
     /**
      * Gets the list of employees.
@@ -53,7 +52,39 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Override
     public List<Employee> getEmployeeList() {
-        return employeeDatabase.getEmployeeList();
+        ArrayList<Employee> employeeList = new ArrayList<Employee>();
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM Employees"
+                            + " ORDER BY employeeNumber;");
+                    ResultSet result = stmt.executeQuery();
+                    while (result.next()) {
+                        employeeList.add(new Employee(
+                                result.getInt("employeeNumber"),
+                                result.getString("employeeName"),
+                                result.getString("userName"),
+                                result.getBoolean("isAdmin")));
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error in getEmployeeList");
+            ex.printStackTrace();
+            return null;
+        }
+        return employeeList;
     }
 
     /**
@@ -62,16 +93,161 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Override
     public Employee getEmployeeByUserName(String userName) {
-        List<Employee> employeeList = employeeDatabase.getEmployeeList();
-        
-        for (Employee employee : employeeList) {
-            if (employee.getUserName().equals(userName)) {
-                return employee;
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM Employees"
+                            + " WHERE userName = ?");
+                    stmt.setString(1, userName);
+                    ResultSet result = stmt.executeQuery();
+                    if (result.next()) {
+                        return new Employee(result.getInt("employeeNumber"),
+                                result.getString("employeeName"),
+                                result.getString("userName"),
+                                result.getBoolean("isAdmin"));
+                    } else {
+                        return null;
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
             }
+        } catch (SQLException ex) {
+            System.out.println("Error in getEmployeeByUsername " + userName);
+            ex.printStackTrace();
+            return null;
         }
-        return null;
     }
 
+    /**
+     * Adds the employee of interest into database AKA "Persist"
+     * @param employee The employee to be added.
+     */
+    public void addEmployee(Employee employee) {
+        // order of fields in INSERT statement
+        final int employeeNumber = 1;
+        final int employeeName = 2;
+        final int userName = 3;
+        final int isAdmin = 4;
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("INSERT INTO Employees "
+                            + "VALUES (?, ?, ?, ?)");
+                    stmt.setInt(employeeNumber, employee.getEmployeeNumber());
+                    stmt.setString(employeeName, employee.getEmployeeName());
+                    stmt.setString(userName, employee.getUserName());
+                    stmt.setBoolean(isAdmin, employee.getIsAdmin());
+                    stmt.executeUpdate();
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            System.out.println("Error in addEmployee " + employee);
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    /**
+     * Updates an existing employee record in the employees table AKA "Merge"
+     *
+     * @param employee to be edited
+     */
+    public void editEmployee(Employee employee) {
+        final int employeeName = 1;
+        final int userName = 2;
+        final int employeeNumber = 3;
+        //final int isAdmin = 4;
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("UPDATE Employees "
+                            + "SET employeeName = ?, userName = ? "
+                            + "WHERE employeeNumber = ?");
+                    stmt.setString(employeeName, employee.getEmployeeName());
+                    stmt.setString(userName, employee.getUserName());
+                    stmt.setInt(employeeNumber, employee.getEmployeeNumber());
+                    //stmt.setBoolean(isAdmin, employee.getIsAdmin());
+                    stmt.executeUpdate();
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            System.out.println("Error in editEmployee " + employee);
+            ex.printStackTrace();
+        }
+    }
+    
+    /**
+     * Deletes the employee of interest from database AKA "Remove".
+     * @param employee The employee to be deleted.
+     */
+    @Override
+    public void deleteEmployee(Employee employee) {
+        // Checks if employee is an admin first
+        String administratorId = getAdministrator().getUserName();
+        String employeeId = employee.getUserName();
+        if (administratorId.equals(employeeId)) {
+            return;
+        }
+        
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("DELETE FROM Employees "
+                            + "WHERE employeeNumber = ?");
+                    stmt.setInt(1, employee.getEmployeeNumber());
+                    stmt.executeUpdate();
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            System.out.println("Error in deleteEmployee " + employee);
+            ex.printStackTrace();
+        }
+        credentialsManager.deleteCredentials(employee);
+    }
+    
     /**
      * Gets map of valid passwords for userNames.
      * @return The map containing the valid (userName, password) combinations.
@@ -98,7 +274,11 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Override
     public Employee getAdministrator() {
-        return adminDatabase.getAdminList().get(0);
+        List<Employee> employeeList = getEmployeeList();
+        for (Employee e : employeeList) {
+            if (e.getIsAdmin()) return e;
+        }
+        return null;
     }
     
     /**
@@ -109,7 +289,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
      */
     @Override
     public boolean verifyUser(Credentials credentials) {
-        List<Credentials> credentialsList = credentialsDatabase.getCredentialsList();
+        List<Credentials> credentialsList = credentialsManager.getCredentialsList();
         for (Credentials c : credentialsList) {
             return (c.equals(credentials));
         };
@@ -126,45 +306,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
     public String logout(Employee employee) {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "logout";
-    }
-    
-    /**
-     * Adds the employee of interest.
-     * @param employee The employee to be added.
-     */
-    @Override
-    public void addEmployee(Employee employee) {
-        List<Employee> employeeList = employeeDatabase.getEmployeeList();
-        for (final Employee emp : employeeList) {
-            
-            String empId = emp.getUserName();
-            String employeeId = employee.getUserName();
-            if (empId.equals(employeeId)) {
-                throw new IllegalArgumentException("Error: An existing user has that username already.");
-            }
-            
-            int empNumber = emp.getEmployeeNumber();
-            int employeeNumber = employee.getEmployeeNumber();
-            if (empNumber == employeeNumber) {
-                throw new IllegalArgumentException("Error: An existing user has that employee number already.");
-            }
-        }
-        employeeList.add(employee);
-    }
-
-    /**
-     * Deletes the employee of interest.
-     * @param employee The employee to be deleted.
-     */
-    @Override
-    public void deleteEmployee(Employee employee) {
-        String administratorId = getAdministrator().getUserName();
-        String employeeId = employee.getUserName();
-        if (administratorId.equals(employeeId)) {
-            return;
-        }
-        List<Employee> employeeList = employeeDatabase.getEmployeeList();
-        employeeList.remove(employee);
     }
     
     /**

@@ -110,10 +110,8 @@ public class ProfileController implements Serializable {
         }
 
         Employee editEmployee = editableEmployee.getEmployee();
-        String userName = editEmployee.getUserName();
         
-        credentials.setUserName(userName);
-        credentials.setPassword(newPassword);
+        credentialsManager.editPassword(editEmployee, newPassword);
         conversation.end();
         return "timesheetListPage";
     }
