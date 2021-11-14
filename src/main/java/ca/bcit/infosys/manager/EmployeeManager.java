@@ -291,7 +291,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
     public boolean verifyUser(Credentials credentials) {
         List<Credentials> credentialsList = credentialsManager.getCredentialsList();
         for (Credentials c : credentialsList) {
-            return (c.equals(credentials));
+            if (c.equals(credentials)) return true;
         };
         return false;
     }
