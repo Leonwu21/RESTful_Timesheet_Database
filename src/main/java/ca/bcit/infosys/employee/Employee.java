@@ -9,20 +9,23 @@ package ca.bcit.infosys.employee;
 public class Employee {
     
     /** 
-     * The employee's name. 
-     */
-    private String employeeName;
-    
-    /** 
      * The employee's employee number.
      */
     private int employeeNumber;
+    /** 
+     * The employee's name. 
+     */
+    private String employeeName;
     
     /** 
      * The employee's login ID.
      */
     private String userName;
 
+    /**
+     * True if employee is an admin, else false.
+     */
+    private boolean isAdmin;
 
     /**
      * The no-argument constructor. Used to create new employees from within the
@@ -39,10 +42,12 @@ public class Employee {
      * @param number the empNumber of the user.
      * @param id the loginID of the user.
      */
-    public Employee(final String name, final int number, final String id) {
+    public Employee(final int number, final String name, final String id,
+            final boolean admin) {
         employeeName = name;
         employeeNumber = number;
         userName = id;
+        isAdmin = admin;
     }
     
     /**
@@ -100,5 +105,21 @@ public class Employee {
      */
     public void setUserName(final String id) {
         userName = id;
+    }
+
+    /**
+     * Gets the employee's isAdmin boolean
+     * @return True if employee is an admin, else false.
+     */
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    /**
+     * Sets the employee's isAdmin boolean
+     * @param admin representing if employee is an admin.
+     */
+    public void setIsAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
