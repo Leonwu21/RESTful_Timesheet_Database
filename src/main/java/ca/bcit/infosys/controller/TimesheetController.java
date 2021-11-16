@@ -13,6 +13,7 @@ import javax.inject.Named;
 
 import ca.bcit.infosys.manager.EmployeeManager;
 import ca.bcit.infosys.manager.TimesheetManager;
+import ca.bcit.infosys.manager.TimesheetRowManager;
 import ca.bcit.infosys.timesheet.Timesheet;
 import ca.bcit.infosys.editable.EditableTimesheet;
 import ca.bcit.infosys.employee.Employee;
@@ -35,6 +36,12 @@ public class TimesheetController implements Serializable {
     @Inject
     private TimesheetManager timesheetManager;
 
+    /**
+     * Injected TimesheetRowManager. Provides access to TimesheetRows.
+     */
+    @Inject
+    private TimesheetRowManager tsRowManager;
+    
     /**
      * Injected EmployeeManager. Provides access to employees.
      */
@@ -187,6 +194,11 @@ public class TimesheetController implements Serializable {
      * @return The path to the timesheet list page.
      */
     public String onTimesheetEdit() {
+        Employee currentEmployee = employeeManager.getCurrentEmployee();
+        Timesheet editTimesheet = editableTimesheet.getTimesheet();
+        editTimesheet.setEmployee(currentEmployee);
+
+        tsRowManager.editRow(editTimesheet.getTimesheetId(), editTimesheet.getDetails());
         editableTimesheet = null;
         conversation.end();
         return goToTimesheetListPage();

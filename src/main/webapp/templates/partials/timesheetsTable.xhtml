@@ -20,14 +20,16 @@
 					<h:outputText value="#{timesheetRow.projectId}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.projectId}"
-						rendered="#{timesheetController.editableTimesheet.editable}" />
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true"/>
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.wp}</f:facet>
 					<h:outputText value="#{timesheetRow.workPackageId}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.workPackageId}"
-						rendered="#{timesheetController.editableTimesheet.editable}" />
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true" />
 				</h:column>
 				<h:column rendered="#{view.viewId eq '/views/timesheets/view.xhtml'}">
 					<f:facet name="header">#{msgs.total}</f:facet>
@@ -38,7 +40,9 @@
 					<h:outputText value="#{timesheetRow.totalWeekHours[0]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[0]}"
-						rendered="#{timesheetController.editableTimesheet.editable}">
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true">
+						
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -47,7 +51,8 @@
 					<h:outputText value="#{timesheetRow.totalWeekHours[1]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[1]}"
-						rendered="#{timesheetController.editableTimesheet.editable}">
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -56,7 +61,8 @@
 					<h:outputText value="#{timesheetRow.totalWeekHours[2]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[2]}"
-						rendered="#{timesheetController.editableTimesheet.editable}">
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -65,7 +71,8 @@
 					<h:outputText value="#{timesheetRow.totalWeekHours[3]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[3]}"
-						rendered="#{timesheetController.editableTimesheet.editable}">
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -74,7 +81,8 @@
 					<h:outputText value="#{timesheetRow.totalWeekHours[4]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[4]}"
-						rendered="#{timesheetController.editableTimesheet.editable}">
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -83,7 +91,8 @@
 					<h:outputText value="#{timesheetRow.totalWeekHours[5]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[5]}"
-						rendered="#{timesheetController.editableTimesheet.editable}">
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -92,7 +101,8 @@
 					<h:outputText value="#{timesheetRow.totalWeekHours[6]}"
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[6]}"
-						rendered="#{timesheetController.editableTimesheet.editable}">
+						rendered="#{timesheetController.editableTimesheet.editable}"
+						required="true">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
