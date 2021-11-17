@@ -21,7 +21,8 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.projectId}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true"/>
+						required="true"
+						requiredMessage=" The project ID field is mandatory."/>
 				</h:column>
 				<h:column>
 					<f:facet name="header">#{msgs.wp}</f:facet>
@@ -29,7 +30,8 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.workPackageId}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true" />
+						required="true" 
+						requiredMessage=" The work package ID field is mandatory."/>
 				</h:column>
 				<h:column rendered="#{view.viewId eq '/views/timesheets/view.xhtml'}">
 					<f:facet name="header">#{msgs.total}</f:facet>
@@ -41,8 +43,9 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[0]}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true">
-						
+						required="true"
+						requiredMessage=" The Saturday field is mandatory."
+						label="Saturday field">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -52,7 +55,9 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[1]}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true">
+						required="true"
+						requiredMessage=" The Sunday field is mandatory."
+						label="Sunday field">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -62,7 +67,9 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[2]}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true">
+						required="true"
+						requiredMessage=" The Monday field is mandatory."
+						label="Monday field">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -72,7 +79,9 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[3]}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true">
+						required="true"
+						requiredMessage=" The Tuesday field is mandatory."
+						label="Tuesday field">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -82,7 +91,9 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[4]}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true">
+						required="true"
+						requiredMessage=" The Wednesday field is mandatory."
+						label="Wednesday field">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -92,7 +103,9 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[5]}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true">
+						required="true"
+						requiredMessage=" The Thursday field is mandatory."
+						label="Thursday field">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>
@@ -102,7 +115,9 @@
 						rendered="#{not timesheetController.editableTimesheet.editable}" />
 					<h:inputText value="#{timesheetRow.totalWeekHours[6]}"
 						rendered="#{timesheetController.editableTimesheet.editable}"
-						required="true">
+						required="true"
+						requiredMessage=" The Friday field is mandatory."
+						label="Friday field">
 						<f:validateDoubleRange minimum="0.0" maximum="24.0" />
 					</h:inputText>
 				</h:column>

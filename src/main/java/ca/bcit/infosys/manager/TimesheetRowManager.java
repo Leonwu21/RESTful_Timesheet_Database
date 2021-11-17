@@ -215,7 +215,6 @@ public class TimesheetRowManager implements Serializable {
         return s;
     }
     
-    //TODO: Can be taken out, along with code blocks 102-108 and 156-162
     public boolean checkPK(List<TimesheetRow> timesheetRows) {
         Connection connection = null;
         PreparedStatement stmt = null;
