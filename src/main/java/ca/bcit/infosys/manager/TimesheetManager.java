@@ -220,4 +220,90 @@ public class TimesheetManager implements TimesheetCollection {
         return null;
     }
     
+    /**
+     * Finds timesheet via ID specified
+     * @param timesheetId to find
+     * @return timesheet
+     */
+    public Timesheet find(Integer timesheetId) {
+        Timesheet timesheet = null;
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM Timesheets WHERE TimesheetID = ?");
+                    stmt.setInt(1, timesheetId);
+                    final ResultSet result = stmt.executeQuery();
+                    if (result.next()) {
+                        int id = result.getInt("TimesheetID");
+                        List<TimesheetRow> rows = tsRowManager.getTimesheetRows(id);
+                        Employee employee = employeeManager.
+                                getEmployeeByNumber(result.getInt("EmployeeNumber"));
+                        timesheet = new Timesheet(employee,
+                                result.getDate("EndDate").toLocalDate(), rows);
+                        timesheet.setTimesheetId(id);
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return timesheet;
+    }
+    
+    
+    /**
+     * Updating an existing timesheet
+     * @param timesheet to be updated
+     * @param id of timesheet
+     */
+    public void updateTimesheet(Timesheet timesheet, int id) {
+        int employeeNumber = 1;
+        int endDate = 2;
+        int timesheetId = 3;
+
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                connection.setAutoCommit(false);
+                try {
+                    stmt = connection.prepareStatement("UPDATE Timesheets " +
+                            "SET EmployeeNumber = ?, EndDate = ? WHERE TimesheetId = ?");
+                    stmt.setInt(employeeNumber,
+                            timesheet.getEmployee().getEmployeeNumber());
+                    stmt.setDate(endDate, java.sql.Date.valueOf(timesheet.getEndDate()));
+                    stmt.setInt(timesheetId, id);
+                    stmt.executeUpdate();
+                    connection.commit();
+                    tsRowManager.editRow(timesheet.getTimesheetId(), timesheet.getDetails());
+                } catch (final Exception e) {
+                    connection.rollback();
+                    e.printStackTrace();
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

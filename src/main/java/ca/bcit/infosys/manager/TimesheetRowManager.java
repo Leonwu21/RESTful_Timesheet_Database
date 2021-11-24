@@ -41,6 +41,7 @@ public class TimesheetRowManager implements Serializable {
      * Gets list of timesheet rows by timesheetId
      *
      * @param timesheetId of timesheet
+     * @return ArrayList of TimesheetRow objects
      */
     public ArrayList<TimesheetRow> getTimesheetRows(Integer timesheetId) {
         final ArrayList<TimesheetRow> timesheetRows = new ArrayList<>();

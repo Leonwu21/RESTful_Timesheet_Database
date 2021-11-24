@@ -76,6 +76,45 @@ public class CredentialsManager implements Serializable {
     }
     
     /**
+     * Gets the credentials of an employee with a specified username.
+     * @param username of the employee.
+     * @return The credentials of the employee with the username
+     */
+    public Credentials getCredentialsByUsername(String username) {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM "
+                            + "Credentials WHERE userName = ?");
+                    stmt.setString(1, username);
+                    ResultSet result = stmt.executeQuery();
+                    if (result.next()) {
+                        return new Credentials(result.getInt("employeeNumber"),
+                                result.getString("userName"),
+                                result.getString("password"));
+                    } else {
+                        return null;
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
      * Adds a set of credentials to the CredentialsDatabase AKA "Persist".
      * @param credentials The set of credentials to be added to the CredentialsDatabase.
      */
