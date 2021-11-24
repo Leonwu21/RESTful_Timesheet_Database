@@ -25,51 +25,45 @@ CREATE TABLE Credentials(
     employeeNumber INT(10) NOT NULL UNIQUE,
     userName VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(20) NOT NULL,
-    CONSTRAINT FKCredentialEmployeeNumber
-        FOREIGN KEY (employeeNumber)
-            REFERENCES Employees(employeeNumber)
-            ON UPDATE CASCADE
-            ON DELETE CASCADE
+    CONSTRAINT FKCredentialEmployeeNumber FOREIGN KEY (employeeNumber)
+        REFERENCES Employees(employeeNumber)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 INSERT INTO Credentials VALUES (1, "bhalim", "benAdmin123");
 INSERT INTO Credentials VALUES (2, "lwu", "leonUser123");
 
--- unsure if below is correct, we don't have a timesheetID
-
-/*
 DROP TABLE IF EXISTS Timesheets;
 CREATE TABLE Timesheets(
     employeeNumber INT(10) NOT NULL,
     endDate DATE NOT NULL,
-    CONSTRAINT PKTimesheet PRIMARY KEY (employeeNumber, endDate),
-    CONSTRAINT FKTimesheetEmployeeNumber
-        FOREIGN KEY (employeeNumber)
-            REFERENCES Employees (employeeNumber)
-            ON UPDATE CASCADE 
-            ON DELETE CASCADE
+    timesheetId INT(10) NOT NULL UNIQUE AUTO_INCREMENT,
+    CONSTRAINT PKTimesheet PRIMARY KEY (timesheetId),
+    CONSTRAINT FKTimesheetEmployeeNumber FOREIGN KEY (employeeNumber)
+        REFERENCES Employees (employeeNumber)
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS TimesheetRows;
 CREATE TABLE TimesheetRows(
-    TimesheetID INT(5) NOT NULL, <-- we don't have this. should we create in Timesheet.java?
-    ProjectID INT(5) NOT NULL,
-    WorkPackage VARCHAR(10) NOT NULL,
-    Notes VARCHAR(50) NOT NULL,
-    HoursForWeek VARCHAR(50) NOT NULL,
-    CONSTRAINT PKTimesheetRows PRIMARY KEY (TimesheetID, ProjectID, WorkPackage),
-    CONSTRAINT FKTimesheetRowsTimesheetID
-        FOREIGN KEY (TimesheetID)
-            REFERENCES Timesheets (TimesheetID)
-            ON UPDATE CASCADE
-            ON DELETE CASCADE
+	timesheetId INT(10) NOT NULL,
+    projectId INT(10) NOT NULL,
+    workPackageId VARCHAR(10) NOT NULL,
+    totalWeekHours VARCHAR(50) NOT NULL,
+    notes VARCHAR(50) NOT NULL,
+    CONSTRAINT PKTimesheetRows PRIMARY KEY (timesheetId, projectId, workPackageId),
+    CONSTRAINT FKTimesheetRowsTimesheetId FOREIGN KEY (TimesheetID)
+        REFERENCES Timesheets (TimesheetID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
-INSERT INTO Timesheets VALUES (1, DATE'2020-11-13', 1);
-INSERT INTO Timesheets VALUES (2, DATE'2020-11-20', 2);
-INSERT INTO Timesheets VALUES (3, DATE'2020-11-27', 3);
+INSERT INTO Timesheets VALUES (1, DATE'2021-11-12', 1);
+INSERT INTO Timesheets VALUES (1, DATE'2021-11-19', 2);
 
-INSERT INTO TimesheetRows VALUES (1, 142, "142", "Redo project", "1,0,5,7,0,0,0");
-INSERT INTO TimesheetRows VALUES (1, 142, "143", "Excellence", "5,5,5,0,0,0,8");
-INSERT INTO TimesheetRows VALUES (2, 100, "150", "Edit some parts", "8,8,8,0,0,0,4");
-*/
+INSERT INTO TimesheetRows VALUES (1, 21, "A87", "0,0,0.00,8,7,8,7", "");
+INSERT INTO TimesheetRows VALUES (1, 21, "A202", "1,2,7.5,4,5,6,7", "Sequence");
+INSERT INTO TimesheetRows VALUES (2, 56, "D777", "0,0,0,0,0,0,0", "None");
+INSERT INTO TimesheetRows VALUES (2, 303, "D777", "10,9.08,8.0,7.1,6,5,4", "");

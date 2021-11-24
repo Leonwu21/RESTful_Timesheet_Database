@@ -58,6 +58,8 @@ public class Timesheet implements java.io.Serializable {
      *  Must be >= 0  */
     private int flextime;
 
+    /** Primary key identifier. */
+    private int timesheetId;
 
     /**
      * Constructor for Timesheet.
@@ -75,11 +77,12 @@ public class Timesheet implements java.io.Serializable {
      * @param employee owner of timesheet
      * @param endDate date in timesheet week
      */
-    public Timesheet(Employee employee, LocalDate endDate) {
+    public Timesheet(Employee employee, LocalDate endDate, int id) {
         details = new ArrayList<TimesheetRow>();
         this.employee = employee;
         this.endDate = endDate.
                 with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+        timesheetId = id;
     }
     
     /**
@@ -364,6 +367,9 @@ public class Timesheet implements java.io.Serializable {
         details.add(new TimesheetRow());
     }
     
+    /**
+     * Returns employee parameters as String representation
+     */
     @Override
     public String toString() {
         String result = employee.toString() + '\t' + endDate + '\t' 
@@ -372,6 +378,22 @@ public class Timesheet implements java.io.Serializable {
             result += '\n' + tsr.toString();
         }
         return result;
+    }
+
+    /**
+     * Gets timesheetId primary key
+     * @return timesheetId
+     */
+    public int getTimesheetId() {
+        return timesheetId;
+    }
+
+    /**
+     * Sets timesheetId primary key
+     * @param timesheetId id to set
+     */
+    public void setTimesheetId(int timesheetId) {
+        this.timesheetId = timesheetId;
     }
 
 }

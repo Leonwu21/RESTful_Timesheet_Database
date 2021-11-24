@@ -34,7 +34,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
     private static final long serialVersionUID = 15L;
 
     /**
-     * Datasource for the project
+     * Datasource for the timesheet system
      */
     @Resource(mappedName = "java:jboss/datasources/timesheet_system")
     private DataSource dataSource;
@@ -129,6 +129,45 @@ public class EmployeeManager implements EmployeeList, Serializable {
     }
 
     /**
+     * Gets the employee with the specified employee number.
+     * @return The employee with the specified employee number.
+     */
+    public Employee getEmployeeByNumber(int num) {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM Employees"
+                            + " WHERE employeeNumber = ?");
+                    stmt.setInt(1, num);
+                    ResultSet result = stmt.executeQuery();
+                    if (result.next()) {
+                        return new Employee(result.getInt("employeeNumber"),
+                                result.getString("employeeName"),
+                                result.getString("userName"),
+                                result.getBoolean("isAdmin"));
+                    } else {
+                        return null;
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error in getEmployeeByNumber " + num);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    /**
      * Adds the employee of interest into database AKA "Persist"
      * @param employee The employee to be added.
      */
@@ -177,7 +216,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
         final int employeeName = 1;
         final int userName = 2;
         final int employeeNumber = 3;
-        //final int isAdmin = 4;
         Connection connection = null;
         PreparedStatement stmt = null;
         try {
@@ -190,7 +228,6 @@ public class EmployeeManager implements EmployeeList, Serializable {
                     stmt.setString(employeeName, employee.getEmployeeName());
                     stmt.setString(userName, employee.getUserName());
                     stmt.setInt(employeeNumber, employee.getEmployeeNumber());
-                    //stmt.setBoolean(isAdmin, employee.getIsAdmin());
                     stmt.executeUpdate();
                 } finally {
                     if (stmt != null) {
@@ -264,7 +301,8 @@ public class EmployeeManager implements EmployeeList, Serializable {
     @Override
     public Employee getCurrentEmployee() {
         final FacesContext context = FacesContext.getCurrentInstance();
-        final String id = (String) context.getExternalContext().getSessionMap().get("employeeNumber");
+        final String id = (String) context.getExternalContext().
+                getSessionMap().get("employeeNumber");
         return getEmployeeByUserName(id);
     }
 

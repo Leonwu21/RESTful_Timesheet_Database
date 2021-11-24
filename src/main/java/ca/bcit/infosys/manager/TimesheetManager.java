@@ -1,16 +1,22 @@
 package ca.bcit.infosys.manager;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.sql.DataSource;
 
-import ca.bcit.infosys.database.TimesheetDatabase;
 import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.timesheet.Timesheet;
 import ca.bcit.infosys.timesheet.TimesheetCollection;
+import ca.bcit.infosys.timesheet.TimesheetRow;
 
 @Named("timesheetManager")
 @ConversationScoped
@@ -25,16 +31,64 @@ public class TimesheetManager implements TimesheetCollection {
     private static final long serialVersionUID = 16L;
     
     /**
-     * Injected TimesheetDatabase.
+     * Datasource for timesheet system
      */
-    @Inject private TimesheetDatabase timesheetDatabase;
+    @Resource(mappedName = "java:jboss/datasources/timesheet_system")
+    private DataSource dataSource;
+    
+    /**
+     * Provides access to the timesheet row manager
+     */
+    @Inject
+    private TimesheetRowManager tsRowManager;
+    
+    /**
+     * Provides access to the employees table in the datasource
+     */
+    @Inject
+    private EmployeeManager employeeManager;
 
     /**
-     * Getting the Timesheets.
+     * Returns list of timesheets
      */
     @Override
     public List<Timesheet> getTimesheets() {
-        return timesheetDatabase.getTimesheetList();
+        ArrayList<Timesheet> timesheets = new ArrayList<Timesheet>();
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM "
+                            + "Timesheets ORDER BY timesheetId");
+                    ResultSet result = stmt.executeQuery();
+                    while (result.next()) {
+                        int id = result.getInt("timesheetId");
+                        List<TimesheetRow> rows = tsRowManager
+                                .getTimesheetRows(id);
+                        Employee employee = employeeManager.
+                                getEmployeeByNumber(result.getInt("employeeNumber"));
+                        Timesheet timesheet = new Timesheet(employee,
+                                result.getDate("endDate").toLocalDate(), rows);
+                        timesheet.setTimesheetId(id);
+                        timesheets.add(timesheet);
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return timesheets;
     }
     
     /**
@@ -44,18 +98,43 @@ public class TimesheetManager implements TimesheetCollection {
      */
     @Override
     public List<Timesheet> getTimesheetList(Employee employee) {
-        List<Timesheet> timesheetList = timesheetDatabase.getTimesheetList();
-        List<Timesheet> newTimesheetList = new ArrayList<>();
-        
-        for (Timesheet timesheet : timesheetList) {
-            int timesheetEmployeeNumber = timesheet.getEmployee().getEmployeeNumber();
-            int employeeNumber = employee.getEmployeeNumber();
-            
-            if (timesheetEmployeeNumber == employeeNumber) {
-                newTimesheetList.add(timesheet);
+        int empNo = employee.getEmployeeNumber();
+        ArrayList<Timesheet> timesheets = new ArrayList<Timesheet>();
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM "
+                            + "Timesheets WHERE employeeNumber = ? "
+                            + "ORDER BY timesheetId");
+                    stmt.setInt(1, empNo);
+                    final ResultSet result = stmt.executeQuery();
+                    while (result.next()) {
+                        int id = result.getInt("timesheetId");
+                        List<TimesheetRow> rows = tsRowManager.
+                                getTimesheetRows(id);
+                        Timesheet timesheet = new Timesheet(employee,
+                                result.getDate("endDate").toLocalDate(), rows);
+                        timesheet.setTimesheetId(id);
+                        timesheets.add(timesheet);
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
         }
-        return newTimesheetList;
+        return timesheets;
     }
 
     /**
@@ -84,12 +163,43 @@ public class TimesheetManager implements TimesheetCollection {
     
     /**
      * Creates a Timesheet object and adds it to the database.
-     * @return The path to a new timesheet page.
      */
     @Override
     public void addTimesheet(Timesheet timesheet) {
-        List<Timesheet> timesheetList = timesheetDatabase.getTimesheetList();
-        timesheetList.add(timesheet);
+        int employeeNumber = 1;
+        int endDate = 2;
+        int tsId = 3;
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("INSERT INTO Timesheets "
+                            + "VALUES (?, ?, ?)");
+                    stmt.setInt(employeeNumber,
+                            timesheet.getEmployee().getEmployeeNumber());
+                    stmt.setDate(endDate,
+                            java.sql.Date.valueOf(timesheet.getEndDate()));
+                    stmt.setInt(tsId, timesheet.getTimesheetId());
+                    stmt.executeUpdate();
+                    List<Timesheet> timesheetList = getTimesheets();
+                    Timesheet ts = timesheetList.get(timesheetList.size()-1);
+                    tsRowManager.addRow(ts.getTimesheetId(),
+                            timesheet.getDetails());
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     
     /**
