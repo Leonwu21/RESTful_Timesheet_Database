@@ -33,7 +33,7 @@ CREATE TABLE Credentials(
 );
 
 INSERT INTO Credentials VALUES (1, "bhalim", "benAdmin123", X'10c867430ef329eed6c4996c6d0d5bbe2d2bf6f21224f270ecbb6470c595f4b3');
-INSERT INTO Credentials VALUES (2, "lwu", "leonUser123", X'10c867430ef329eed6c4996c6d0d5bbe2d2bf6f21224f270ecbb6470c595f4b3');
+INSERT INTO Credentials VALUES (2, "lwu", "leonUser123", X'0ac1c6cf435f5ef7bb5fc5d79ef606a44a163578f56b0fa0f336419f594b8eac');
 
 DROP TABLE IF EXISTS Timesheets;
 CREATE TABLE Timesheets(

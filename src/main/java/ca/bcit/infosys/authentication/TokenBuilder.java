@@ -5,7 +5,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import org.apache.commons.codec.binary.Hex;
 
 public class TokenBuilder {
     private static final String ALGORITHM = "SHA-256";
