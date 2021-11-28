@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLDataException;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -357,5 +359,45 @@ public class EmployeeManager implements EmployeeList, Serializable {
             return false;
         }
         return currentEmployee.getEmployeeNumber() == admin.getEmployeeNumber();
+    }
+    
+    /**
+     * Finds the admin user for the application
+     *
+     * @return the admin employee
+     * @throws SQLException
+     */
+    public Employee findAdmin() throws SQLException {
+        Connection connection = null;
+        Statement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.createStatement();
+                    final ResultSet result = stmt.executeQuery(
+                            "SELECT * FROM Employees WHERE isAdmin = 1");
+                    if (result.next()) {
+                        return new Employee(result.getInt("employeeNumber"),
+                                result.getString("employeeName"),
+                                result.getString("userName"),
+                                result.getBoolean("isAdmin"));
+                    } else {
+                        return null;
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
     }
 }

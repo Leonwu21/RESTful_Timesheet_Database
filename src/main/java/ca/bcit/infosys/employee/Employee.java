@@ -1,5 +1,7 @@
 package ca.bcit.infosys.employee;
 
+import ca.bcit.infosys.authentication.Permission;
+
 /**
  * A class for an Employee.
  *
@@ -27,6 +29,11 @@ public class Employee {
      */
     private boolean isAdmin;
 
+    /**
+     * The employee's permission for RESTful services
+     */
+    private Permission permission;
+    
     /**
      * The no-argument constructor. Used to create new employees from within the
      * application.
@@ -121,5 +128,21 @@ public class Employee {
      */
     public void setIsAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    /**
+     * Gets the employee's Permission enum
+     * @return permission of employee
+     */
+    public Permission getPermission() {
+        return permission;
+    }
+
+    /**
+     * Sets the employee's Permission enum
+     * @param permission of employee
+     */
+    public void setPermission(Permission permission) {
+        this.permission = permission;
     }
 }

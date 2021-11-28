@@ -41,6 +41,11 @@ public class Credentials {
         password = pw;
     }
     
+    public Credentials(String id, String pw) {
+        userName = id;
+        password = pw;
+    }
+    
     /**
      * Returns the login ID and password as a String.
      * @return The login ID and password as a String.

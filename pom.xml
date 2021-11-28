@@ -26,6 +26,11 @@
       <artifactId>primefaces</artifactId>
       <version>8.0</version>
     </dependency>
+    <dependency>
+    	<groupId>commons-codec</groupId>
+    	<artifactId>commons-codec</artifactId>
+    	<version>1.15</version>
+    </dependency>
   </dependencies>
   <dependencyManagement>
     <dependencies>
@@ -35,6 +40,11 @@
         <version>8.0</version>
         <scope>provided</scope>
       </dependency>
+ 	<dependency>
+		<groupId>commons-codec</groupId>
+		<artifactId>commons-codec</artifactId>
+		<version>1.15</version>
+	</dependency>
     </dependencies>
   </dependencyManagement>
   <properties>
