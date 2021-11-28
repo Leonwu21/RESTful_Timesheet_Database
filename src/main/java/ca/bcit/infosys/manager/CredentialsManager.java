@@ -14,6 +14,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
+
+import ca.bcit.infosys.authentication.TokenBuilder;
 import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
 
@@ -28,6 +32,7 @@ import ca.bcit.infosys.employee.Employee;
 public class CredentialsManager implements Serializable {
     
     private static final long serialVersionUID = 14L;
+    private TokenBuilder tokenBuilder;
     
     /**
      * Datasource for the project
@@ -70,6 +75,45 @@ public class CredentialsManager implements Serializable {
             }
         } catch (SQLException ex) {
             System.out.println("Error in getCredentialsByEmpNumber " + empNumber);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Gets the credentials of an employee with a specified username.
+     * @param username of the employee.
+     * @return The credentials of the employee with the username
+     */
+    public Credentials getCredentialsByUsername(String username) {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM "
+                            + "Credentials WHERE userName = ?");
+                    stmt.setString(1, username);
+                    ResultSet result = stmt.executeQuery();
+                    if (result.next()) {
+                        return new Credentials(result.getInt("employeeNumber"),
+                                result.getString("userName"),
+                                result.getString("password"));
+                    } else {
+                        return null;
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -249,6 +293,91 @@ public class CredentialsManager implements Serializable {
         } catch (final SQLException ex) {
             System.out.println("Error in editUserName " + employee);
             ex.printStackTrace();
+        }
+    }
+    
+    /**
+     * Gets credentials by token string
+     *
+     * @param token string
+     * @return Credentials of the employee
+     * @throws SQLException
+     */
+    public Credentials getCredentialByToken(String token)
+            throws SQLException, DecoderException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM "
+                            + "Credentials WHERE token = ?");
+                    stmt.setBytes(1, Hex.decodeHex(token));
+                    final ResultSet result = stmt.executeQuery();
+                    if (result.next()) {
+                        final String password = Hex.encodeHexString(
+                                result.getBytes("token"));
+                        final Credentials c = new Credentials(
+                                result.getString("userName"), password);
+                        c.setEmployeeNumber(result.getInt("employeeNumber"));
+                        return c;
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        return null;
+    }
+    
+    /**
+     * Updates an existing Credentials record in database, including REST token
+     *
+     * @param credentials to be updated
+     * @throws SQLException
+     */
+    public void merge(Credentials credentials, int id) throws SQLException {
+        final int user = 1;
+        final int token = 2;
+        final int num = 3;
+
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("UPDATE Credentials "
+                            + "SET userName=?, token=? " + "WHERE employeeNumber = ?");
+                    stmt.setInt(num, id);
+                    stmt.setString(user, credentials.getUserName());
+                    byte[] tokenArr = tokenBuilder.encrypt(
+                           credentials.getUserName() + credentials.getPassword());
+                    stmt.setBytes(token, tokenArr);
+                    stmt.executeUpdate();
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
         }
     }
 }

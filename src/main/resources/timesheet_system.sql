@@ -25,14 +25,15 @@ CREATE TABLE Credentials(
     employeeNumber INT(10) NOT NULL UNIQUE,
     userName VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(20) NOT NULL,
+    token BINARY(32) NOT NULL,
     CONSTRAINT FKCredentialEmployeeNumber FOREIGN KEY (employeeNumber)
         REFERENCES Employees(employeeNumber)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-INSERT INTO Credentials VALUES (1, "bhalim", "benAdmin123");
-INSERT INTO Credentials VALUES (2, "lwu", "leonUser123");
+INSERT INTO Credentials VALUES (1, "bhalim", "benAdmin123", X'10c867430ef329eed6c4996c6d0d5bbe2d2bf6f21224f270ecbb6470c595f4b3');
+INSERT INTO Credentials VALUES (2, "lwu", "leonUser123", X'10c867430ef329eed6c4996c6d0d5bbe2d2bf6f21224f270ecbb6470c595f4b3');
 
 DROP TABLE IF EXISTS Timesheets;
 CREATE TABLE Timesheets(
