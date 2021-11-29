@@ -38,7 +38,7 @@ public class EmployeeManager implements EmployeeList, Serializable {
     /**
      * Datasource for the timesheet system
      */
-    @Resource(mappedName = "java:jboss/datasources/timesheet_system")
+    @Resource(mappedName = "java:jboss/datasources/timesheet_system_asn3")
     private DataSource dataSource;
     
     

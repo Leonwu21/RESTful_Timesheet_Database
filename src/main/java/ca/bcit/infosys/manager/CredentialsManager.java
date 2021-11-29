@@ -41,7 +41,7 @@ public class CredentialsManager implements Serializable {
     /**
      * Datasource for the project
      */
-    @Resource(mappedName = "java:jboss/datasources/timesheet_system")
+    @Resource(mappedName = "java:jboss/datasources/timesheet_system_asn3")
     private DataSource dataSource;
     
     /**

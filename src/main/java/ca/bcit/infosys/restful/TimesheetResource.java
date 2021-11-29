@@ -37,9 +37,11 @@ public class TimesheetResource {
      */
     @Secured({ Permission.ADMIN, Permission.USER })
     @GET
-    @Path("list")
     @Produces("application/json")
     public Timesheet[] getTimesheets() {
+        if (!authEmployee.getIsAdmin()) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }   
         Timesheet[] arr;
         try {
             List<Timesheet> list = tsManager.getTimesheets();
@@ -91,7 +93,8 @@ public class TimesheetResource {
     @PATCH
     @Path("{id}")
     @Consumes("application/json")
-    public Response updateTimesheet(Timesheet timesheet, @PathParam("id") Integer id) {
+    public Response updateTimesheet(@PathParam("id") Integer id) {
+        Timesheet timesheet = tsManager.find(id);
         Response res = checkAuth(timesheet);
         if (res != null) return res;
         try {
@@ -100,16 +103,17 @@ public class TimesheetResource {
             e.printStackTrace();
             return Response.serverError().entity(e).build();
         }
-        return Response.noContent().build();
+        return Response.ok().build();
     }
     
-    @POST
-    @Consumes("application/json")
     /**
      * Creates a new timesheet
      * @param timesheet to be created
      * @return Response object
      */
+    @Secured({ Permission.ADMIN, Permission.USER })
+    @POST
+    @Consumes("application/json")
     public Response addTimesheet(Timesheet timesheet) {
         Response res = checkAuth(timesheet);
         if (res != null) return res;
