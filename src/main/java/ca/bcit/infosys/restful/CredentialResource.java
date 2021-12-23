@@ -63,15 +63,15 @@ public class CredentialResource {
     @PATCH
     @Consumes("application/json")
     public Response merge(Credentials c, @PathParam("id") Integer id) {
-        final Response errorRes = checkCred(authEmployee, id);
-        if (errorRes != null) return errorRes;
+        Response res = checkCred(authEmployee, id);
+        if (res != null) return res;
         try {
             credentialsManager.merge(c, id);
         } catch (Exception e) {
             e.printStackTrace();
             return Response.serverError().entity(e).build();
         }
-        return Response.noContent().build();
+        return Response.ok().build();
     }
     
     /**
@@ -83,7 +83,10 @@ public class CredentialResource {
     @Consumes("application/json")
     public Response addCredentials(Credentials credentials) {
         try {
-            credentialsManager.addCredentials(credentials);
+            if (!authEmployee.getIsAdmin())
+                return Response.status(Response.Status.UNAUTHORIZED).entity(
+                    "Cannot create credentials as a non-admin!").build();
+            credentialsManager.addCredentialsToken(credentials);
         } catch (Exception e) {
             e.printStackTrace();
             return Response.serverError().entity(e).build();

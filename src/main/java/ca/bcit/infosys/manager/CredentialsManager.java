@@ -1,6 +1,7 @@
 package ca.bcit.infosys.manager;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,12 +35,26 @@ public class CredentialsManager implements Serializable {
     private static final long serialVersionUID = 14L;
     private TokenBuilder tokenBuilder;
     
+    @Inject
+    EmployeeManager employeeManager;
+    
     /**
      * Datasource for the project
      */
-    @Resource(mappedName = "java:jboss/datasources/timesheet_system")
+    @Resource(mappedName = "java:jboss/datasources/timesheet_system_asn3")
     private DataSource dataSource;
     
+    /**
+     * Constructor initializes TokenBuilder
+     */
+    public CredentialsManager() {
+        try {
+            tokenBuilder = new TokenBuilder();
+        } catch (final NoSuchAlgorithmException e) {
+            tokenBuilder = null;
+            e.printStackTrace();
+        }
+    }
     /**
      * Gets the credentials of an employee with a specified employee number.
      * @param empNumber The employee number.
@@ -139,6 +154,50 @@ public class CredentialsManager implements Serializable {
                     stmt.setInt(employeeNumber, credentials.getEmployeeNumber());
                     stmt.setString(userName, credentials.getUserName());
                     stmt.setString(password, credentials.getPassword());
+                    stmt.executeUpdate();
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (final SQLException ex) {
+            System.out.println("Error in addCredentials " + credentials);
+            ex.printStackTrace();
+        }
+    }
+    
+    /**
+     * Adds a set of credentials to the CredentialsDatabase AKA "Persist".
+     * @param credentials The set of credentials to be added to the CredentialsDatabase.
+     */
+    public void addCredentialsToken(Credentials credentials) {
+        // Must first add new employee with placeholder name due to foreign key constraints
+        Employee e = new Employee(credentials.getEmployeeNumber(),
+                "Placeholder", credentials.getUserName(), false);
+        employeeManager.addEmployee(e);
+        final int employeeNumber = 1;
+        final int userName = 2;
+        final int password = 3;
+        final int tokenNum = 4;
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        byte[] token = tokenBuilder.encrypt(credentials.getUserName() +
+                credentials.getPassword());
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("INSERT INTO Credentials "
+                            + "VALUES (?, ?, ?, ?)");
+                    stmt.setInt(employeeNumber, credentials.getEmployeeNumber());
+                    stmt.setString(userName, credentials.getUserName());
+                    stmt.setString(password, credentials.getPassword());
+                    stmt.setBytes(tokenNum, token);
                     stmt.executeUpdate();
                 } finally {
                     if (stmt != null) {
@@ -341,14 +400,14 @@ public class CredentialsManager implements Serializable {
     }
     
     /**
-     * Updates an existing Credentials record in database, including REST token
+     * Updates an existing Credentials record in database
      *
      * @param credentials to be updated
      * @throws SQLException
      */
     public void merge(Credentials credentials, int id) throws SQLException {
         final int user = 1;
-        final int token = 2;
+        final int pw = 2;
         final int num = 3;
 
         Connection connection = null;
@@ -358,12 +417,10 @@ public class CredentialsManager implements Serializable {
                 connection = dataSource.getConnection();
                 try {
                     stmt = connection.prepareStatement("UPDATE Credentials "
-                            + "SET userName=?, token=? " + "WHERE employeeNumber = ?");
+                            + "SET userName=?, password=? " + "WHERE employeeNumber = ?");
                     stmt.setInt(num, id);
                     stmt.setString(user, credentials.getUserName());
-                    byte[] tokenArr = tokenBuilder.encrypt(
-                           credentials.getUserName() + credentials.getPassword());
-                    stmt.setBytes(token, tokenArr);
+                    stmt.setString(pw, credentials.getPassword());
                     stmt.executeUpdate();
                 } finally {
                     if (stmt != null) {

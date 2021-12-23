@@ -33,7 +33,7 @@ public class TimesheetManager implements TimesheetCollection {
     /**
      * Datasource for timesheet system
      */
-    @Resource(mappedName = "java:jboss/datasources/timesheet_system")
+    @Resource(mappedName = "java:jboss/datasources/timesheet_system_asn3")
     private DataSource dataSource;
     
     /**
@@ -278,7 +278,6 @@ public class TimesheetManager implements TimesheetCollection {
         try {
             try {
                 connection = dataSource.getConnection();
-                connection.setAutoCommit(false);
                 try {
                     stmt = connection.prepareStatement("UPDATE Timesheets " +
                             "SET EmployeeNumber = ?, EndDate = ? WHERE TimesheetId = ?");
@@ -287,8 +286,6 @@ public class TimesheetManager implements TimesheetCollection {
                     stmt.setDate(endDate, java.sql.Date.valueOf(timesheet.getEndDate()));
                     stmt.setInt(timesheetId, id);
                     stmt.executeUpdate();
-                    connection.commit();
-                    tsRowManager.editRow(timesheet.getTimesheetId(), timesheet.getDetails());
                 } catch (final Exception e) {
                     connection.rollback();
                     e.printStackTrace();

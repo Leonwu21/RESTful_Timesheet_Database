@@ -1,12 +1,12 @@
-DROP DATABASE IF EXISTS timesheet_system;
-CREATE DATABASE timesheet_system;
+DROP DATABASE IF EXISTS timesheet_system_asn3;
+CREATE DATABASE timesheet_system_asn3;
 
 CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin';
 CREATE USER IF NOT EXISTS 'admin'@'%' IDENTIFIED BY 'admin';
-GRANT ALL ON timesheet_system.* TO 'admin'@'localhost';
-GRANT ALL ON timesheet_system.* TO 'admin'@'%';
+GRANT ALL ON timesheet_system_asn3.* TO 'admin'@'localhost';
+GRANT ALL ON timesheet_system_asn3.* TO 'admin'@'%';
 
-USE timesheet_system;
+USE timesheet_system_asn3;
 
 DROP TABLE IF EXISTS Employees;
 CREATE TABLE Employees(
@@ -33,7 +33,7 @@ CREATE TABLE Credentials(
 );
 
 INSERT INTO Credentials VALUES (1, "bhalim", "benAdmin123", X'10c867430ef329eed6c4996c6d0d5bbe2d2bf6f21224f270ecbb6470c595f4b3');
-INSERT INTO Credentials VALUES (2, "lwu", "leonUser123", X'10c867430ef329eed6c4996c6d0d5bbe2d2bf6f21224f270ecbb6470c595f4b3');
+INSERT INTO Credentials VALUES (2, "lwu", "leonUser123", X'0ac1c6cf435f5ef7bb5fc5d79ef606a44a163578f56b0fa0f336419f594b8eac');
 
 DROP TABLE IF EXISTS Timesheets;
 CREATE TABLE Timesheets(
@@ -63,8 +63,14 @@ CREATE TABLE TimesheetRows(
 
 INSERT INTO Timesheets VALUES (1, DATE'2021-11-12', 1);
 INSERT INTO Timesheets VALUES (1, DATE'2021-11-19', 2);
+INSERT INTO Timesheets VALUES (2, DATE'2021-11-12', 3);
+INSERT INTO Timesheets VALUES (2, DATE'2021-11-19', 4);
 
 INSERT INTO TimesheetRows VALUES (1, 21, "A87", "0,0,0.00,8,7,8,7", "");
 INSERT INTO TimesheetRows VALUES (1, 21, "A202", "1,2,7.5,4,5,6,7", "Sequence");
 INSERT INTO TimesheetRows VALUES (2, 56, "D777", "0,0,0,0,0,0,0", "None");
 INSERT INTO TimesheetRows VALUES (2, 303, "D777", "10,9.08,8.0,7.1,6,5,4", "");
+INSERT INTO TimesheetRows VALUES (3, 66, "A8711", "0,0,0.00,8,7,8,7", "");
+INSERT INTO TimesheetRows VALUES (3, 88, "A2022", "1,2,7.5,4,5,6,7", "Sequence");
+INSERT INTO TimesheetRows VALUES (4, 7, "D7737", "0,0,0,0,0,0,0", "None");
+INSERT INTO TimesheetRows VALUES (4, 224, "D7577", "10,9.08,8.0,7.1,6,5,4", "");

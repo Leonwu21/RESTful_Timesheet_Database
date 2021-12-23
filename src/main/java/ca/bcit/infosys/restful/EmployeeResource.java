@@ -64,10 +64,6 @@ public class EmployeeResource {
     @Path("{id}")
     @Produces("application/json")
     public Employee find(@PathParam("id") Integer id) {
-        if (!authEmployee.getIsAdmin()
-                && authEmployee.getEmployeeNumber() != id) {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
-        }
         Employee employee = employeeManager.getEmployeeByNumber(id);
         if (employee == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -97,7 +93,7 @@ public class EmployeeResource {
             e.printStackTrace();
             return Response.serverError().entity(e).build();
         }
-        return Response.noContent().build();
+        return Response.ok().build();
     }
     
     /**
@@ -108,6 +104,9 @@ public class EmployeeResource {
     @POST
     @Consumes("application/json")
     public Response addEmployee(Employee employee) {
+        if (!authEmployee.getIsAdmin()) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
         try {
             employeeManager.addEmployee(employee);
         } catch (Exception e) {
@@ -126,6 +125,9 @@ public class EmployeeResource {
     @Path("{id}")
     @DELETE
     public Response remove(@PathParam("id") Integer id) {
+        if (!authEmployee.getIsAdmin()) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
         try {
             Employee employee = employeeManager.getEmployeeByNumber(id);
             employeeManager.deleteEmployee(employee);
