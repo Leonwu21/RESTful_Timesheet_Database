@@ -114,3 +114,6 @@ Or alternatively, for a non-admin user paste in this JSON snippet:
 | TimesheetRows  | GET         | /rows/<timesheetId>           | Gets all timesheetRows with specific timesheetId.                                                                                                          |
 | TimesheetRows  | PATCH       | /rows/<timesheetId>           | Updates timesheetRow with specific timesheetId.<br/><br/>{ "projectId": "1", "workPackageId": "1", "totalWeekHours": [ 0 , 0 , 0 , 0 , 0 , 0 , 0 ], "notes": "1" } |
 | TimesheetRows  | POST        | /rows                         | Adds timesheetRow with specific timesheetId.<br/><br/>{ "projectId": "1", "workPackageId": "1", "totalWeekHours": [ 0 , 0 , 0 , 0 , 0 , 0 , 0 ], "notes": "1" }    |
+  
+## Known Issues
+See [Test Cases here](https://github.com/Leonwu21/RESTful_Timesheet_Database/blob/main/Test%20Cases%20(asn3).xlsx)
