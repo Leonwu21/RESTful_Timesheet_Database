@@ -1,5 +1,6 @@
 # RESTful Timesheet Database
 This is an application which allows a user to either use the UI to directly edit timesheets/profile information, or perform similar CRUD operations via URI endpoints.
+![Timesheet System ERD](/TimesheetSystemERD.JPG)
 
 ## Functionality:
 
